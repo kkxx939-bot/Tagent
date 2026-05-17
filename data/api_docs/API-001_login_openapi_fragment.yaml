@@ -1,0 +1,40 @@
+openapi: 3.0.0
+info:
+  title: Login API
+  version: 1.3.0
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: 用户登录
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [login_type]
+              properties:
+                login_type:
+                  type: string
+                  enum: [password, sms]
+                username:
+                  type: string
+                  description: 密码登录时必填
+                password:
+                  type: string
+                  description: 密码登录时必填，前端需加密传输
+                mobile:
+                  type: string
+                  description: 短信登录时必填
+                sms_code:
+                  type: string
+                  description: 短信登录时必填
+      responses:
+        "200":
+          description: 登录成功
+        "400":
+          description: 参数错误
+        "423":
+          description: 账号锁定或冻结
+        "500":
+          description: 系统异常
+

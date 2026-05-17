@@ -1,0 +1,9 @@
+接口名,方法,路径,字段,必填,说明
+领取优惠券,POST,/api/coupon/receive,coupon_id,是,优惠券 ID
+领取优惠券,POST,/api/coupon/receive,activity_id,是,活动 ID
+领取优惠券,POST,/api/coupon/receive,channel,否,来源渠道 app/h5
+领取优惠券,POST,/api/coupon/receive,token,是,登录态
+领取优惠券,RESPONSE,/api/coupon/receive,code,是,0 成功 4001 未登录 4002 已领取 4003 已抢光 4004 活动未开始 4005 活动结束
+领取优惠券,RESPONSE,/api/coupon/receive,msg,是,提示文案
+领取优惠券,RESPONSE,/api/coupon/receive,coupon_instance_id,否,领取成功后返回
+

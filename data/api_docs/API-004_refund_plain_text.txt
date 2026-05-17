@@ -1,0 +1,27 @@
+退款接口说明 - 非正式版本
+
+1. 申请退款
+POST /refund/apply
+入参：
+order_no string 必填
+reason string 非必填
+client_request_id string 必填，用于幂等
+
+返回：
+0 成功
+5101 订单不存在
+5102 订单状态不允许退款
+5103 重复申请
+5104 支付渠道异常
+
+2. 取消退款
+POST /refund/cancel
+入参：order_no
+返回：0 成功，5201 不允许取消
+
+3. 支付回调
+POST /refund/callback
+字段不稳定，以支付网关为准。
+
+注意：回调可能重复，必须幂等。
+

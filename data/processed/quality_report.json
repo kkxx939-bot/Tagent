@@ -1,0 +1,3364 @@
+{
+  "summary": {
+    "total_items": 19669,
+    "total_json_errors": 0,
+    "total_unsupported_items": 1,
+    "datasets": [
+      "case",
+      "requirement",
+      "bug",
+      "api"
+    ]
+  },
+  "datasets": {
+    "case": {
+      "dataset": "case",
+      "file": "data/processed/case_items.jsonl",
+      "total": 10777,
+      "json_errors": 0,
+      "item_type_counts": {
+        "test_case": 6054,
+        "test_point": 4723
+      },
+      "source_file_counts": {
+        "data/test_cases/2 车机测试用例(5000多条).xlsx": 5994,
+        "data/test_cases/4 长安汽车车机测试模块XMind.xmind": 229,
+        "data/test_cases/xx租房项目 测试用例 60条.xlsx": 60,
+        "data/test_cases/手机号转账.xmind": 153,
+        "data/test_cases/手机号转账模块详细测试点.xmind": 153,
+        "data/test_cases/手机银行前端1.3.xmind": 2357,
+        "data/test_cases/手机银行后管.xmind": 51,
+        "data/test_cases/数据迁移测试案例.xmind": 144,
+        "data/test_cases/测试点-农贷、个贷业务功能.xmind": 579,
+        "data/test_cases/测试点-贷后管理功能业务.xmind": 96,
+        "data/test_cases/银行业务-贷款.xmind": 835,
+        "data/test_cases/银行业务.xmind": 126
+      },
+      "missing_core_fields": {
+        "title": 17
+      },
+      "empty_content_like_items": 2,
+      "unsupported_items": 0,
+      "long_content_items": [],
+      "duplicate_titles": [
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "循环录制播放操作",
+          "count": 60
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "紧急录制播放操作",
+          "count": 59
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "使用场景说明",
+          "count": 41
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "IACC主动推送",
+          "count": 40
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "ACC主动推送",
+          "count": 35
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "拨号操作",
+          "count": 23
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "播放状态切换",
+          "count": 21
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "记录会计事件",
+          "count": 20
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "贷款金额信息维护",
+          "count": 17
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "IACC 主动提醒",
+          "count": 16
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "利率资料检查",
+          "count": 15
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "贷款控制信息维护",
+          "count": 15
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "经典模式下显示切换",
+          "count": 14
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "资料检查",
+          "count": 14
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "错误3次，提示密码已被锁定，核心查询为密码锁定状态",
+          "count": 13
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "HU 弹出框退出条件",
+          "count": 12
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "错误1次，提示还剩2次",
+          "count": 12
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "错误2次，提示还剩1次",
+          "count": 12
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "验证取款密码",
+          "count": 12
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "取款密码为空，下一步置灰",
+          "count": 11
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "不足6位页面提示错误",
+          "count": 11
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "营运产品码查询",
+          "count": 11
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "行外",
+          "count": 10
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "日累计",
+          "count": 10
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "年累计",
+          "count": 10
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "校验取款密码",
+          "count": 10
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "账户密码锁定-当日，输入后提示",
+          "count": 10
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "密码锁定-累计，输入后提示",
+          "count": 10
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "如果是内部户",
+          "count": 9
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "内部户检查",
+          "count": 9
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "存款账户检查",
+          "count": 9
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "存储文件命名",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "电压过低进入低电压保护",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "AC_AirQualityInCarLevel",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "转出",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "不受限额影响（转账金额未超过渠道限额/行级限额/特殊限额/非柜面转账限额）",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "非绑定账户转账",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/测试点-农贷、个贷业务功能.xmind",
+          "title": "01新增向导",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "输入数据有效性检查",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "日期检查",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "产品代码规则查询",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "贷款控制信息查询",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "贷款金额信息查询",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/银行业务-贷款.xmind",
+          "title": "循环处理",
+          "count": 8
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "经典模式开启",
+          "count": 7
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "来电",
+          "count": 7
+        },
+        {
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "循环录制编辑操作",
+          "count": 7
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "小额",
+          "count": 7
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "绑定账户转账",
+          "count": 7
+        },
+        {
+          "source_file": "data/test_cases/手机银行前端1.3.xmind",
+          "title": "进行网联交易，限额内成功，超限额交易失败",
+          "count": 7
+        }
+      ],
+      "sample_items": [
+        {
+          "item_type": "test_case",
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "TBOX登录后台",
+          "module": "4G",
+          "case_id": null,
+          "steps": "1.启动车机，查看tsp上报信息",
+          "expected_result": "1.在Kibana系统查询对应的车机TUID是否有上传tsp收到sid=5，mid=200的登录信息",
+          "sheet": "冒烟测试用例",
+          "path": null,
+          "raw": {
+            "用例序号": "1",
+            "module": "4G",
+            "相关需求": "",
+            "title": "TBOX登录后台",
+            "前置条件": "tbox唤醒",
+            "steps": "1.启动车机，查看tsp上报信息",
+            "expected_result": "1.在Kibana系统查询对应的车机TUID是否有上传tsp收到sid=5，mid=200的登录信息",
+            "优先级": "1",
+            "用例执行方式": "台架",
+            "用例执行结果": "",
+            "dtm缺陷号": ""
+          }
+        },
+        {
+          "item_type": "test_case",
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "4G公网联通基本功能",
+          "module": "4G",
+          "case_id": null,
+          "steps": "1.启动车机，播放在线音乐；",
+          "expected_result": "1.在线音乐可以正常播放；",
+          "sheet": "冒烟测试用例",
+          "path": null,
+          "raw": {
+            "用例序号": "2",
+            "module": "4G",
+            "相关需求": "",
+            "title": "4G公网联通基本功能",
+            "前置条件": "1.车机完成实名认证，tbox唤醒；",
+            "steps": "1.启动车机，播放在线音乐；",
+            "expected_result": "1.在线音乐可以正常播放；",
+            "优先级": "1",
+            "用例执行方式": "台架",
+            "用例执行结果": "",
+            "dtm缺陷号": ""
+          }
+        },
+        {
+          "item_type": "test_case",
+          "source_file": "data/test_cases/2 车机测试用例(5000多条).xlsx",
+          "title": "S—接有音频文件的U盘",
+          "module": "本地音乐&蓝牙音乐",
+          "case_id": null,
+          "steps": "1.车机处于主界面\n2.接有音频文件的U盘",
+          "expected_result": "1.切换到 USB 音乐源并自动播放第一个识别出来的音频文 件",
+          "sheet": "冒烟测试用例",
+          "path": null,
+          "raw": {
+            "用例序号": "3",
+            "module": "本地音乐&蓝牙音乐",
+            "相关需求": "I206本地音乐需求规格说明书-V1.3—3.1.2 USB",
+            "title": "S—接有音频文件的U盘",
+            "前置条件": "车机已上电",
+            "steps": "1.车机处于主界面\n2.接有音频文件的U盘",
+            "expected_result": "1.切换到 USB 音乐源并自动播放第一个识别出来的音频文 件",
+            "优先级": "1",
+            "用例执行方式": "台架",
+            "用例执行结果": "",
+            "dtm缺陷号": ""
+          }
+        }
+      ],
+      "business_topic_counts": {
+        "登录注册": 1541,
+        "车机": 3940,
+        "<unknown>": 3022,
+        "用户资料": 42,
+        "订单": 186,
+        "组合管理": 22,
+        "租房": 224,
+        "贷款": 1580,
+        "优惠券": 16,
+        "转账": 1328
+      },
+      "test_dimension_counts": {
+        "<unknown>": 3339,
+        "正常流": 3356,
+        "状态流转": 3883,
+        "边界值": 1238,
+        "数据校验": 912,
+        "兼容性": 100,
+        "幂等": 212,
+        "异常流": 1383,
+        "权限": 76,
+        "并发": 603,
+        "安全": 483,
+        "性能": 38,
+        "历史Bug回归": 95
+      },
+      "rule_type_counts": {},
+      "api_constraint_counts": {},
+      "business_findings": []
+    },
+    "requirement": {
+      "dataset": "requirement",
+      "file": "data/processed/requirement_items.jsonl",
+      "total": 8635,
+      "json_errors": 0,
+      "item_type_counts": {
+        "requirement_section": 163,
+        "requirement_table_row": 8471,
+        "unsupported": 1
+      },
+      "source_file_counts": {
+        "data/requirements/KIMS基础组合管理需求规格说明书.docx": 442,
+        "data/requirements/KIMS多组合分类管理需求规格说明书.docx": 105,
+        "data/requirements/KIMS多组合查询需求规格说明.docx": 355,
+        "data/requirements/KIMS货币组合管理需求规格说明.docx": 141,
+        "data/requirements/XZ银行手机银行需求格明书-后台管理部分V0.2-20200311.docx": 1106,
+        "data/requirements/XZ银行手机银行需求说明书-功能权限表V0.1-20200610.xlsx": 167,
+        "data/requirements/XZ银行手机银行需求说明书V0.1-20200311.docx": 868,
+        "data/requirements/XZ银行手机银行需求说明书V0.1-20200311.xlsx": 167,
+        "data/requirements/xx租房项目 客户端需求文档使用说明书.docx": 3,
+        "data/requirements/信贷业务基础（上）-授信、合同及放款出账(1).pdf": 1,
+        "data/requirements/信贷业务基础（下）-受托支付、还款及变更(1).pdf": 1,
+        "data/requirements/寿险渠道走无抵押贷款流程图文版.pdf": 1,
+        "data/requirements/平安普惠线上联合放款需求文档v3.9.1.docx": 34,
+        "data/requirements/新版手机银行数字证书补充需求.docx": 6,
+        "data/requirements/智慧社区SaaS服务平台PRD需求规格说明书V0.0.1.docx": 888,
+        "data/requirements/西藏银行手机银行需求说明书.docx": 868,
+        "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx": 741,
+        "data/requirements/需求说明书-个贷业务V3.0(1).doc": 1,
+        "data/requirements/需求说明书-贷后管理V3.0(1).doc": 1,
+        "data/requirements/需求说明书农贷业务V3.0.docx": 2739
+      },
+      "missing_core_fields": {},
+      "empty_content_like_items": 1,
+      "unsupported_items": 1,
+      "long_content_items": [
+        {
+          "line": 5895,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/需求说明书-个贷业务V3.0(1).doc",
+          "title": "需求说明书-个贷业务V3.0(1)",
+          "field": "content",
+          "length": 50299
+        },
+        {
+          "line": 5903,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/需求说明书农贷业务V3.0.docx",
+          "title": "05 输入的参数错误",
+          "field": "content",
+          "length": 35892
+        },
+        {
+          "line": 2317,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/XZ银行手机银行需求说明书V0.1-20200311.docx",
+          "title": "XZ银行手机银行需求说明书V0.1-20200311",
+          "field": "content",
+          "length": 27416
+        },
+        {
+          "line": 4286,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/西藏银行手机银行需求说明书.docx",
+          "title": "西藏银行手机银行需求说明书",
+          "field": "content",
+          "length": 27416
+        },
+        {
+          "line": 3355,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/信贷业务基础（上）-授信、合同及放款出账(1).pdf",
+          "title": "信贷业务基础（上）-授信、合同及放款出账(1)",
+          "field": "content",
+          "length": 13737
+        },
+        {
+          "line": 5198,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+          "title": "2、 用户管理中维护的征信调阅用户在申请查询、历史申请查询中点击“征信调阅”，查看申请件的征信报告。",
+          "field": "content",
+          "length": 10517
+        },
+        {
+          "line": 1044,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/XZ银行手机银行需求格明书-后台管理部分V0.2-20200311.docx",
+          "title": "XZ银行手机银行需求格明书-后台管理部分V0.2-20200311",
+          "field": "content",
+          "length": 9961
+        },
+        {
+          "line": 5200,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+          "title": "2、编辑",
+          "field": "content",
+          "length": 9037
+        },
+        {
+          "line": 5201,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+          "title": "5. 已复核页面以列表形式展示已复核的每条数据; 选择其一数据可查看详情。输入知识库标题&知识库级别&选择级别，点击【查询】，进行模糊查询。",
+          "field": "content",
+          "length": 8905
+        },
+        {
+          "line": 5194,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+          "title": "1、密码设置",
+          "field": "content",
+          "length": 7637
+        },
+        {
+          "line": 3356,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/信贷业务基础（下）-受托支付、还款及变更(1).pdf",
+          "title": "信贷业务基础（下）-受托支付、还款及变更(1)",
+          "field": "content",
+          "length": 6123
+        },
+        {
+          "line": 5901,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/需求说明书农贷业务V3.0.docx",
+          "title": "4.5影像资料191",
+          "field": "content",
+          "length": 5743
+        },
+        {
+          "line": 3357,
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/寿险渠道走无抵押贷款流程图文版.pdf",
+          "title": "寿险渠道走无抵押贷款流程图文版",
+          "field": "content",
+          "length": 5234
+        }
+      ],
+      "duplicate_titles": [
+        {
+          "source_file": "data/requirements/需求说明书农贷业务V3.0.docx",
+          "title": "需求说明书农贷业务V3.0",
+          "count": 2733
+        },
+        {
+          "source_file": "data/requirements/XZ银行手机银行需求格明书-后台管理部分V0.2-20200311.docx",
+          "title": "XZ银行手机银行需求格明书-后台管理部分V0.2-20200311",
+          "count": 1100
+        },
+        {
+          "source_file": "data/requirements/XZ银行手机银行需求说明书V0.1-20200311.docx",
+          "title": "XZ银行手机银行需求说明书V0.1-20200311",
+          "count": 867
+        },
+        {
+          "source_file": "data/requirements/西藏银行手机银行需求说明书.docx",
+          "title": "西藏银行手机银行需求说明书",
+          "count": 867
+        },
+        {
+          "source_file": "data/requirements/智慧社区SaaS服务平台PRD需求规格说明书V0.0.1.docx",
+          "title": "智慧社区SaaS服务平台PRD需求规格说明书V0.0.1",
+          "count": 846
+        },
+        {
+          "source_file": "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+          "title": "银行移动消费信贷系统需求规格说明书V_1.1- 副本",
+          "count": 691
+        },
+        {
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "count": 442
+        },
+        {
+          "source_file": "data/requirements/KIMS多组合查询需求规格说明.docx",
+          "title": "KIMS多组合查询需求规格说明",
+          "count": 355
+        },
+        {
+          "source_file": "data/requirements/XZ银行手机银行需求说明书-功能权限表V0.1-20200610.xlsx",
+          "title": "XZ银行手机银行需求说明书-功能权限表V0.1-20200610",
+          "count": 167
+        },
+        {
+          "source_file": "data/requirements/XZ银行手机银行需求说明书V0.1-20200311.xlsx",
+          "title": "XZ银行手机银行需求说明书V0.1-20200311",
+          "count": 167
+        },
+        {
+          "source_file": "data/requirements/KIMS货币组合管理需求规格说明.docx",
+          "title": "KIMS货币组合管理需求规格说明",
+          "count": 141
+        },
+        {
+          "source_file": "data/requirements/KIMS多组合分类管理需求规格说明书.docx",
+          "title": "KIMS多组合分类管理需求规格说明书",
+          "count": 105
+        },
+        {
+          "source_file": "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+          "title": "2、信息填写进度条",
+          "count": 3
+        },
+        {
+          "source_file": "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+          "title": "1、导航栏",
+          "count": 3
+        },
+        {
+          "source_file": "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+          "title": "3、贷款信息",
+          "count": 2
+        },
+        {
+          "source_file": "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+          "title": "5、（代客录入端）下一步",
+          "count": 2
+        },
+        {
+          "source_file": "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+          "title": "2、信息列表",
+          "count": 2
+        }
+      ],
+      "sample_items": [
+        {
+          "item_type": "requirement_section",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "content": "KIMS\n基础组合管理\n需求规格说明书\n修订历史\n状态标识：C – Created A- Added M - Modified D - Deleted\n基础组合管理整体概述\n功能描述\n该模块主要包含投资日历和组合调仓功能。\n投资日历可以直观的查看在不同时间所涉及到的公告提示、新股、分红派息、停复牌、交易信息、基金运作等相关信息，并提供数据查询功能，便于自定义时间区间内的数据汇总查询。\n组合调仓提供查看组合列表、行业配置情况、资产配置情况、证券池、自选列表、指令列表、调仓记录、行情信息，以及相关操作，如：下达普通个券指令、下达证券池个券指令、下达自选列表个券指令、调整组合、调整证券池方案、调整自选方案、指令操作（导出指令、调整指令、删除指令），除此之外还有一些组合试算的功能。\n用例图\n组合业务数据查询者：\n组合业务数据操作者：\n系统功能树\n整体原型展示\n（1）投资日历：\n（2）组合调仓：\n基础组合管理功能说明\n投资日历\n功能用例描述\n输入要素\n输出要素\n附件\n组合调仓-组合列表\n功能用例描述\n输入要素\n输出要素\n组合调仓-行业配置情况\n功能用例描述\n输入要素\n输出要素\n组合调仓-资产配置情况\n功能用例描述\n输入要素\n输出要素\n组合调仓-证券池\n功能用例描述\n输入要素\n输出要素\n组合调仓-指令列表\n功能用例描述\n输入要素\n输出要素\n组合调仓-调仓记录\n功能用例描述\n输入要素\n输出要素\n组合调仓-行情信息\n功能用例描述\n输入要素\n输出要素\n组合调仓-普通个券指令\n功能用例描述\n输入要素\n输出要素\n组合调仓-证券池个券指令\n功能用例描述\n输入要素\n输出要素\n组合调仓-自选列表个券指令\n功能用例描述\n输入要素\n输出要素\n组合调仓-调整组合\n功能用例描述\n输入要素\n输出要素\n组合调仓-调整证券池方案\n功能用例描述\n输入要素\n输出要素\n组合调仓-调整自选方案\n功能用例描述\n输入要素\n输出要素\n组合调仓-指令操作\n功能用例描述\n输入要素\n输出要素",
+          "section_title": "KIMS基础组合管理需求规格说明书",
+          "sheet": null,
+          "row_index": null,
+          "raw": null,
+          "error": null
+        },
+        {
+          "item_type": "requirement_table_row",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "content": "文档名称 | KIMS基础组合管理需求规格说明书 | 文档版本 | V0.5",
+          "section_title": null,
+          "sheet": null,
+          "row_index": 2,
+          "raw": {
+            "公司名称": "文档名称",
+            "金证财富南京科技有限公司": "KIMS基础组合管理需求规格说明书",
+            "文档编号": "文档版本",
+            "column_4": "V0.5"
+          },
+          "error": null
+        },
+        {
+          "item_type": "requirement_table_row",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "content": "起草 | <陈晓龙 | 起草日期 | 2017-04-13",
+          "section_title": null,
+          "sheet": null,
+          "row_index": 3,
+          "raw": {
+            "公司名称": "起草",
+            "金证财富南京科技有限公司": "<陈晓龙",
+            "文档编号": "起草日期",
+            "column_4": "2017-04-13"
+          },
+          "error": null
+        }
+      ],
+      "business_topic_counts": {
+        "优惠券": 165,
+        "组合管理": 1056,
+        "订单": 62,
+        "贷款": 2865,
+        "登录注册": 453,
+        "转账": 267,
+        "租房": 107,
+        "<unknown>": 3907,
+        "用户资料": 27,
+        "车机": 51
+      },
+      "test_dimension_counts": {
+        "正常流": 279,
+        "状态流转": 557,
+        "并发": 28,
+        "兼容性": 36,
+        "<unknown>": 7120,
+        "权限": 296,
+        "数据校验": 461,
+        "边界值": 233,
+        "幂等": 67,
+        "异常流": 158,
+        "安全": 150,
+        "性能": 1
+      },
+      "rule_type_counts": {
+        "验收标准": 258,
+        "流程规则": 723,
+        "业务规则": 296,
+        "字段规则": 233,
+        "限制规则": 125
+      },
+      "api_constraint_counts": {},
+      "business_findings": [
+        {
+          "line": 1,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "验收标准",
+            "流程规则"
+          ]
+        },
+        {
+          "line": 4,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 11,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "验收标准"
+          ]
+        },
+        {
+          "line": 15,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "验收标准",
+            "流程规则"
+          ]
+        },
+        {
+          "line": 16,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 17,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 19,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "验收标准"
+          ]
+        },
+        {
+          "line": 20,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "验收标准"
+          ]
+        },
+        {
+          "line": 21,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "验收标准"
+          ]
+        },
+        {
+          "line": 28,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "验收标准"
+          ]
+        },
+        {
+          "line": 31,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "验收标准"
+          ]
+        },
+        {
+          "line": 34,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "验收标准"
+          ]
+        },
+        {
+          "line": 36,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "验收标准"
+          ]
+        },
+        {
+          "line": 69,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "验收标准"
+          ]
+        },
+        {
+          "line": 78,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "字段规则",
+            "流程规则"
+          ]
+        },
+        {
+          "line": 79,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 80,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 82,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 83,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "字段规则"
+          ]
+        },
+        {
+          "line": 85,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "限制规则"
+          ]
+        },
+        {
+          "line": 94,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "限制规则"
+          ]
+        },
+        {
+          "line": 104,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 105,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 106,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 108,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 109,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "字段规则"
+          ]
+        },
+        {
+          "line": 119,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "验收标准"
+          ]
+        },
+        {
+          "line": 126,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 127,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 128,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 130,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 131,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "字段规则"
+          ]
+        },
+        {
+          "line": 145,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 146,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 147,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 149,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 150,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "字段规则"
+          ]
+        },
+        {
+          "line": 170,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 171,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 172,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 174,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 175,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "字段规则"
+          ]
+        },
+        {
+          "line": 182,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 196,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 197,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 198,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 200,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 201,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "字段规则",
+            "限制规则"
+          ]
+        },
+        {
+          "line": 203,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 210,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 214,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "限制规则"
+          ]
+        },
+        {
+          "line": 221,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 222,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 223,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 225,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 259,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "流程规则"
+          ]
+        },
+        {
+          "line": 260,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 261,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 263,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 271,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 282,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "订单",
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 283,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 284,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 286,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 287,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "字段规则"
+          ]
+        },
+        {
+          "line": 295,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 307,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "流程规则"
+          ]
+        },
+        {
+          "line": 308,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 309,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 311,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 312,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "字段规则"
+          ]
+        },
+        {
+          "line": 331,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "流程规则"
+          ]
+        },
+        {
+          "line": 332,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 333,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        },
+        {
+          "line": 335,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "流程规则",
+            "限制规则"
+          ]
+        },
+        {
+          "line": 336,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "字段规则"
+          ]
+        },
+        {
+          "line": 342,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "限制规则"
+          ]
+        },
+        {
+          "line": 351,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则"
+          ]
+        },
+        {
+          "line": 360,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "优惠券",
+            "组合管理"
+          ],
+          "rule_types": [
+            "业务规则",
+            "流程规则"
+          ]
+        },
+        {
+          "line": 361,
+          "finding_type": "requirement_rule",
+          "source_file": "data/requirements/KIMS基础组合管理需求规格说明书.docx",
+          "title": "KIMS基础组合管理需求规格说明书",
+          "topics": [
+            "组合管理"
+          ],
+          "rule_types": [
+            "流程规则"
+          ]
+        }
+      ]
+    },
+    "bug": {
+      "dataset": "bug",
+      "file": "data/processed/bug_items.jsonl",
+      "total": 205,
+      "json_errors": 0,
+      "item_type_counts": {
+        "bug_severity_rule": 18,
+        "bug_record": 187
+      },
+      "source_file_counts": {
+        "data/bugs/5 Bug描述清单.xlsx": 18,
+        "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx": 187
+      },
+      "missing_core_fields": {},
+      "empty_content_like_items": 187,
+      "unsupported_items": 0,
+      "long_content_items": [],
+      "duplicate_titles": [
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "点击",
+          "count": 21
+        },
+        {
+          "source_file": "data/bugs/5 Bug描述清单.xlsx",
+          "title": "S 缺陷等级规则",
+          "count": 5
+        },
+        {
+          "source_file": "data/bugs/5 Bug描述清单.xlsx",
+          "title": "A 缺陷等级规则",
+          "count": 5
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "样式",
+          "count": 5
+        },
+        {
+          "source_file": "data/bugs/5 Bug描述清单.xlsx",
+          "title": "B 缺陷等级规则",
+          "count": 4
+        },
+        {
+          "source_file": "data/bugs/5 Bug描述清单.xlsx",
+          "title": "C 缺陷等级规则",
+          "count": 4
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "间距",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "数字键盘",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "电话",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "宽度",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "跳转",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "去掉",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "弹窗",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "侧滑",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "图标",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "居中",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "无法查看详情，闪退",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "选中图标不对",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "适配",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "不对",
+          "count": 2
+        },
+        {
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "跳转问题",
+          "count": 2
+        }
+      ],
+      "sample_items": [
+        {
+          "item_type": "bug_severity_rule",
+          "source_file": "data/bugs/5 Bug描述清单.xlsx",
+          "title": "S 缺陷等级规则",
+          "bug_id": null,
+          "bug_type": null,
+          "status": null,
+          "priority": null,
+          "severity": "S",
+          "version": null,
+          "description": "未做高压，低压，反接短路等保护，容易引发电路起火；\n带机芯车机，按出碟后，碟片飞出来等；",
+          "sheet": "bug",
+          "row_index": 3,
+          "raw": {
+            "index": "1",
+            "severity": "S",
+            "definition": "必现性及大概率（1/100及以上)致命问题，不能用于量产及销售",
+            "detail": "1、可导致驾驶人生命财产安全隐患的问题",
+            "description": "未做高压，低压，反接短路等保护，容易引发电路起火；\n带机芯车机，按出碟后，碟片飞出来等；",
+            "remark": ""
+          }
+        },
+        {
+          "item_type": "bug_severity_rule",
+          "source_file": "data/bugs/5 Bug描述清单.xlsx",
+          "title": "S 缺陷等级规则",
+          "bug_id": null,
+          "bug_type": null,
+          "status": null,
+          "priority": null,
+          "severity": "S",
+          "version": null,
+          "description": "侵权设计，外观尺寸及设计不符合客户规范；\n违背DV/EMC实验标准，导致硬件需要整改；",
+          "sheet": "bug",
+          "row_index": 4,
+          "raw": {
+            "index": "",
+            "severity": "S",
+            "definition": "必现性及大概率（1/100及以上)致命问题，不能用于量产及销售",
+            "detail": "2、违反国家法律法规、行业认证、客户规格要求及标准",
+            "description": "侵权设计，外观尺寸及设计不符合客户规范；\n违背DV/EMC实验标准，导致硬件需要整改；",
+            "remark": ""
+          }
+        },
+        {
+          "item_type": "bug_severity_rule",
+          "source_file": "data/bugs/5 Bug描述清单.xlsx",
+          "title": "S 缺陷等级规则",
+          "bug_id": null,
+          "bug_type": null,
+          "status": null,
+          "priority": null,
+          "severity": "S",
+          "version": null,
+          "description": "主界面app应用使用不了；\n方控、面板按键、倒车无法使用；\ncarplay、carlife无法使用；",
+          "sheet": "bug",
+          "row_index": 5,
+          "raw": {
+            "index": "",
+            "severity": "S",
+            "definition": "必现性及大概率（1/100及以上)致命问题，不能用于量产及销售",
+            "detail": "3、主界面APP功能（包含必须支持的第三方软件）及日常使用功能无法实现",
+            "description": "主界面app应用使用不了；\n方控、面板按键、倒车无法使用；\ncarplay、carlife无法使用；",
+            "remark": ""
+          }
+        }
+      ],
+      "business_topic_counts": {
+        "车机": 8,
+        "<unknown>": 185,
+        "退款": 5,
+        "用户资料": 5,
+        "租房": 2,
+        "登录注册": 3
+      },
+      "test_dimension_counts": {
+        "异常流": 19,
+        "历史Bug回归": 205,
+        "数据校验": 2,
+        "性能": 1,
+        "正常流": 4,
+        "状态流转": 187,
+        "兼容性": 2,
+        "安全": 1,
+        "边界值": 1
+      },
+      "rule_type_counts": {},
+      "api_constraint_counts": {},
+      "business_findings": [
+        {
+          "line": 19,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.adapter.MeetingAdapter.convert(MeetingAdapter.java:57)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.adapter.MeetingAdapter.convert(MeetingAdapter.java:57)"
+        },
+        {
+          "line": 20,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "时间精确到小时",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：时间精确到小时"
+        },
+        {
+          "line": 21,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "间距",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：间距"
+        },
+        {
+          "line": 22,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "请选择生日",
+          "topics": [
+            "用户资料"
+          ],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：请选择生日"
+        },
+        {
+          "line": 23,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "前一个带过来的",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：前一个带过来的"
+        },
+        {
+          "line": 24,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.adapter.NoteHistoryAdapter.convert(NoteHistoryAdapter.java:58)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.adapter.NoteHistoryAdapter.convert(NoteHistoryAdapter.java:58)"
+        },
+        {
+          "line": 25,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "删除图标",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：删除图标"
+        },
+        {
+          "line": 26,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "数字键盘",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：数字键盘"
+        },
+        {
+          "line": 27,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "数字键盘",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：数字键盘"
+        },
+        {
+          "line": 28,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "头像检查",
+          "topics": [
+            "用户资料"
+          ],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：头像检查"
+        },
+        {
+          "line": 29,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "身份",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：身份"
+        },
+        {
+          "line": 30,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.house.HouseDetailAct$$ViewBinder.bind(HouseDetailAct$$ViewBinder.java:11)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.house.HouseDetailAct$$ViewBinder.bind(HouseDetailAct$$ViewBinder.java:11)"
+        },
+        {
+          "line": 31,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.house.HouseDetailAct.initializeVariate(HouseDetailAct.java:134)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.house.HouseDetailAct.initializeVariate(HouseDetailAct.java:134)"
+        },
+        {
+          "line": 32,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.mine.message.NoteDetailAct.onViewClicked(NoteDetailAct.java:214)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.mine.message.NoteDetailAct.onViewClicked(NoteDetailAct.java:214)"
+        },
+        {
+          "line": 33,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.home.door.DoorListAct.lambda$initializeView$1(DoorListAct.java:109)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.home.door.DoorListAct.lambda$initializeView$1(DoorListAct.java:109)"
+        },
+        {
+          "line": 34,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "退出编辑状态",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：退出编辑状态"
+        },
+        {
+          "line": 35,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "错误",
+          "topics": [],
+          "dimensions": [
+            "异常流",
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：错误"
+        },
+        {
+          "line": 36,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "筛选",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：筛选"
+        },
+        {
+          "line": 37,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "电话",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：电话"
+        },
+        {
+          "line": 38,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "跳转，缺少id",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：跳转，缺少id"
+        },
+        {
+          "line": 39,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.setting.ChangePhoneTabAct.onBackPressed(ChangePhoneTabAct.java:77)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.setting.ChangePhoneTabAct.onBackPressed(ChangePhoneTabAct.java:77)"
+        },
+        {
+          "line": 40,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.adapter.AgentAdapter.convert(AgentAdapter.java:18)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.adapter.AgentAdapter.convert(AgentAdapter.java:18)"
+        },
+        {
+          "line": 41,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "点击",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：点击"
+        },
+        {
+          "line": 42,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "点击",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：点击"
+        },
+        {
+          "line": 43,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "请选择",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：请选择"
+        },
+        {
+          "line": 44,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "不限",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：不限"
+        },
+        {
+          "line": 45,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "点击",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：点击"
+        },
+        {
+          "line": 46,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "接口错误信息返回问题",
+          "topics": [],
+          "dimensions": [
+            "异常流",
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：接口错误信息返回问题"
+        },
+        {
+          "line": 47,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "所有房源传城市",
+          "topics": [
+            "租房"
+          ],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：所有房源传城市"
+        },
+        {
+          "line": 48,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "android.support.v4.view.ViewPager.populate(ViewPager.java:1135)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "兼容性",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：android.support.v4.view.ViewPager.populate(ViewPager.java:1135)"
+        },
+        {
+          "line": 49,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.house.AppointAct.initializeView(AppointAct.java:118)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.house.AppointAct.initializeView(AppointAct.java:118)"
+        },
+        {
+          "line": 50,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.adapter.MeetingAdapter.convert(MeetingAdapter.java:21)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.adapter.MeetingAdapter.convert(MeetingAdapter.java:21)"
+        },
+        {
+          "line": 51,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.adapter.PopSearchFilterAdapter.<init>(PopSearchFilterAdapter.java:28)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.adapter.PopSearchFilterAdapter.<init>(PopSearchFilterAdapter.java:28)"
+        },
+        {
+          "line": 52,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "名字",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：名字"
+        },
+        {
+          "line": 53,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "有错误",
+          "topics": [],
+          "dimensions": [
+            "异常流",
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：有错误"
+        },
+        {
+          "line": 54,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "名字加价格",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：名字加价格"
+        },
+        {
+          "line": 55,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "启动页",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：启动页"
+        },
+        {
+          "line": 56,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "头像上传",
+          "topics": [
+            "用户资料"
+          ],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：头像上传"
+        },
+        {
+          "line": 57,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "换成简体字",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：换成简体字"
+        },
+        {
+          "line": 58,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.mine.info.MineInfoEditAct.onViewClicked(MineInfoEditAct.java:304)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.mine.info.MineInfoEditAct.onViewClicked(MineInfoEditAct.java:304)"
+        },
+        {
+          "line": 59,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.adapter.OfficeAdapter.convert(OfficeAdapter.java:21)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.adapter.OfficeAdapter.convert(OfficeAdapter.java:21)"
+        },
+        {
+          "line": 60,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.adapter.OfficeAdapter.convert(OfficeAdapter.java:20)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.adapter.OfficeAdapter.convert(OfficeAdapter.java:20)"
+        },
+        {
+          "line": 61,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.api.ApiModel.requestUpdateName(ApiModel.java:79)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.api.ApiModel.requestUpdateName(ApiModel.java:79)"
+        },
+        {
+          "line": 62,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.TabHomeActivity.requestCityList(TabHomeActivity.java:125)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.TabHomeActivity.requestCityList(TabHomeActivity.java:125)"
+        },
+        {
+          "line": 63,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.setting.SettingAct.lambda$onViewClicked$9(SettingAct.java:152)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.setting.SettingAct.lambda$onViewClicked$9(SettingAct.java:152)"
+        },
+        {
+          "line": 64,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "android.support.v4.app.FragmentManagerImpl.moveToState(FragmentManager.java:1413)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "兼容性",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：android.support.v4.app.FragmentManagerImpl.moveToState(FragmentManager.java:1413)"
+        },
+        {
+          "line": 65,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.house.HouseDetailAct.lambda$new$4(HouseDetailAct.java:237)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.house.HouseDetailAct.lambda$new$4(HouseDetailAct.java:237)"
+        },
+        {
+          "line": 66,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "时间选择",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：时间选择"
+        },
+        {
+          "line": 67,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.ui.home.HomeFrag$1.fillBannerItem(HomeFrag.java:103)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.ui.home.HomeFrag$1.fillBannerItem(HomeFrag.java:103)"
+        },
+        {
+          "line": 68,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.view.advs.utils.ViewFactory.getImageView(ViewFactory.java:30)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.view.advs.utils.ViewFactory.getImageView(ViewFactory.java:30)"
+        },
+        {
+          "line": 69,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "com.znz.compass.meike.view.advs.CycleViewPager.onCreateView(CycleViewPager.java:64)",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：com.znz.compass.meike.view.advs.CycleViewPager.onCreateView(CycleViewPager.java:64)"
+        },
+        {
+          "line": 70,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "拨打电话",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：拨打电话"
+        },
+        {
+          "line": 71,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "高度变高",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：高度变高"
+        },
+        {
+          "line": 72,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "点击变颜色",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：点击变颜色"
+        },
+        {
+          "line": 73,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "banner计算高度",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：banner计算高度"
+        },
+        {
+          "line": 74,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "箭头",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：箭头"
+        },
+        {
+          "line": 75,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "宽度",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：宽度"
+        },
+        {
+          "line": 76,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "选择否的时候文案不对",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：选择否的时候文案不对"
+        },
+        {
+          "line": 77,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "宽度",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：宽度"
+        },
+        {
+          "line": 78,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "两个标签",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：两个标签"
+        },
+        {
+          "line": 79,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "标签个数",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：标签个数"
+        },
+        {
+          "line": 80,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "灰色",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：灰色"
+        },
+        {
+          "line": 81,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "测试",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：测试"
+        },
+        {
+          "line": 82,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "内容按照界面修改",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：内容按照界面修改"
+        },
+        {
+          "line": 83,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "页面滑动卡顿",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：页面滑动卡顿"
+        },
+        {
+          "line": 84,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "换行显示不对",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：换行显示不对"
+        },
+        {
+          "line": 85,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "切换图片不变",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：切换图片不变"
+        },
+        {
+          "line": 86,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "指示器修改",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：指示器修改"
+        },
+        {
+          "line": 87,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "文案不对",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：文案不对"
+        },
+        {
+          "line": 88,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "点击",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：点击"
+        },
+        {
+          "line": 89,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "提醒暂未开放",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：提醒暂未开放"
+        },
+        {
+          "line": 90,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "点击",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：点击"
+        },
+        {
+          "line": 91,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "白色",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：白色"
+        },
+        {
+          "line": 92,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "弹框",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：弹框"
+        },
+        {
+          "line": 93,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "跳转",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：跳转"
+        },
+        {
+          "line": 94,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "样式",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：样式"
+        },
+        {
+          "line": 95,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "点击",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：点击"
+        },
+        {
+          "line": 96,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "样式",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：样式"
+        },
+        {
+          "line": 97,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "点击出现搜索",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：点击出现搜索"
+        },
+        {
+          "line": 98,
+          "finding_type": "bug_risk",
+          "source_file": "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+          "title": "默认第一个",
+          "topics": [],
+          "dimensions": [
+            "状态流转",
+            "历史Bug回归"
+          ],
+          "suggestion": "生成相关用例时需要覆盖历史缺陷：默认第一个"
+        }
+      ]
+    },
+    "api": {
+      "dataset": "api",
+      "file": "data/processed/api_items.jsonl",
+      "total": 52,
+      "json_errors": 0,
+      "item_type_counts": {
+        "api_endpoint": 7,
+        "api_field": 26,
+        "api_response": 1,
+        "api_error_code": 18
+      },
+      "source_file_counts": {
+        "data/api_docs/API-001_login_openapi_fragment.yaml": 10,
+        "data/api_docs/API-002_order_markdown_loose.md": 10,
+        "data/api_docs/API-003_coupon_csv_style.csv": 7,
+        "data/api_docs/API-004_refund_plain_text.txt": 10,
+        "data/api_docs/API-005_profile_mixed_notes.md": 15
+      },
+      "missing_core_fields": {},
+      "empty_content_like_items": 0,
+      "unsupported_items": 0,
+      "long_content_items": [],
+      "duplicate_titles": [
+        {
+          "source_file": "data/api_docs/API-005_profile_mixed_notes.md",
+          "title": "/user/profile field avatar",
+          "count": 2
+        },
+        {
+          "source_file": "data/api_docs/API-005_profile_mixed_notes.md",
+          "title": "/user/profile field bio",
+          "count": 2
+        }
+      ],
+      "sample_items": [
+        {
+          "item_type": "api_endpoint",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "用户登录",
+          "method": "POST",
+          "path": "/api/v1/auth/login",
+          "field_name": null,
+          "required": null,
+          "location": null,
+          "error_code": null,
+          "description": null,
+          "content": null,
+          "raw": {
+            "operation": {
+              "summary": "用户登录",
+              "requestBody": {
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "required": [
+                        "login_type"
+                      ],
+                      "properties": {
+                        "login_type": {
+                          "type": "string",
+                          "enum": [
+                            "password",
+                            "sms"
+                          ]
+                        },
+                        "username": {
+                          "type": "string",
+                          "description": "密码登录时必填"
+                        },
+                        "password": {
+                          "type": "string",
+                          "description": "密码登录时必填，前端需加密传输"
+                        },
+                        "mobile": {
+                          "type": "string",
+                          "description": "短信登录时必填"
+                        },
+                        "sms_code": {
+                          "type": "string",
+                          "description": "短信登录时必填"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "登录成功"
+                },
+                "400": {
+                  "description": "参数错误"
+                },
+                "423": {
+                  "description": "账号锁定或冻结"
+                },
+                "500": {
+                  "description": "系统异常"
+                }
+              }
+            }
+          }
+        },
+        {
+          "item_type": "api_field",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "POST /api/v1/auth/login request field login_type",
+          "method": "POST",
+          "path": "/api/v1/auth/login",
+          "field_name": "login_type",
+          "required": "是",
+          "location": "request",
+          "error_code": null,
+          "description": null,
+          "content": null,
+          "raw": {
+            "type": "string",
+            "enum": [
+              "password",
+              "sms"
+            ]
+          }
+        },
+        {
+          "item_type": "api_field",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "POST /api/v1/auth/login request field username",
+          "method": "POST",
+          "path": "/api/v1/auth/login",
+          "field_name": "username",
+          "required": "否",
+          "location": "request",
+          "error_code": null,
+          "description": "密码登录时必填",
+          "content": null,
+          "raw": {
+            "type": "string",
+            "description": "密码登录时必填"
+          }
+        }
+      ],
+      "business_topic_counts": {
+        "登录注册": 8,
+        "<unknown>": 27,
+        "订单": 5,
+        "优惠券": 9,
+        "退款": 1,
+        "用户资料": 5
+      },
+      "test_dimension_counts": {
+        "正常流": 5,
+        "异常流": 7,
+        "状态流转": 3,
+        "数据校验": 10,
+        "安全": 4,
+        "<unknown>": 27,
+        "边界值": 2,
+        "并发": 2,
+        "权限": 2,
+        "幂等": 2
+      },
+      "rule_type_counts": {},
+      "api_constraint_counts": {
+        "必填校验": 9,
+        "枚举校验": 6,
+        "错误码校验": 10,
+        "条件必填": 7,
+        "鉴权校验": 1
+      },
+      "business_findings": [
+        {
+          "line": 1,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "用户登录",
+          "path": "/api/v1/auth/login",
+          "field_name": null,
+          "constraints": [
+            "必填校验",
+            "枚举校验",
+            "错误码校验",
+            "条件必填"
+          ]
+        },
+        {
+          "line": 2,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "POST /api/v1/auth/login request field login_type",
+          "path": "/api/v1/auth/login",
+          "field_name": "login_type",
+          "constraints": [
+            "枚举校验"
+          ]
+        },
+        {
+          "line": 3,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "POST /api/v1/auth/login request field username",
+          "path": "/api/v1/auth/login",
+          "field_name": "username",
+          "constraints": [
+            "必填校验",
+            "条件必填"
+          ]
+        },
+        {
+          "line": 4,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "POST /api/v1/auth/login request field password",
+          "path": "/api/v1/auth/login",
+          "field_name": "password",
+          "constraints": [
+            "必填校验",
+            "枚举校验",
+            "条件必填"
+          ]
+        },
+        {
+          "line": 5,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "POST /api/v1/auth/login request field mobile",
+          "path": "/api/v1/auth/login",
+          "field_name": "mobile",
+          "constraints": [
+            "必填校验",
+            "条件必填"
+          ]
+        },
+        {
+          "line": 6,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "POST /api/v1/auth/login request field sms_code",
+          "path": "/api/v1/auth/login",
+          "field_name": "sms_code",
+          "constraints": [
+            "必填校验",
+            "枚举校验",
+            "错误码校验",
+            "条件必填"
+          ]
+        },
+        {
+          "line": 8,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "POST /api/v1/auth/login response 400",
+          "path": "/api/v1/auth/login",
+          "field_name": null,
+          "constraints": [
+            "错误码校验"
+          ]
+        },
+        {
+          "line": 9,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "POST /api/v1/auth/login response 423",
+          "path": "/api/v1/auth/login",
+          "field_name": null,
+          "constraints": [
+            "错误码校验"
+          ]
+        },
+        {
+          "line": 10,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-001_login_openapi_fragment.yaml",
+          "title": "POST /api/v1/auth/login response 500",
+          "path": "/api/v1/auth/login",
+          "field_name": null,
+          "constraints": [
+            "错误码校验"
+          ]
+        },
+        {
+          "line": 15,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-002_order_markdown_loose.md",
+          "title": "/order/create field couponId",
+          "path": "/order/create",
+          "field_name": "couponId",
+          "constraints": [
+            "条件必填"
+          ]
+        },
+        {
+          "line": 16,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-002_order_markdown_loose.md",
+          "title": "/order/create field source",
+          "path": "/order/create",
+          "field_name": "source",
+          "constraints": [
+            "枚举校验"
+          ]
+        },
+        {
+          "line": 17,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-002_order_markdown_loose.md",
+          "title": "/order/create error 3001",
+          "path": "/order/create",
+          "field_name": null,
+          "constraints": [
+            "错误码校验"
+          ]
+        },
+        {
+          "line": 18,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-002_order_markdown_loose.md",
+          "title": "/order/create error 3002",
+          "path": "/order/create",
+          "field_name": null,
+          "constraints": [
+            "错误码校验"
+          ]
+        },
+        {
+          "line": 19,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-002_order_markdown_loose.md",
+          "title": "/order/create error 3003",
+          "path": "/order/create",
+          "field_name": null,
+          "constraints": [
+            "错误码校验"
+          ]
+        },
+        {
+          "line": 20,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-002_order_markdown_loose.md",
+          "title": "/order/create error 3004",
+          "path": "/order/create",
+          "field_name": null,
+          "constraints": [
+            "错误码校验"
+          ]
+        },
+        {
+          "line": 23,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-003_coupon_csv_style.csv",
+          "title": "领取优惠券 channel",
+          "path": "/api/coupon/receive",
+          "field_name": "channel",
+          "constraints": [
+            "枚举校验"
+          ]
+        },
+        {
+          "line": 24,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-003_coupon_csv_style.csv",
+          "title": "领取优惠券 token",
+          "path": "/api/coupon/receive",
+          "field_name": "token",
+          "constraints": [
+            "鉴权校验"
+          ]
+        },
+        {
+          "line": 25,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-003_coupon_csv_style.csv",
+          "title": "领取优惠券 response code",
+          "path": "/api/coupon/receive",
+          "field_name": "code",
+          "constraints": [
+            "错误码校验"
+          ]
+        },
+        {
+          "line": 29,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-004_refund_plain_text.txt",
+          "title": "/refund/apply field order_no",
+          "path": "/refund/apply",
+          "field_name": "order_no",
+          "constraints": [
+            "必填校验"
+          ]
+        },
+        {
+          "line": 30,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-004_refund_plain_text.txt",
+          "title": "/refund/apply field reason",
+          "path": "/refund/apply",
+          "field_name": "reason",
+          "constraints": [
+            "必填校验",
+            "条件必填"
+          ]
+        },
+        {
+          "line": 31,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-004_refund_plain_text.txt",
+          "title": "/refund/apply field client_request_id",
+          "path": "/refund/apply",
+          "field_name": "client_request_id",
+          "constraints": [
+            "必填校验"
+          ]
+        },
+        {
+          "line": 41,
+          "finding_type": "api_constraint",
+          "source_file": "data/api_docs/API-005_profile_mixed_notes.md",
+          "title": "/user/profile field nickname",
+          "path": "/user/profile",
+          "field_name": "nickname",
+          "constraints": [
+            "必填校验"
+          ]
+        }
+      ]
+    }
+  },
+  "business_summary": {
+    "business_topic_counts": {
+      "登录注册": 2005,
+      "车机": 3999,
+      "<unknown>": 7141,
+      "用户资料": 79,
+      "订单": 253,
+      "组合管理": 1078,
+      "租房": 333,
+      "贷款": 4445,
+      "优惠券": 190,
+      "转账": 1595,
+      "退款": 6
+    },
+    "test_dimension_counts": {
+      "<unknown>": 10486,
+      "正常流": 3644,
+      "状态流转": 4630,
+      "边界值": 1474,
+      "数据校验": 1385,
+      "兼容性": 138,
+      "幂等": 281,
+      "异常流": 1567,
+      "权限": 374,
+      "并发": 633,
+      "安全": 638,
+      "性能": 40,
+      "历史Bug回归": 300
+    },
+    "covered_topics": [
+      "优惠券",
+      "用户资料",
+      "登录注册",
+      "租房",
+      "组合管理",
+      "订单",
+      "贷款",
+      "车机",
+      "转账",
+      "退款"
+    ],
+    "missing_core_dimensions": [],
+    "note": "This is keyword-based business profiling, used as a first-pass QA data quality signal."
+  }
+}
