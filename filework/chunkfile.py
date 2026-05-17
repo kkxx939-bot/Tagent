@@ -66,12 +66,30 @@ TEST_DIMENSION_KEYWORDS = {
     "历史Bug回归": ["bug", "缺陷", "崩溃", "闪退", "死机", "黑屏", "修复", "回归"],
 }
 
+PROJECT_KEYWORDS = {
+    "xx租房项目": ["xx租房项目", "美客美租", "租房"],
+    "手机银行": ["手机银行", "西藏银行", "XZ银行", "手机号转账"],
+    "信贷业务": ["信贷", "贷款", "授信", "放款", "贷后", "农贷", "个贷"],
+    "车机": ["车机", "长安汽车", "TBOX", "高德地图", "蓝牙音乐"],
+    "KIMS": ["KIMS", "组合管理", "投资日历", "证券池"],
+    "智慧社区": ["智慧社区", "SaaS"],
+}
+
+API_CONSTRAINT_KEYWORDS = {
+    "必填校验": ["必填", "required", "不能为空"],
+    "枚举校验": ["enum", "app/h5", "password", "sms"],
+    "错误码校验": ["错误码", "code", "400", "401", "403", "404", "423", "500"],
+    "鉴权校验": ["token", "登录态", "鉴权", "权限"],
+    "条件必填": ["时必填", "模式", "可为空", "非必填"],
+}
+
 
 @dataclass
 class KnowledgeChunk:
     chunk_id: str
     source_type: str
     item_type: str
+    chunk_type: str
     source_file: str
     title: str
     content: str
@@ -111,6 +129,38 @@ def enrich_metadata(content: str, metadata: dict[str, Any]) -> dict[str, Any]:
     metadata["business_topics"] = match_keywords(content, BUSINESS_TOPIC_KEYWORDS)
     metadata["test_dimensions"] = match_keywords(content, TEST_DIMENSION_KEYWORDS)
     return metadata
+
+
+def infer_project(source_file: str, content: str) -> str | None:
+    text = f"{source_file} {content}"
+    matches = match_keywords(text, PROJECT_KEYWORDS)
+    return matches[0] if matches else None
+
+
+def infer_feature(content: str) -> str | None:
+    matches = match_keywords(content, BUSINESS_TOPIC_KEYWORDS)
+    return matches[0] if matches else None
+
+
+def infer_chunk_type(source_type: str, item_type: str) -> str:
+    mapping = {
+        ("case", "test_case"): "case_full",
+        ("case", "test_point"): "test_point_path",
+        ("requirement", "requirement_section"): "requirement_text",
+        ("requirement", "requirement_table_row"): "requirement_table_row",
+        ("requirement", "unsupported"): "unsupported_source",
+        ("bug", "bug_record"): "bug_record",
+        ("bug", "bug_severity_rule"): "bug_severity_rule",
+        ("api", "api_endpoint"): "api_endpoint",
+        ("api", "api_field"): "api_field",
+        ("api", "api_response"): "api_response",
+        ("api", "api_error_code"): "api_error_code",
+    }
+    return mapping.get((source_type, item_type), item_type or source_type)
+
+
+def api_constraints(content: str) -> list[str]:
+    return match_keywords(content, API_CONSTRAINT_KEYWORDS)
 
 
 def split_long_text(text: str, max_chars: int = MAX_CHARS, overlap_chars: int = OVERLAP_CHARS) -> list[str]:
@@ -221,7 +271,7 @@ def build_item_content(source_type: str, item: dict[str, Any]) -> str:
     return clean_text(item.get("content") or item.get("title"))
 
 
-def build_metadata(item: dict[str, Any]) -> dict[str, Any]:
+def build_metadata(source_type: str, item: dict[str, Any], source_line: int, content: str) -> dict[str, Any]:
     metadata_keys = [
         "case_id",
         "module",
@@ -242,20 +292,37 @@ def build_metadata(item: dict[str, Any]) -> dict[str, Any]:
         "error_code",
     ]
     metadata = {key: item.get(key) for key in metadata_keys if item.get(key) not in (None, "", [])}
+    metadata["source_line"] = source_line
+    metadata["source_item_id"] = f"{source_type}:{source_line}"
+    project = infer_project(item.get("source_file") or "", content)
+    feature = infer_feature(content)
+    if project:
+        metadata["project"] = project
+    if feature:
+        metadata["feature"] = feature
     if item.get("path") and isinstance(item.get("path"), list):
         metadata["mindmap_path"] = item["path"]
+    if source_type == "bug" and item.get("item_type") == "bug_record":
+        metadata["risk_hint"] = f"生成相关用例时需要覆盖历史缺陷：{item.get('title')}"
+        metadata["suggested_dimension"] = "历史Bug回归"
+    if source_type == "api":
+        constraints = api_constraints(content)
+        if constraints:
+            metadata["api_constraints"] = constraints
     return metadata
 
 
 def build_chunks_for_items(source_type: str, items: list[dict[str, Any]], start_index: int) -> tuple[list[KnowledgeChunk], int]:
     chunks: list[KnowledgeChunk] = []
     next_index = start_index
-    for item in items:
+    for source_line, item in enumerate(items, start=1):
         content = build_item_content(source_type, item)
         if not content:
             continue
 
-        metadata = build_metadata(item)
+        item_type = item.get("item_type") or ""
+        chunk_type = infer_chunk_type(source_type, item_type)
+        metadata = build_metadata(source_type, item, source_line, content)
         parts = split_long_text(content)
         for part_index, part in enumerate(parts):
             metadata_for_part = dict(metadata)
@@ -267,7 +334,8 @@ def build_chunks_for_items(source_type: str, items: list[dict[str, Any]], start_
                 KnowledgeChunk(
                     chunk_id=make_chunk_id(source_type, next_index),
                     source_type=source_type,
-                    item_type=item.get("item_type") or "",
+                    item_type=item_type,
+                    chunk_type=chunk_type,
                     source_file=item.get("source_file") or "",
                     title=item.get("title") or "",
                     content=part,
