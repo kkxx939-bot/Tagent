@@ -1,8 +1,8 @@
 {
   "summary": {
-    "total_items": 19669,
+    "total_items": 19668,
     "total_json_errors": 0,
-    "total_unsupported_items": 1,
+    "total_unsupported_items": 0,
     "datasets": [
       "case",
       "requirement",
@@ -400,12 +400,11 @@
     "requirement": {
       "dataset": "requirement",
       "file": "data/processed/requirement_items.jsonl",
-      "total": 8635,
+      "total": 8634,
       "json_errors": 0,
       "item_type_counts": {
         "requirement_section": 163,
-        "requirement_table_row": 8471,
-        "unsupported": 1
+        "requirement_table_row": 8471
       },
       "source_file_counts": {
         "data/requirements/KIMS基础组合管理需求规格说明书.docx": 442,
@@ -426,12 +425,11 @@
         "data/requirements/西藏银行手机银行需求说明书.docx": 868,
         "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx": 741,
         "data/requirements/需求说明书-个贷业务V3.0(1).doc": 1,
-        "data/requirements/需求说明书-贷后管理V3.0(1).doc": 1,
         "data/requirements/需求说明书农贷业务V3.0.docx": 2739
       },
       "missing_core_fields": {},
-      "empty_content_like_items": 1,
-      "unsupported_items": 1,
+      "empty_content_like_items": 0,
+      "unsupported_items": 0,
       "long_content_items": [
         {
           "line": 5895,
@@ -442,7 +440,7 @@
           "length": 50299
         },
         {
-          "line": 5903,
+          "line": 5902,
           "item_type": "requirement_section",
           "source_file": "data/requirements/需求说明书农贷业务V3.0.docx",
           "title": "05 输入的参数错误",
@@ -522,7 +520,7 @@
           "length": 6123
         },
         {
-          "line": 5901,
+          "line": 5900,
           "item_type": "requirement_section",
           "source_file": "data/requirements/需求说明书农贷业务V3.0.docx",
           "title": "4.5影像资料191",
@@ -674,7 +672,7 @@
         "优惠券": 165,
         "组合管理": 1056,
         "订单": 62,
-        "贷款": 2865,
+        "贷款": 2864,
         "登录注册": 453,
         "转账": 267,
         "租房": 107,
@@ -687,7 +685,7 @@
         "状态流转": 557,
         "并发": 28,
         "兼容性": 36,
-        "<unknown>": 7120,
+        "<unknown>": 7119,
         "权限": 296,
         "数据校验": 461,
         "边界值": 233,
@@ -3326,13 +3324,13 @@
       "订单": 253,
       "组合管理": 1078,
       "租房": 333,
-      "贷款": 4445,
+      "贷款": 4444,
       "优惠券": 190,
       "转账": 1595,
       "退款": 6
     },
     "test_dimension_counts": {
-      "<unknown>": 10486,
+      "<unknown>": 10485,
       "正常流": 3644,
       "状态流转": 4630,
       "边界值": 1474,

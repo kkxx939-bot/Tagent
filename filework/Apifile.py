@@ -1,19 +1,7 @@
-"""
-API 文档处理。
-
-目标：
-1. 把 OpenAPI/YAML、Markdown、CSV、纯文本接口说明转成统一 JSONL。
-2. 接口本身输出为 api_endpoint。
-3. 请求/响应字段输出为 api_field。
-4. 错误码输出为 api_error_code。
-
-API 文档通常比需求和用例更不规范，所以这一版采用：
-结构化格式优先解析；非结构化文本用正则尽量抽取；原始内容保留在 raw/content 中。
-"""
+"""Parse API documents into normalized JSONL items."""
 
 from __future__ import annotations
 
-import argparse
 import csv
 import json
 import re
@@ -56,7 +44,7 @@ def clean_text(value: Any) -> str:
 
 
 def display_path(path: Path) -> str:
-    """保存项目内相对路径，避免 JSONL 里出现本机绝对目录。"""
+    """Prefer project-relative paths in generated data."""
     try:
         return str(path.resolve().relative_to(PROJECT_ROOT))
     except ValueError:
@@ -318,19 +306,14 @@ def write_jsonl(items: list[ApiItem], output_path: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Parse API docs into JSONL.")
-    parser.add_argument("--api-dir", type=Path, default=DEFAULT_API_DIR)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    args = parser.parse_args()
-
-    items = parse_all_apis(args.api_dir)
-    write_jsonl(items, args.output)
+    items = parse_all_apis(DEFAULT_API_DIR)
+    write_jsonl(items, DEFAULT_OUTPUT)
     counts: dict[str, int] = {}
     for item in items:
         counts[item.item_type] = counts.get(item.item_type, 0) + 1
     print(f"total: {len(items)} items")
     print(f"by_type: {counts}")
-    print(f"output: {args.output}")
+    print(f"output: {DEFAULT_OUTPUT}")
 
 
 if __name__ == "__main__":

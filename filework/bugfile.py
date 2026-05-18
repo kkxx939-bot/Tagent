@@ -1,17 +1,7 @@
-"""
-Bug 文件处理。
-
-目标：
-1. 把 Excel Bug 列表转成统一 JSONL。
-2. 真实 Bug 行输出为 bug_record。
-3. Bug 严重等级定义表输出为 bug_severity_rule。
-
-这一步只做数据标准化，后续再做和需求、用例的关联。
-"""
+"""Parse bug spreadsheets into normalized JSONL items."""
 
 from __future__ import annotations
 
-import argparse
 import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -49,7 +39,7 @@ def clean_cell(value: Any) -> str:
 
 
 def display_path(path: Path) -> str:
-    """保存项目内相对路径，避免 JSONL 里出现本机绝对目录。"""
+    """Prefer project-relative paths in generated data."""
     try:
         return str(path.resolve().relative_to(PROJECT_ROOT))
     except ValueError:
@@ -122,7 +112,7 @@ def parse_bug_excel(path: Path) -> list[BugItem]:
             if not any(values.values()):
                 continue
 
-            # 合并单元格在 read_only 模式下只会第一行有值，后续空值需要继承。
+            # read_only mode exposes merged cells only on the first row.
             for key in ("severity", "definition"):
                 if not values.get(key) and last_values.get(key):
                     values[key] = last_values[key]
@@ -200,19 +190,14 @@ def write_jsonl(items: list[BugItem], output_path: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Parse bug Excel files into JSONL.")
-    parser.add_argument("--bug-dir", type=Path, default=DEFAULT_BUG_DIR)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    args = parser.parse_args()
-
-    items = parse_all_bugs(args.bug_dir)
-    write_jsonl(items, args.output)
+    items = parse_all_bugs(DEFAULT_BUG_DIR)
+    write_jsonl(items, DEFAULT_OUTPUT)
     counts: dict[str, int] = {}
     for item in items:
         counts[item.item_type] = counts.get(item.item_type, 0) + 1
     print(f"total: {len(items)} items")
     print(f"by_type: {counts}")
-    print(f"output: {args.output}")
+    print(f"output: {DEFAULT_OUTPUT}")
 
 
 if __name__ == "__main__":

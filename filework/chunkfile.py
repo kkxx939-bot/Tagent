@@ -1,22 +1,7 @@
-"""
-统一知识 chunk 生成。
-
-输入：
-- data/processed/case_items.jsonl
-- data/processed/requirement_items.jsonl
-- data/processed/bug_items.jsonl
-- data/processed/api_items.jsonl
-
-输出：
-- data/processed/knowledge_chunks.jsonl
-
-作用：
-把需求、用例、Bug、API 统一成一种可检索结构，给后续 BM25 / 向量检索使用。
-"""
+"""Build searchable knowledge chunks from processed JSONL files."""
 
 from __future__ import annotations
 
-import argparse
 import json
 import re
 from dataclasses import asdict, dataclass, field
@@ -35,8 +20,8 @@ INPUT_FILES = {
     "api": "api_items.jsonl",
 }
 
-MAX_CHARS = 1200
-OVERLAP_CHARS = 160
+MAX_CHARS = 800
+OVERLAP_CHARS = 120
 
 BUSINESS_TOPIC_KEYWORDS = {
     "登录注册": ["登录", "注册", "密码", "验证码", "手机号", "短信"],
@@ -328,6 +313,15 @@ def build_chunks_for_items(source_type: str, items: list[dict[str, Any]], start_
             metadata_for_part = dict(metadata)
             metadata_for_part["part_index"] = part_index
             metadata_for_part["part_count"] = len(parts)
+            if len(parts) > 1:
+                part = add_part_context(
+                    title=item.get("title") or "",
+                    source_type=source_type,
+                    chunk_type=chunk_type,
+                    part=part,
+                    part_index=part_index,
+                    part_count=len(parts),
+                )
             metadata_for_part = enrich_metadata(part, metadata_for_part)
 
             chunks.append(
@@ -345,6 +339,35 @@ def build_chunks_for_items(source_type: str, items: list[dict[str, Any]], start_
             next_index += 1
 
     return chunks, next_index
+
+
+def add_part_context(
+    title: str,
+    source_type: str,
+    chunk_type: str,
+    part: str,
+    part_index: int,
+    part_count: int,
+) -> str:
+    """Add stable context to split chunks."""
+    title = truncate_text(title, 120)
+    prefix = "\n".join(
+        [
+            f"标题：{title}" if title else "",
+            f"来源类型：{source_type}",
+            f"内容类型：{chunk_type}",
+            f"片段：{part_index + 1}/{part_count}",
+            "",
+        ]
+    )
+    return clean_text(f"{prefix}\n{part}")
+
+
+def truncate_text(text: str, max_chars: int) -> str:
+    text = clean_text(text)
+    if len(text) <= max_chars:
+        return text
+    return f"{text[:max_chars].rstrip()}..."
 
 
 def build_all_chunks(processed_dir: Path) -> list[KnowledgeChunk]:
@@ -365,20 +388,15 @@ def write_jsonl(chunks: list[KnowledgeChunk], output_path: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build unified knowledge chunks.")
-    parser.add_argument("--processed-dir", type=Path, default=DEFAULT_PROCESSED_DIR)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    args = parser.parse_args()
-
-    chunks = build_all_chunks(args.processed_dir)
-    write_jsonl(chunks, args.output)
+    chunks = build_all_chunks(DEFAULT_PROCESSED_DIR)
+    write_jsonl(chunks, DEFAULT_OUTPUT)
 
     counts: dict[str, int] = {}
     for chunk in chunks:
         counts[chunk.source_type] = counts.get(chunk.source_type, 0) + 1
     print(f"total_chunks: {len(chunks)}")
     print(f"by_source_type: {counts}")
-    print(f"output: {args.output}")
+    print(f"output: {DEFAULT_OUTPUT}")
 
 
 if __name__ == "__main__":

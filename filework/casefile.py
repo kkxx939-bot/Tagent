@@ -1,17 +1,7 @@
-"""
-测试用例文件处理。
-
-目标：
-1. Excel 用例文件：提取成结构化 test_case。
-2. XMind 脑图文件：提取成测试点 test_point。
-3. 统一输出 JSONL，后续才能做检索、RAG、用例生成参考。
-
-先只处理 data/test_cases 下的 .xlsx 和 .xmind。
-"""
+"""Parse Excel and XMind test case files into JSONL."""
 
 from __future__ import annotations
 
-import argparse
 import json
 import zipfile
 from collections import Counter
@@ -30,7 +20,7 @@ DEFAULT_OUTPUT = PROJECT_ROOT / "data" / "processed" / "case_items.jsonl"
 
 @dataclass
 class CaseItem:
-    """统一后的用例/测试点记录。"""
+    """Normalized test case or test point."""
 
     item_type: str
     source_file: str
@@ -45,14 +35,14 @@ class CaseItem:
 
 
 def clean_cell(value: Any) -> str:
-    """把 Excel 单元格值转成干净字符串。"""
+    """Return a stripped cell value."""
     if value is None:
         return ""
     return str(value).strip()
 
 
 def display_path(path: Path) -> str:
-    """保存项目内相对路径，避免 JSONL 里出现本机绝对目录。"""
+    """Prefer project-relative paths in generated data."""
     try:
         return str(path.resolve().relative_to(PROJECT_ROOT))
     except ValueError:
@@ -60,7 +50,7 @@ def display_path(path: Path) -> str:
 
 
 def normalize_header(value: str) -> str:
-    """把不同命名的表头归一成内部字段。"""
+    """Map common spreadsheet headers to internal field names."""
     text = value.replace(" ", "").replace("\n", "").strip().lower()
     mapping = {
         "用例编号": "case_id",
@@ -85,11 +75,7 @@ def normalize_header(value: str) -> str:
 
 
 def find_header_row(rows: list[tuple[Any, ...]]) -> tuple[int, dict[int, str]] | None:
-    """
-    查找 Excel 表头行。
-
-    真实 Excel 经常前几行是标题、说明、空行，所以不能假设第一行就是表头。
-    """
+    """Locate the header row in a loosely formatted sheet."""
     required_like = {"title", "steps", "expected_result"}
     for row_index, row in enumerate(rows):
         headers = {index: normalize_header(clean_cell(cell)) for index, cell in enumerate(row) if clean_cell(cell)}
@@ -272,17 +258,12 @@ def parse_all_cases(case_dir: Path = DEFAULT_CASE_DIR) -> list[CaseItem]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Parse test case Excel/XMind files into JSONL.")
-    parser.add_argument("--case-dir", type=Path, default=DEFAULT_CASE_DIR)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    args = parser.parse_args()
-
-    items = parse_all_cases(args.case_dir)
-    write_jsonl(items, args.output)
+    items = parse_all_cases(DEFAULT_CASE_DIR)
+    write_jsonl(items, DEFAULT_OUTPUT)
     item_counts = Counter(item.item_type for item in items)
     print(f"total: {len(items)} items")
     print(f"by_type: {dict(item_counts)}")
-    print(f"output: {args.output}")
+    print(f"output: {DEFAULT_OUTPUT}")
 
 
 if __name__ == "__main__":

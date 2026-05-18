@@ -1,18 +1,7 @@
-"""
-需求文件处理。
-
-目标：
-1. 把 Word/PDF/Excel 等需求资料转成统一 JSONL。
-2. Word 文档按章节抽取 requirement_section。
-3. Excel 需求表按行抽取 requirement_table_row。
-4. 暂时无法解析的文件输出 unsupported，方便后续补能力。
-
-这一步只做“数据标准化”，不做 RAG、不做向量化。
-"""
+"""Parse requirement documents into normalized JSONL items."""
 
 from __future__ import annotations
 
-import argparse
 import json
 import re
 import subprocess
@@ -33,7 +22,7 @@ DEFAULT_OUTPUT = PROJECT_ROOT / "data" / "processed" / "requirement_items.jsonl"
 
 @dataclass
 class RequirementItem:
-    """统一后的需求记录。"""
+    """Normalized requirement record."""
 
     item_type: str
     source_file: str
@@ -56,7 +45,7 @@ def clean_text(value: Any) -> str:
 
 
 def display_path(path: Path) -> str:
-    """保存项目内相对路径，避免 JSONL 里出现本机绝对目录。"""
+    """Prefer project-relative paths in generated data."""
     try:
         return str(path.resolve().relative_to(PROJECT_ROOT))
     except ValueError:
@@ -308,19 +297,14 @@ def write_jsonl(items: list[RequirementItem], output_path: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Parse requirement files into JSONL.")
-    parser.add_argument("--requirements-dir", type=Path, default=DEFAULT_REQUIREMENTS_DIR)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    args = parser.parse_args()
-
-    items = parse_all_requirements(args.requirements_dir)
-    write_jsonl(items, args.output)
+    items = parse_all_requirements(DEFAULT_REQUIREMENTS_DIR)
+    write_jsonl(items, DEFAULT_OUTPUT)
     counts: dict[str, int] = {}
     for item in items:
         counts[item.item_type] = counts.get(item.item_type, 0) + 1
     print(f"total: {len(items)} items")
     print(f"by_type: {counts}")
-    print(f"output: {args.output}")
+    print(f"output: {DEFAULT_OUTPUT}")
 
 
 if __name__ == "__main__":

@@ -1,22 +1,7 @@
-"""
-处理后数据质量检查。
-
-输入：
-- data/processed/case_items.jsonl
-- data/processed/requirement_items.jsonl
-- data/processed/bug_items.jsonl
-- data/processed/api_items.jsonl
-
-输出：
-- 控制台摘要
-- data/processed/quality_report.json
-
-这一步只检查数据，不修改数据。
-"""
+"""Check processed JSONL files and write a quality report."""
 
 from __future__ import annotations
 
-import argparse
 import json
 from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass, field
@@ -86,6 +71,8 @@ API_CONSTRAINT_KEYWORDS = {
 
 @dataclass
 class DatasetQuality:
+    """Quality summary for one processed dataset."""
+
     dataset: str
     file: str
     total: int = 0
@@ -126,6 +113,7 @@ def content_length(value: Any) -> int:
 
 
 def item_text(item: dict[str, Any]) -> str:
+    """Build a text view for rule-based classification."""
     parts = [
         item.get("title"),
         item.get("content"),
@@ -151,6 +139,7 @@ def item_text(item: dict[str, Any]) -> str:
 
 
 def match_keywords(text: str, keyword_map: dict[str, list[str]]) -> list[str]:
+    """Return labels whose keyword list appears in text."""
     matched = []
     lower_text = text.lower()
     for label, keywords in keyword_map.items():
@@ -160,6 +149,7 @@ def match_keywords(text: str, keyword_map: dict[str, list[str]]) -> list[str]:
 
 
 def load_jsonl(path: Path) -> tuple[list[dict[str, Any]], int]:
+    """Load JSONL records and count malformed lines."""
     items: list[dict[str, Any]] = []
     errors = 0
     if not path.exists():
@@ -178,6 +168,7 @@ def load_jsonl(path: Path) -> tuple[list[dict[str, Any]], int]:
 
 
 def analyze_dataset(dataset: str, path: Path) -> DatasetQuality:
+    """Collect quality checks and business labels for one dataset."""
     items, json_errors = load_jsonl(path)
     quality = DatasetQuality(dataset=dataset, file=str(path.relative_to(PROJECT_ROOT)), total=len(items), json_errors=json_errors)
 
@@ -308,6 +299,7 @@ def analyze_dataset(dataset: str, path: Path) -> DatasetQuality:
 
 
 def build_report(processed_dir: Path) -> dict[str, Any]:
+    """Build the complete quality report."""
     reports = {}
     for dataset, filename in DATASETS.items():
         reports[dataset] = asdict(analyze_dataset(dataset, processed_dir / filename))
@@ -329,6 +321,7 @@ def build_report(processed_dir: Path) -> dict[str, Any]:
 
 
 def build_business_summary(reports: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    """Aggregate business coverage across all datasets."""
     topic_totals = Counter()
     dimension_totals = Counter()
     for report in reports.values():
@@ -354,6 +347,7 @@ def write_report(report: dict[str, Any], output_path: Path) -> None:
 
 
 def print_summary(report: dict[str, Any], output_path: Path) -> None:
+    """Print the main report metrics."""
     summary = report["summary"]
     print(f"total_items: {summary['total_items']}")
     print(f"total_json_errors: {summary['total_json_errors']}")
@@ -388,14 +382,9 @@ def print_summary(report: dict[str, Any], output_path: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Check processed JSONL data quality.")
-    parser.add_argument("--processed-dir", type=Path, default=DEFAULT_PROCESSED_DIR)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    args = parser.parse_args()
-
-    report = build_report(args.processed_dir)
-    write_report(report, args.output)
-    print_summary(report, args.output)
+    report = build_report(DEFAULT_PROCESSED_DIR)
+    write_report(report, DEFAULT_OUTPUT)
+    print_summary(report, DEFAULT_OUTPUT)
 
 
 if __name__ == "__main__":
