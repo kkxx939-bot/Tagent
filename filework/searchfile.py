@@ -15,9 +15,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CHUNKS_PATH = PROJECT_ROOT / "data" / "processed" / "knowledge_chunks.jsonl"
 
 QUERY = "租房"
-TOP_K = 1
+TOP_K = 20
 SOURCE_TYPE = None  # 可选："case" / "requirement" / "bug" / "api"
 MIN_SCORE = 0.01
+
+# TODO: 第一版框架稳定后，调研 OpenViking 作为 Agent 上下文数据库，
+#       对比当前 BM25 / 后续 hybrid search 在上下文组织和召回效果上的差异。
 
 
 @dataclass
@@ -157,10 +160,40 @@ class BM25Index:
         return results[:top_k]
 
 
-def group_results(results: list[SearchResult]) -> dict[str, list[SearchResult]]:
-    grouped: dict[str, list[SearchResult]] = defaultdict(list)
+def search_knowledge(
+    query: str,
+    chunks_path: Path = DEFAULT_CHUNKS_PATH,
+    top_k: int = TOP_K,
+    source_type: str | None = SOURCE_TYPE,
+    min_score: float = MIN_SCORE,
+) -> list[dict[str, Any]]:
+    chunks = load_chunks(chunks_path)
+    index = BM25Index(chunks)
+    results = index.search(query, top_k=top_k, source_type=source_type, min_score=min_score)
+    return [result_to_dict(result) for result in results]
+
+
+def result_to_dict(result: SearchResult) -> dict[str, Any]:
+    chunk = result.chunk
+    metadata = chunk.get("metadata") or {}
+    return {
+        "score": round(result.score, 4),
+        "chunk_id": chunk.get("chunk_id"),
+        "source_type": chunk.get("source_type"),
+        "item_type": chunk.get("item_type"),
+        "chunk_type": chunk.get("chunk_type"),
+        "source_file": chunk.get("source_file"),
+        "title": chunk.get("title"),
+        "content": chunk.get("content"),
+        "metadata": metadata,
+        "matched_terms": result.matched_terms,
+    }
+
+
+def group_results(results: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for result in results:
-        grouped[result.chunk.get("source_type") or "unknown"].append(result)
+        grouped[result.get("source_type") or "unknown"].append(result)
     return dict(grouped)
 
 
@@ -171,7 +204,7 @@ def preview(text: str, max_chars: int = 180) -> str:
     return f"{text[:max_chars].rstrip()}..."
 
 
-def print_results(query: str, results: list[SearchResult], grouped: bool = True) -> None:
+def print_results(query: str, results: list[dict[str, Any]], grouped: bool = True) -> None:
     if not results:
         print(f"query: {query}")
         print("confidence: low")
@@ -193,23 +226,21 @@ def print_results(query: str, results: list[SearchResult], grouped: bool = True)
             print_one_result(result)
 
 
-def print_one_result(result: SearchResult) -> None:
-    chunk = result.chunk
-    metadata = chunk.get("metadata") or {}
-    print(f"- score={result.score:.4f} {chunk.get('chunk_id')} {chunk.get('chunk_type')} {chunk.get('title')}")
-    print(f"  source_file: {chunk.get('source_file')}")
+def print_one_result(result: dict[str, Any]) -> None:
+    metadata = result.get("metadata") or {}
+    print(f"- score={result.get('score'):.4f} {result.get('chunk_id')} {result.get('chunk_type')} {result.get('title')}")
+    print(f"  source_file: {result.get('source_file')}")
     if metadata.get("project") or metadata.get("feature"):
         print(f"  project/feature: {metadata.get('project')} / {metadata.get('feature')}")
-    if result.matched_terms:
-        print(f"  matched_terms: {', '.join(result.matched_terms[:12])}")
-    print(f"  content: {preview(chunk.get('content') or '')}")
+    matched_terms = result.get("matched_terms") or []
+    if matched_terms:
+        print(f"  matched_terms: {', '.join(matched_terms[:12])}")
+    print(f"  content: {preview(result.get('content') or '')}")
     print(f"  metadata: {json.dumps(metadata, ensure_ascii=False)}")
 
 
 def main() -> None:
-    chunks = load_chunks(DEFAULT_CHUNKS_PATH)
-    index = BM25Index(chunks)
-    results = index.search(QUERY, top_k=TOP_K, source_type=SOURCE_TYPE, min_score=MIN_SCORE)
+    results = search_knowledge(QUERY)
     print_results(QUERY, results, grouped=True)
 
 if __name__ == "__main__":
