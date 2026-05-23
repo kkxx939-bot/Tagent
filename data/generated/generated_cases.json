@@ -1,0 +1,306 @@
+{
+  "query": "用户筛选房源后没有看到正确结果",
+  "generated_at": "2026-05-23T11:59:24",
+  "source_summary": {
+    "requirement": {
+      "count": 4,
+      "chunk_ids": [
+        "requirement_003427",
+        "requirement_004083",
+        "requirement_003793",
+        "requirement_004048"
+      ]
+    },
+    "case": {
+      "count": 4,
+      "chunk_ids": [
+        "case_006267",
+        "case_006249",
+        "case_006265",
+        "case_006247"
+      ]
+    },
+    "bug": {
+      "count": 2,
+      "chunk_ids": [
+        "bug_000104",
+        "bug_000047"
+      ]
+    },
+    "api": {
+      "count": 2,
+      "chunk_ids": [
+        "api_000001",
+        "api_000046"
+      ]
+    }
+  },
+  "cases": [
+    {
+      "case_id": "TC-001",
+      "module": "房源",
+      "title": "正常筛选-按区域筛选房源",
+      "priority": "P0",
+      "case_type": "正常流",
+      "precondition": "用户已登录，房源列表页存在多个区域的房源数据",
+      "steps": [
+        "1. 进入房源列表页",
+        "2. 在筛选栏中选择一个特定区域（如朝阳区）",
+        "3. 点击筛选或确定按钮"
+      ],
+      "expected_result": "房源列表只显示属于所选区域的房源信息，其他区域房源不显示",
+      "case_basis": "需求chunk_id: requirement_003427 中‘房源筛选 用户可以按区域、面积、价格筛选房源’；历史用例 case_006267",
+      "source_chunk_ids": [
+        "requirement_003427",
+        "case_006267"
+      ]
+    },
+    {
+      "case_id": "TC-002",
+      "module": "房源",
+      "title": "正常筛选-按面积范围筛选房源",
+      "priority": "P0",
+      "case_type": "正常流",
+      "precondition": "房源列表中存在不同面积的房源数据",
+      "steps": [
+        "1. 进入房源列表页",
+        "2. 在筛选栏中选择面积范围（如50-100平米）",
+        "3. 点击筛选或确定按钮"
+      ],
+      "expected_result": "房源列表只显示面积在50-100平米范围内的房源信息",
+      "case_basis": "需求chunk_id: requirement_003427",
+      "source_chunk_ids": [
+        "requirement_003427"
+      ]
+    },
+    {
+      "case_id": "TC-003",
+      "module": "房源",
+      "title": "正常筛选-按价格范围筛选房源",
+      "priority": "P0",
+      "case_type": "正常流",
+      "precondition": "房源列表中存在不同价格的房源数据",
+      "steps": [
+        "1. 进入房源列表页",
+        "2. 在筛选栏中选择价格范围（如3000-5000元/月）",
+        "3. 点击筛选或确定按钮"
+      ],
+      "expected_result": "房源列表只显示价格在3000-5000元/月范围内的房源信息",
+      "case_basis": "需求chunk_id: requirement_003427",
+      "source_chunk_ids": [
+        "requirement_003427"
+      ]
+    },
+    {
+      "case_id": "TC-004",
+      "module": "房源",
+      "title": "正常筛选-组合多条件筛选（区域+面积+价格）",
+      "priority": "P1",
+      "case_type": "正常流",
+      "precondition": "房源列表存在满足组合条件的房源数据",
+      "steps": [
+        "1. 进入房源列表页",
+        "2. 依次选择区域（如海淀区）、面积范围（80-120平米）、价格范围（4000-6000元/月）",
+        "3. 点击筛选或确定按钮"
+      ],
+      "expected_result": "房源列表只显示同时满足三个条件的房源信息",
+      "case_basis": "需求chunk_id: requirement_003427；组合筛选常见场景",
+      "source_chunk_ids": [
+        "requirement_003427"
+      ]
+    },
+    {
+      "case_id": "TC-005",
+      "module": "房源",
+      "title": "边界值-面积范围最小值0和最大值输入",
+      "priority": "P1",
+      "case_type": "边界值",
+      "precondition": "房源列表存在面积接近0和极大值的房源数据",
+      "steps": [
+        "1. 进入房源列表页",
+        "2. 在面积筛选输入框中输入最小值0，最大值99999（或其他极大值）",
+        "3. 点击筛选"
+      ],
+      "expected_result": "应能正确显示所有面积大于0的房源，边界值处理正常，不报错",
+      "case_basis": "需求chunk_id: requirement_003427；边界值测试通用原则",
+      "source_chunk_ids": [
+        "requirement_003427"
+      ]
+    },
+    {
+      "case_id": "TC-006",
+      "module": "房源",
+      "title": "边界值-价格范围最小值和最大值输入",
+      "priority": "P1",
+      "case_type": "边界值",
+      "precondition": "房源列表存在价格接近0和极高价格的房源数据",
+      "steps": [
+        "1. 进入房源列表页",
+        "2. 在价格筛选输入框中输入最小值0，最大值999999",
+        "3. 点击筛选"
+      ],
+      "expected_result": "应正确显示所有价格大于0的房源，边界值处理正常",
+      "case_basis": "需求chunk_id: requirement_003427",
+      "source_chunk_ids": [
+        "requirement_003427"
+      ]
+    },
+    {
+      "case_id": "TC-007",
+      "module": "房源",
+      "title": "异常流-无匹配结果时显示空状态提示",
+      "priority": "P1",
+      "case_type": "异常流",
+      "precondition": "房源列表中没有数据满足筛选条件",
+      "steps": [
+        "1. 进入房源列表页",
+        "2. 选择系统中不存在的区域或输入极端的面积/价格范围",
+        "3. 点击筛选"
+      ],
+      "expected_result": "房源列表显示空状态，应有友好提示文字如‘暂无符合条件的房源’",
+      "case_basis": "需求chunk_id: requirement_003427；通用空状态处理",
+      "source_chunk_ids": [
+        "requirement_003427"
+      ]
+    },
+    {
+      "case_id": "TC-008",
+      "module": "房源",
+      "title": "异常流-筛选参数为空（不选择任何条件）",
+      "priority": "P2",
+      "case_type": "异常流",
+      "precondition": "默认筛选条件显示全部房源",
+      "steps": [
+        "1. 进入房源列表页",
+        "2. 不修改任何筛选条件，直接点击筛选或确定按钮（若存在）",
+        "3. 或者直接退出筛选界面"
+      ],
+      "expected_result": "列表应正常显示所有房源，不应出现错误或空白",
+      "case_basis": "需求chunk_id: requirement_003427；正常交互逻辑",
+      "source_chunk_ids": [
+        "requirement_003427"
+      ]
+    },
+    {
+      "case_id": "TC-009",
+      "module": "房源",
+      "title": "历史Bug回归-筛选结果中房源数据加载不全（房源列车问题）",
+      "priority": "P1",
+      "case_type": "历史Bug回归",
+      "precondition": "房源列表有较多房源数据（超过一屏）",
+      "steps": [
+        "1. 进入房源列表页",
+        "2. 选择一个筛选条件，点击筛选",
+        "3. 快速滑动列表到底部（触发分页加载或懒加载）",
+        "4. 检查所有加载的房源是否符合筛选条件"
+      ],
+      "expected_result": "所有加载的房源均符合筛选条件，没有出现错误房源或缺失数据",
+      "case_basis": "历史Bug ID 82-1 ‘房源列车’，可能涉及列表滚动加载异常",
+      "source_chunk_ids": [
+        "bug_000104"
+      ]
+    },
+    {
+      "case_id": "TC-010",
+      "module": "房源",
+      "title": "历史Bug回归-切换城市后筛选结果错误（所有房源传城市问题）",
+      "priority": "P1",
+      "case_type": "历史Bug回归",
+      "precondition": "用户已登录，系统中存在多个城市房源数据",
+      "steps": [
+        "1. 进入房源列表页，默认显示城市A的房源",
+        "2. 切换到城市B",
+        "3. 在筛选栏中选择面积或价格条件",
+        "4. 点击筛选，查看结果"
+      ],
+      "expected_result": "筛选结果仅显示城市B的房源，不会混入城市A的房源",
+      "case_basis": "历史Bug ID 180-1 ‘所有房源传城市’，可能筛选时未正确传递城市参数",
+      "source_chunk_ids": [
+        "bug_000047"
+      ]
+    },
+    {
+      "case_id": "TC-011",
+      "module": "房源",
+      "title": "权限-未登录用户筛选房源",
+      "priority": "P2",
+      "case_type": "权益",
+      "precondition": "用户未登录，进入房源列表页",
+      "steps": [
+        "1. 未登录状态下进入房源列表页",
+        "2. 在筛选栏中选择区域/面积/价格",
+        "3. 点击筛选"
+      ],
+      "expected_result": "应能正常筛选并显示结果，不需要强制登录（根据通用产品设计，浏览房源通常无需登录）",
+      "case_basis": "上下文不足，仅给出通用测试方向；需求中未明确登录限制",
+      "source_chunk_ids": []
+    },
+    {
+      "case_id": "TC-012",
+      "module": "房源",
+      "title": "异常场景-网络中断时筛选房源",
+      "priority": "P2",
+      "case_type": "异常流",
+      "precondition": "设备网络连接断开",
+      "steps": [
+        "1. 进入房源列表页（可先加载缓存数据）",
+        "2. 在筛选栏中任意选择筛选条件",
+        "3. 点击筛选"
+      ],
+      "expected_result": "应显示网络错误提示，如‘网络连接失败，请稍后重试’，列表保持之前状态或显示加载失败状态",
+      "case_basis": "上下文不足，仅给出通用测试方向；常规异常场景",
+      "source_chunk_ids": []
+    },
+    {
+      "case_id": "TC-013",
+      "module": "房源",
+      "title": "异常流-筛选接口返回错误码处理",
+      "priority": "P2",
+      "case_type": "接口",
+      "precondition": "服务端筛选接口可模拟返回错误码（如500、参数错误等）",
+      "steps": [
+        "1. 使用抓包工具或Mock服务，使筛选接口返回错误码（如500）",
+        "2. 在客户端正常筛选操作"
+      ],
+      "expected_result": "客户端应正确处理错误，显示友好提示，不崩溃，列表可保留之前状态",
+      "case_basis": "上下文不足，仅给出通用测试方向；接口异常处理通用要求",
+      "source_chunk_ids": []
+    },
+    {
+      "case_id": "TC-014",
+      "module": "房源",
+      "title": "边界值-面积或价格输入框中输入负数",
+      "priority": "P1",
+      "case_type": "边界值",
+      "precondition": "面积或价格筛选支持手动输入（假设有输入框）",
+      "steps": [
+        "1. 进入房源列表页筛选界面",
+        "2. 在面积最小值输入框中输入-10",
+        "3. 在价格最大值输入框中输入-500",
+        "4. 点击筛选"
+      ],
+      "expected_result": "系统应拒绝对输入进行校验，提示‘输入无效’或自动将负数转为0，不产生错误结果",
+      "case_basis": "需求chunk_id: requirement_003427；数据校验通用要求",
+      "source_chunk_ids": [
+        "requirement_003427"
+      ]
+    },
+    {
+      "case_id": "TC-015",
+      "module": "房源",
+      "title": "正常流-筛选后重置条件恢复默认列表",
+      "priority": "P1",
+      "case_type": "正常流",
+      "precondition": "已执行一次筛选，列表显示部分房源",
+      "steps": [
+        "1. 在筛选界面点击‘重置’或‘清除条件’按钮",
+        "2. 查看结果"
+      ],
+      "expected_result": "筛选条件清空，房源列表恢复为全部房源（默认列表）",
+      "case_basis": "需求chunk_id: requirement_004083 中提及重置按钮清空筛选条件，虽然该需求来自智慧社区，但类似交互可参考",
+      "source_chunk_ids": [
+        "requirement_004083"
+      ]
+    }
+  ]
+}

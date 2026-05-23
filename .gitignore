@@ -1,3 +1,7 @@
 # Python cache
 __pycache__/
 *.pyc
+
+# Local model weights
+data/model/*
+!data/model/README.md

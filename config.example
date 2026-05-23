@@ -1,0 +1,5 @@
+LLM_BASE_URL=https://api.deepseek.com
+LLM_MODEL=deepseek-v4-flash
+LLM_API_KEY=你的_deepseek_key
+LLM_TEMPERATURE=0.2
+LLM_MAX_TOKENS=4096
