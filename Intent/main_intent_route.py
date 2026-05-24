@@ -16,7 +16,7 @@ except ModuleNotFoundError:
 
 QUERY = "登录接口返回 500，有 traceId=abc123，帮我看一下"
 
-UNKNOWN_SUB_INTENT = "UNKNOWN"
+DEFAULT_SUB_INTENT = "NONE"
 
 NEXT_ACTIONS = {
     "CASE_GENERATION": "generate_cases",
@@ -30,7 +30,7 @@ NEXT_ACTIONS = {
     "CONTEXT_SEARCH": "search_context",
     "RESULT_REVIEW": "review_generated_result",
     "PROJECT_QA": "answer_project_question",
-    "UNKNOWN": "ask_for_intent_clarification",
+    "OUT_OF_SCOPE": "report_capability_gap",
 }
 
 MAIN_INTENT_RULES = [
@@ -229,7 +229,7 @@ def recognize_main_intent(user_input: str) -> dict[str, object]:
     """识别主意图，返回统一结构。"""
     text = normalize_text(user_input)
     if not text:
-        return asdict(build_result("UNKNOWN", 0.0, ["输入为空"], [], text))
+        return asdict(build_result("OUT_OF_SCOPE", 0.0, ["输入为空"], [], text))
 
     llm_result = classify_main_intent_with_llm(user_input=user_input)
     if is_usable_llm_result(llm_result):
@@ -256,12 +256,12 @@ def recognize_main_intent(user_input: str) -> dict[str, object]:
         ]
         return asdict(build_result(intent, confidence, evidence, alternatives, text))
 
-    evidence = build_unknown_evidence(llm_result)
-    return asdict(build_result("UNKNOWN", 0.3, evidence, [], text))
+    evidence = build_out_of_scope_evidence(llm_result)
+    return asdict(build_result("OUT_OF_SCOPE", 0.3, evidence, [], text))
 
 
 def is_usable_llm_result(llm_result: dict[str, object]) -> bool:
-    return bool(llm_result.get("is_valid")) and str(llm_result.get("intent") or "UNKNOWN") != "UNKNOWN"
+    return bool(llm_result.get("is_valid")) and str(llm_result.get("intent") or "OUT_OF_SCOPE") != "OUT_OF_SCOPE"
 
 
 def normalize_llm_alternatives(value: object) -> list[dict[str, object]]:
@@ -286,18 +286,18 @@ def build_rule_fallback_evidence(rule_result: dict[str, object], llm_result: dic
     evidence = ["模型不可用或低置信，使用规则兜底"]
     if llm_result.get("error"):
         evidence.append(f"模型错误：{llm_result['error']}")
-    elif llm_result.get("intent") == "UNKNOWN":
-        evidence.append("模型返回 UNKNOWN")
+    elif llm_result.get("intent") == "OUT_OF_SCOPE":
+        evidence.append("模型返回 OUT_OF_SCOPE")
     evidence.extend(str(item) for item in rule_result.get("evidence", []))
     return evidence
 
 
-def build_unknown_evidence(llm_result: dict[str, object]) -> list[str]:
-    evidence = ["模型和规则都没有得到可用主意图"]
+def build_out_of_scope_evidence(llm_result: dict[str, object]) -> list[str]:
+    evidence = ["模型和规则都没有得到可执行的测试主意图"]
     if llm_result.get("error"):
         evidence.append(f"模型错误：{llm_result['error']}")
-    elif llm_result.get("intent") == "UNKNOWN":
-        evidence.append("模型返回 UNKNOWN")
+    elif llm_result.get("intent") == "OUT_OF_SCOPE":
+        evidence.append("模型返回 OUT_OF_SCOPE")
     return evidence
 
 
@@ -355,7 +355,7 @@ def build_result(
     extracted_context = extract_main_context(text)
     return MainIntentResult(
         intent=intent,
-        sub_intent=UNKNOWN_SUB_INTENT,
+        sub_intent=DEFAULT_SUB_INTENT,
         confidence=confidence,
         is_ready=is_ready_by_intent(intent, extracted_context),
         evidence=evidence,
@@ -373,7 +373,7 @@ def is_ready_by_intent(
     intent: str,
     extracted_context: dict[str, object],
 ) -> bool:
-    if intent == "UNKNOWN":
+    if intent == "OUT_OF_SCOPE":
         return False
     if intent in {"FAILURE_TRIAGE", "AUTOMATION_FAILURE_FIX"}:
         return False
@@ -396,8 +396,8 @@ def missing_context_by_intent(
         return ["环境", "错误现象", "接口状态码/response", "traceId/requestId", "是否所有账号都失败"]
     if intent == "AUTOMATION_FAILURE_FIX":
         return ["失败日志", "自动化框架", "失败用例", "截图/trace/控制台日志"]
-    if intent == "UNKNOWN":
-        return ["请说明是要生成用例、排查问题、生成自动化代码，还是查看结果"]
+    if intent == "OUT_OF_SCOPE":
+        return ["当前输入不属于明确的测试任务，或缺少足够信息进入测试流程"]
     return []
 
 

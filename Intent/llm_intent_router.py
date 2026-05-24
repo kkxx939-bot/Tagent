@@ -84,9 +84,9 @@ def build_validated_result(payload: dict[str, Any], raw_response: str) -> LlmInt
     if intent not in MAIN_INTENT_OPTIONS:
         return build_invalid_result(raw_response=raw_response, error=f"非法 intent: {intent}")
 
-    if confidence < 0.55 and intent != "UNKNOWN":
-        intent = "UNKNOWN"
-        reason = reason or "模型置信度低于阈值，降级为 UNKNOWN。"
+    if confidence < 0.55 and intent != "OUT_OF_SCOPE":
+        intent = "OUT_OF_SCOPE"
+        reason = reason or "模型置信度低于阈值，降级为 OUT_OF_SCOPE。"
 
     return LlmIntentFallbackResult(
         intent=intent,
@@ -102,11 +102,11 @@ def build_validated_result(payload: dict[str, Any], raw_response: str) -> LlmInt
 
 def build_invalid_result(raw_response: str, error: str) -> LlmIntentFallbackResult:
     return LlmIntentFallbackResult(
-        intent="UNKNOWN",
+        intent="OUT_OF_SCOPE",
         confidence=DEFAULT_CONFIDENCE,
-        evidence=["模型主意图识别不可用，降级为 UNKNOWN"],
+        evidence=["模型主意图识别不可用，降级为 OUT_OF_SCOPE"],
         alternative_intents=[],
-        reason="需要追问用户澄清主意图。",
+        reason="当前无法进入明确的测试任务流程。",
         raw_response=raw_response,
         is_valid=False,
         error=error,
@@ -114,7 +114,7 @@ def build_invalid_result(raw_response: str, error: str) -> LlmIntentFallbackResu
 
 
 def normalize_intent(value: Any) -> str:
-    return str(value or "UNKNOWN").strip().upper()
+    return str(value or "OUT_OF_SCOPE").strip().upper()
 
 
 def normalize_confidence(value: Any) -> float:
@@ -142,7 +142,7 @@ def normalize_alternative_intents(value: Any) -> list[dict[str, object]]:
         if not isinstance(item, dict):
             continue
         intent = normalize_intent(item.get("intent"))
-        if intent not in MAIN_INTENT_OPTIONS or intent == "UNKNOWN":
+        if intent not in MAIN_INTENT_OPTIONS or intent == "OUT_OF_SCOPE":
             continue
         alternatives.append(
             {
@@ -178,7 +178,7 @@ def extract_json_object(text: str) -> str:
 def main() -> None:
     result = classify_main_intent_with_llm(
         user_input="登录接口返回500，帮我写回归测试用例",
-        rule_result={"intent": "UNKNOWN", "confidence": 0.3},
+        rule_result={"intent": "OUT_OF_SCOPE", "confidence": 0.3},
         rule_candidates=[
             {"intent": "FAILURE_TRIAGE", "confidence": 0.36},
             {"intent": "CASE_GENERATION", "confidence": 0.84},

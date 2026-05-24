@@ -8,3 +8,6 @@ data/model/*
 
 # Local tool configuration with secrets/endpoints
 tools/config/tools.local.json
+
+# Local long-term memory data
+memory/LongTermMemory/data/

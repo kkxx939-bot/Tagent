@@ -18,7 +18,7 @@ MAIN_INTENT_OPTIONS = {
     "CONTEXT_SEARCH": "检索需求、历史用例、历史 Bug、接口文档、chunk、RAG 上下文",
     "RESULT_REVIEW": "查看、解释、评审已生成结果或输出文件",
     "PROJECT_QA": "回答项目流程、架构设计、下一步规划、实现逻辑等问题",
-    "UNKNOWN": "无法判断用户主意图，需要追问澄清",
+    "OUT_OF_SCOPE": "不属于 Test Agent 能力范围，或缺少足够测试任务信息，不能进入正式测试流程",
 }
 
 
@@ -28,7 +28,7 @@ MAIN_INTENT_FALLBACK_SYSTEM_PROMPT = """你是 Test Agent 的主意图识别器�
 1. 判断用户输入的主意图，并输出结构化 JSON。
 2. 只能从给定 intent 枚举中选择一个，不允许创造新 intent。
 3. 如果用户同时表达多个任务，选择最主要、最应该先执行的主意图，并把其他可能意图放入 alternative_intents。
-4. 如果无法可靠判断，必须返回 UNKNOWN。
+4. 如果输入不属于 Test Agent 能力范围，或无法可靠判断测试任务类型，必须返回 OUT_OF_SCOPE。
 5. 只输出合法 JSON，不要输出 Markdown，不要输出解释性段落。
 """
 
@@ -54,7 +54,7 @@ MAIN_INTENT_FALLBACK_USER_TEMPLATE = """请识别用户输入的主意图。
 4. confidence 使用 0 到 1 之间的小数：
    - 0.80 以上：用户意图明确
    - 0.55 到 0.79：可以判断但有歧义
-   - 0.55 以下：应返回 UNKNOWN 或低置信结果
+   - 0.55 以下：应返回 OUT_OF_SCOPE 或低置信结果
 5. evidence 必须引用用户输入中的具体词语或短语。
 
 只输出如下 JSON 格式：
