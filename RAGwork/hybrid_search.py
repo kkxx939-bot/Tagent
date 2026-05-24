@@ -1,6 +1,6 @@
-"""Hybrid retrieval pipeline: BM25 + embedding recall + rerank."""
+"""混合检索流程：BM25 + 向量召回 + rerank。"""
 
-#bm25+向量检索+rerank重排 ，这里这么用有什么好处，和为什么这么用
+# BM25 负责精确词命中，向量召回补语义相似，rerank 再做精排。
 
 from __future__ import annotations
 

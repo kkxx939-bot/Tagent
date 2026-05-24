@@ -9,16 +9,14 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 
 try:
-    from Intent.llm_intent_fallback import classify_main_intent_with_llm
+    from Intent.llm_intent_router import classify_main_intent_with_llm
 except ModuleNotFoundError:
-    from llm_intent_fallback import classify_main_intent_with_llm
+    from llm_intent_router import classify_main_intent_with_llm
 
 
 QUERY = "登录接口返回 500，有 traceId=abc123，帮我看一下"
 
 UNKNOWN_SUB_INTENT = "UNKNOWN"
-LLM_FALLBACK_CONFIDENCE_THRESHOLD = 0.55
-LLM_FALLBACK_CLOSE_MARGIN = 0.12
 
 NEXT_ACTIONS = {
     "CASE_GENERATION": "generate_cases",
@@ -233,26 +231,21 @@ def recognize_main_intent(user_input: str) -> dict[str, object]:
     if not text:
         return asdict(build_result("UNKNOWN", 0.0, ["输入为空"], [], text))
 
-    scored = score_intent_rules(text)
-    if should_use_llm_fallback(scored):
-        fallback_result = classify_main_intent_with_llm(
-            user_input=user_input,
-            rule_result=build_rule_result_for_fallback(scored),
-            rule_candidates=scored[:4],
-        )
-        if is_usable_llm_fallback(fallback_result):
-            intent = str(fallback_result["intent"])
-            confidence = float(fallback_result["confidence"])
-            evidence = [f"LLM兜底：{item}" for item in fallback_result.get("evidence", [])]
-            if fallback_result.get("reason"):
-                evidence.append(f"LLM兜底理由：{fallback_result['reason']}")
-            alternatives = normalize_fallback_alternatives(fallback_result.get("alternative_intents"))
-            return asdict(build_result(intent, confidence, evidence, alternatives, text))
+    llm_result = classify_main_intent_with_llm(user_input=user_input)
+    if is_usable_llm_result(llm_result):
+        intent = str(llm_result["intent"])
+        confidence = float(llm_result["confidence"])
+        evidence = [f"LLM识别：{item}" for item in llm_result.get("evidence", [])]
+        if llm_result.get("reason"):
+            evidence.append(f"LLM理由：{llm_result['reason']}")
+        alternatives = normalize_llm_alternatives(llm_result.get("alternative_intents"))
+        return asdict(build_result(intent, confidence, evidence, alternatives, text))
 
+    scored = score_intent_rules(text)
     if scored:
         intent = str(scored[0]["intent"])
         confidence = float(scored[0]["confidence"])
-        evidence = list(scored[0]["evidence"])
+        evidence = build_rule_fallback_evidence(scored[0], llm_result)
         alternatives = [
             {
                 "intent": item["intent"],
@@ -263,44 +256,15 @@ def recognize_main_intent(user_input: str) -> dict[str, object]:
         ]
         return asdict(build_result(intent, confidence, evidence, alternatives, text))
 
-    return asdict(build_result("UNKNOWN", 0.3, ["没有命中明确主意图关键词"], [], text))
+    evidence = build_unknown_evidence(llm_result)
+    return asdict(build_result("UNKNOWN", 0.3, evidence, [], text))
 
 
-def should_use_llm_fallback(scored: list[dict[str, object]]) -> bool:
-    if not scored:
-        return True
-
-    top_confidence = float(scored[0]["confidence"])
-    if top_confidence < LLM_FALLBACK_CONFIDENCE_THRESHOLD:
-        return True
-
-    if len(scored) >= 2:
-        second_confidence = float(scored[1]["confidence"])
-        if top_confidence - second_confidence < LLM_FALLBACK_CLOSE_MARGIN:
-            return True
-
-    return False
+def is_usable_llm_result(llm_result: dict[str, object]) -> bool:
+    return bool(llm_result.get("is_valid")) and str(llm_result.get("intent") or "UNKNOWN") != "UNKNOWN"
 
 
-def build_rule_result_for_fallback(scored: list[dict[str, object]]) -> dict[str, object]:
-    if not scored:
-        return {
-            "intent": "UNKNOWN",
-            "confidence": 0.3,
-            "evidence": ["规则没有命中明确主意图"],
-        }
-    return {
-        "intent": scored[0]["intent"],
-        "confidence": scored[0]["confidence"],
-        "evidence": scored[0]["evidence"],
-    }
-
-
-def is_usable_llm_fallback(fallback_result: dict[str, object]) -> bool:
-    return bool(fallback_result.get("is_valid")) and str(fallback_result.get("intent") or "UNKNOWN") != "UNKNOWN"
-
-
-def normalize_fallback_alternatives(value: object) -> list[dict[str, object]]:
+def normalize_llm_alternatives(value: object) -> list[dict[str, object]]:
     if not isinstance(value, list):
         return []
 
@@ -316,6 +280,25 @@ def normalize_fallback_alternatives(value: object) -> list[dict[str, object]]:
             }
         )
     return alternatives
+
+
+def build_rule_fallback_evidence(rule_result: dict[str, object], llm_result: dict[str, object]) -> list[str]:
+    evidence = ["模型不可用或低置信，使用规则兜底"]
+    if llm_result.get("error"):
+        evidence.append(f"模型错误：{llm_result['error']}")
+    elif llm_result.get("intent") == "UNKNOWN":
+        evidence.append("模型返回 UNKNOWN")
+    evidence.extend(str(item) for item in rule_result.get("evidence", []))
+    return evidence
+
+
+def build_unknown_evidence(llm_result: dict[str, object]) -> list[str]:
+    evidence = ["模型和规则都没有得到可用主意图"]
+    if llm_result.get("error"):
+        evidence.append(f"模型错误：{llm_result['error']}")
+    elif llm_result.get("intent") == "UNKNOWN":
+        evidence.append("模型返回 UNKNOWN")
+    return evidence
 
 
 def score_intent_rules(text: str) -> list[dict[str, object]]:

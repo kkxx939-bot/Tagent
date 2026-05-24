@@ -1,4 +1,4 @@
-"""Lightweight BM25 search over knowledge_chunks.jsonl."""
+"""面向 knowledge_chunks.jsonl 的轻量 BM25 检索。"""
 
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ class SearchResult:
 
 
 def load_chunks(path: Path) -> list[dict[str, Any]]:
-    """Load generated chunks."""
+    """读取已生成的 chunk。"""
     chunks: list[dict[str, Any]] = []
     with path.open("r", encoding="utf-8") as file:
         for line in file:
@@ -42,7 +42,7 @@ def load_chunks(path: Path) -> list[dict[str, Any]]:
 
 
 def tokenize(text: str) -> list[str]:
-    """Tokenize mixed Chinese and ASCII text for BM25."""
+    """给中英文混合文本做 BM25 分词。"""
     text = (text or "").lower()
     ascii_tokens = re.findall(r"[a-z0-9_/-]+", text)
     chinese_chars = re.findall(r"[\u4e00-\u9fff]", text)
@@ -52,7 +52,7 @@ def tokenize(text: str) -> list[str]:
 
 
 def chunk_search_text(chunk: dict[str, Any]) -> str:
-    """Build the text field used by the search index."""
+    """拼出检索索引用的文本。"""
     metadata = chunk.get("metadata") or {}
     metadata_parts = []
     for key in (
@@ -91,7 +91,7 @@ def chunk_search_text(chunk: dict[str, Any]) -> str:
 
 
 class BM25Index:
-    """Minimal in-memory BM25 index."""
+    """内存版 BM25 索引，够当前本地检索使用。"""
 
     def __init__(self, chunks: list[dict[str, Any]], k1: float = 1.5, b: float = 0.75) -> None:
         self.chunks = chunks

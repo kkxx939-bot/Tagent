@@ -1,4 +1,4 @@
-"""Embedding retrieval over knowledge_chunks.jsonl."""
+"""基于 embedding 的知识片段检索。"""
 
 from __future__ import annotations
 

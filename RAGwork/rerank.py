@@ -1,4 +1,4 @@
-"""Rerank retrieved chunks with a cross-encoder model."""
+"""使用 cross-encoder 模型对召回的 chunk 重新排序。"""
 
 from __future__ import annotations
 

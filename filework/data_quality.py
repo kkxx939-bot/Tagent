@@ -1,4 +1,4 @@
-"""Check processed JSONL files and write a quality report."""
+"""检查已处理的 JSONL 数据，并生成质量报告。"""
 
 from __future__ import annotations
 
@@ -71,7 +71,7 @@ API_CONSTRAINT_KEYWORDS = {
 
 @dataclass
 class DatasetQuality:
-    """Quality summary for one processed dataset."""
+    """单个数据集的质量统计结果。"""
 
     dataset: str
     file: str
@@ -113,7 +113,7 @@ def content_length(value: Any) -> int:
 
 
 def item_text(item: dict[str, Any]) -> str:
-    """Build a text view for rule-based classification."""
+    """把一条记录拼成便于规则分类的文本。"""
     parts = [
         item.get("title"),
         item.get("content"),
@@ -139,7 +139,7 @@ def item_text(item: dict[str, Any]) -> str:
 
 
 def match_keywords(text: str, keyword_map: dict[str, list[str]]) -> list[str]:
-    """Return labels whose keyword list appears in text."""
+    """返回命中文本关键词的标签。"""
     matched = []
     lower_text = text.lower()
     for label, keywords in keyword_map.items():
@@ -149,7 +149,7 @@ def match_keywords(text: str, keyword_map: dict[str, list[str]]) -> list[str]:
 
 
 def load_jsonl(path: Path) -> tuple[list[dict[str, Any]], int]:
-    """Load JSONL records and count malformed lines."""
+    """读取 JSONL，并统计格式错误的行数。"""
     items: list[dict[str, Any]] = []
     errors = 0
     if not path.exists():
@@ -168,7 +168,7 @@ def load_jsonl(path: Path) -> tuple[list[dict[str, Any]], int]:
 
 
 def analyze_dataset(dataset: str, path: Path) -> DatasetQuality:
-    """Collect quality checks and business labels for one dataset."""
+    """统计单个数据集的质量问题和业务标签。"""
     items, json_errors = load_jsonl(path)
     quality = DatasetQuality(dataset=dataset, file=str(path.relative_to(PROJECT_ROOT)), total=len(items), json_errors=json_errors)
 
@@ -299,7 +299,7 @@ def analyze_dataset(dataset: str, path: Path) -> DatasetQuality:
 
 
 def build_report(processed_dir: Path) -> dict[str, Any]:
-    """Build the complete quality report."""
+    """生成完整的数据质量报告。"""
     reports = {}
     for dataset, filename in DATASETS.items():
         reports[dataset] = asdict(analyze_dataset(dataset, processed_dir / filename))
@@ -321,7 +321,7 @@ def build_report(processed_dir: Path) -> dict[str, Any]:
 
 
 def build_business_summary(reports: dict[str, dict[str, Any]]) -> dict[str, Any]:
-    """Aggregate business coverage across all datasets."""
+    """汇总所有数据集的业务覆盖情况。"""
     topic_totals = Counter()
     dimension_totals = Counter()
     for report in reports.values():
@@ -337,7 +337,7 @@ def build_business_summary(reports: dict[str, dict[str, Any]]) -> dict[str, Any]
         "test_dimension_counts": dict(dimension_totals),
         "covered_topics": sorted(known_topics),
         "missing_core_dimensions": missing_core_dimensions,
-        "note": "This is keyword-based business profiling, used as a first-pass QA data quality signal.",
+        "note": "这里使用关键词做业务画像，作为 QA 数据质量的第一层参考。",
     }
 
 
@@ -347,7 +347,7 @@ def write_report(report: dict[str, Any], output_path: Path) -> None:
 
 
 def print_summary(report: dict[str, Any], output_path: Path) -> None:
-    """Print the main report metrics."""
+    """打印报告里的主要指标。"""
     summary = report["summary"]
     print(f"total_items: {summary['total_items']}")
     print(f"total_json_errors: {summary['total_json_errors']}")

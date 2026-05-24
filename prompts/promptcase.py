@@ -1,4 +1,4 @@
-"""Prompt template for test case generation."""
+"""测试用例生成的提示词模板。"""
 
 from __future__ import annotations
 

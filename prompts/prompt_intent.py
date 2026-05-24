@@ -1,4 +1,4 @@
-"""Prompt template for LLM fallback intent routing."""
+"""主意图识别的提示词模板。"""
 
 from __future__ import annotations
 
@@ -22,10 +22,10 @@ MAIN_INTENT_OPTIONS = {
 }
 
 
-MAIN_INTENT_FALLBACK_SYSTEM_PROMPT = """你是 Test Agent 的主意图兜底识别器。
+MAIN_INTENT_FALLBACK_SYSTEM_PROMPT = """你是 Test Agent 的主意图识别器。
 
 你的任务：
-1. 只在规则路由低置信或 UNKNOWN 时，辅助判断用户输入的主意图。
+1. 判断用户输入的主意图，并输出结构化 JSON。
 2. 只能从给定 intent 枚举中选择一个，不允许创造新 intent。
 3. 如果用户同时表达多个任务，选择最主要、最应该先执行的主意图，并把其他可能意图放入 alternative_intents。
 4. 如果无法可靠判断，必须返回 UNKNOWN。
@@ -41,10 +41,10 @@ MAIN_INTENT_FALLBACK_USER_TEMPLATE = """请识别用户输入的主意图。
 用户输入：
 {user_input}
 
-规则路由结果：
+规则路由结果（可选，仅供参考，可能为空）：
 {rule_result}
 
-规则候选：
+规则候选（可选，仅供参考，可能为空）：
 {rule_candidates}
 
 判断要求：
@@ -74,8 +74,8 @@ MAIN_INTENT_FALLBACK_USER_TEMPLATE = """请识别用户输入的主意图。
 """
 
 
-def build_main_intent_fallback_prompt(context: dict[str, Any]) -> list[dict[str, str]]:
-    """Build messages for LLM fallback main-intent classification."""
+def build_main_intent_prompt(context: dict[str, Any]) -> list[dict[str, str]]:
+    """构造主意图识别需要的消息列表。"""
     user_input = str(context.get("user_input") or "")
     rule_result = format_json_block(context.get("rule_result") or {})
     rule_candidates = format_json_block(context.get("rule_candidates") or [])
@@ -92,8 +92,8 @@ def build_main_intent_fallback_prompt(context: dict[str, Any]) -> list[dict[str,
     ]
 
 
-def build_main_intent_fallback_prompt_text(context: dict[str, Any]) -> str:
-    messages = build_main_intent_fallback_prompt(context)
+def build_main_intent_prompt_text(context: dict[str, Any]) -> str:
+    messages = build_main_intent_prompt(context)
     return "\n\n".join(f"[{message['role']}]\n{message['content']}" for message in messages)
 
 

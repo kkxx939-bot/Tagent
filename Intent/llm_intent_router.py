@@ -1,7 +1,6 @@
-"""LLM fallback for main-intent routing.
+"""基于模型的主意图识别器。
 
-This module is only responsible for calling the model and validating its
-structured output. The main router decides when to use this fallback.
+这里负责调用模型并校验结构化输出；模型不可用时怎么兜底由主路由决定。
 """
 
 from __future__ import annotations
@@ -17,7 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from llm_client import call_llm
-from prompts.prompt_fallback import MAIN_INTENT_OPTIONS, build_main_intent_fallback_prompt
+from prompts.prompt_intent import MAIN_INTENT_OPTIONS, build_main_intent_prompt
 
 
 DEFAULT_CONFIDENCE = 0.3
@@ -42,13 +41,13 @@ def classify_main_intent_with_llm(
     rule_result: dict[str, Any] | None = None,
     rule_candidates: list[dict[str, Any]] | None = None,
 ) -> dict[str, object]:
-    """Call LLM fallback and return a validated main-intent result."""
+    """调用模型识别主意图，并返回校验后的结果。"""
     context = {
         "user_input": user_input,
         "rule_result": rule_result or {},
         "rule_candidates": rule_candidates or [],
     }
-    messages = build_main_intent_fallback_prompt(context)
+    messages = build_main_intent_prompt(context)
 
     try:
         response_text = call_llm(messages, temperature=TEMPERATURE, max_tokens=MAX_TOKENS)
@@ -63,7 +62,7 @@ def classify_main_intent_with_llm(
 
 
 def parse_fallback_response(response_text: str) -> dict[str, Any]:
-    """Parse model output as JSON object."""
+    """把模型输出解析成 JSON 对象。"""
     text = remove_markdown_fence(response_text)
     try:
         data = json.loads(text)
@@ -105,7 +104,7 @@ def build_invalid_result(raw_response: str, error: str) -> LlmIntentFallbackResu
     return LlmIntentFallbackResult(
         intent="UNKNOWN",
         confidence=DEFAULT_CONFIDENCE,
-        evidence=["模型兜底不可用，降级为 UNKNOWN"],
+        evidence=["模型主意图识别不可用，降级为 UNKNOWN"],
         alternative_intents=[],
         reason="需要追问用户澄清主意图。",
         raw_response=raw_response,

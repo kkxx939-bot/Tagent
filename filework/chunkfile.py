@@ -1,4 +1,4 @@
-"""Build searchable knowledge chunks from processed JSONL files."""
+"""把处理后的 JSONL 数据构造成可检索的知识片段。"""
 
 from __future__ import annotations
 
@@ -349,7 +349,7 @@ def add_part_context(
     part_index: int,
     part_count: int,
 ) -> str:
-    """Add stable context to split chunks."""
+    """给拆分后的片段补上稳定的上下文信息。"""
     title = truncate_text(title, 120)
     prefix = "\n".join(
         [

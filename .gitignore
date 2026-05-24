@@ -5,3 +5,6 @@ __pycache__/
 # Local model weights
 data/model/*
 !data/model/README.md
+
+# Local tool configuration with secrets/endpoints
+tools/config/tools.local.json

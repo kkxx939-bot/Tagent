@@ -1,4 +1,4 @@
-"""Parse requirement documents into normalized JSONL items."""
+"""解析需求文档，并转换成统一的 JSONL 记录。"""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ DEFAULT_OUTPUT = PROJECT_ROOT / "data" / "processed" / "requirement_items.jsonl"
 
 @dataclass
 class RequirementItem:
-    """Normalized requirement record."""
+    """标准化后的需求记录。"""
 
     item_type: str
     source_file: str
@@ -45,7 +45,7 @@ def clean_text(value: Any) -> str:
 
 
 def display_path(path: Path) -> str:
-    """Prefer project-relative paths in generated data."""
+    """生成数据里优先使用项目相对路径。"""
     try:
         return str(path.resolve().relative_to(PROJECT_ROOT))
     except ValueError:
@@ -233,7 +233,7 @@ def parse_doc_with_textutil(path: Path) -> list[RequirementItem]:
 
 
 def parse_pdf(path: Path) -> list[RequirementItem]:
-    """PDF 解析入口：当前环境没有 PDF 解析库时，输出 unsupported。"""
+    """PDF 解析入口：当前环境没有 PDF 解析库时，标记为不支持。"""
     source_file = display_path(path)
     try:
         from pypdf import PdfReader

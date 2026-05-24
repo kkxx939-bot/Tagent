@@ -1,1 +1,1 @@
-"""RAG retrieval and rerank modules."""
+"""RAG 检索和重排相关模块。"""

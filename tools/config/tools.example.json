@@ -1,0 +1,28 @@
+{
+  "log": {
+    "default_backend": "mock",
+    "envs": {
+      "test": {
+        "backend": "mock",
+        "endpoint": "https://log-test.example.com",
+        "topic": "app-test-log",
+        "auth_env": "LOG_TOKEN"
+      },
+      "pre": {
+        "backend": "mock",
+        "endpoint": "https://log-pre.example.com",
+        "topic": "app-pre-log",
+        "auth_env": "LOG_TOKEN"
+      }
+    }
+  },
+  "db": {
+    "envs": {
+      "test": {
+        "dsn_env": "TEST_DB_DSN",
+        "readonly": true,
+        "allowed_tables": []
+      }
+    }
+  }
+}

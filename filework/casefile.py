@@ -1,4 +1,4 @@
-"""Parse Excel and XMind test case files into JSONL."""
+"""解析 Excel 和 XMind 测试用例文件，并转换成 JSONL。"""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ DEFAULT_OUTPUT = PROJECT_ROOT / "data" / "processed" / "case_items.jsonl"
 
 @dataclass
 class CaseItem:
-    """Normalized test case or test point."""
+    """标准化后的测试用例或测试点。"""
 
     item_type: str
     source_file: str
@@ -35,14 +35,14 @@ class CaseItem:
 
 
 def clean_cell(value: Any) -> str:
-    """Return a stripped cell value."""
+    """返回去掉首尾空白后的单元格内容。"""
     if value is None:
         return ""
     return str(value).strip()
 
 
 def display_path(path: Path) -> str:
-    """Prefer project-relative paths in generated data."""
+    """生成数据里优先使用项目相对路径。"""
     try:
         return str(path.resolve().relative_to(PROJECT_ROOT))
     except ValueError:
@@ -50,7 +50,7 @@ def display_path(path: Path) -> str:
 
 
 def normalize_header(value: str) -> str:
-    """Map common spreadsheet headers to internal field names."""
+    """把常见表头映射成内部字段名。"""
     text = value.replace(" ", "").replace("\n", "").strip().lower()
     mapping = {
         "用例编号": "case_id",
@@ -75,7 +75,7 @@ def normalize_header(value: str) -> str:
 
 
 def find_header_row(rows: list[tuple[Any, ...]]) -> tuple[int, dict[int, str]] | None:
-    """Locate the header row in a loosely formatted sheet."""
+    """在格式不太规整的表格里定位表头行。"""
     required_like = {"title", "steps", "expected_result"}
     for row_index, row in enumerate(rows):
         headers = {index: normalize_header(clean_cell(cell)) for index, cell in enumerate(row) if clean_cell(cell)}

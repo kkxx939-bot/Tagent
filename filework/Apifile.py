@@ -1,4 +1,4 @@
-"""Parse API documents into normalized JSONL items."""
+"""解析 API 文档，并转换成统一的 JSONL 记录。"""
 
 from __future__ import annotations
 
@@ -44,7 +44,7 @@ def clean_text(value: Any) -> str:
 
 
 def display_path(path: Path) -> str:
-    """Prefer project-relative paths in generated data."""
+    """生成数据里优先使用项目相对路径。"""
     try:
         return str(path.resolve().relative_to(PROJECT_ROOT))
     except ValueError:

@@ -22,7 +22,7 @@ def call_llm(
     temperature: float | None = None,
     max_tokens: int | None = None,
 ) -> str:
-    """调用默认 LLM，并返回 assistant 的 content。"""
+    """调用默认模型，并返回模型回复文本。"""
     config = get_llm_config()
     api_key = require_llm_api_key()
 
@@ -62,7 +62,7 @@ def call_deepseek_v4_flash(messages: list[dict[str, str]]) -> str:
 
 
 def post_chat_completion(base_url: str, api_key: str, payload: dict[str, Any]) -> dict[str, Any]:
-    """请求 OpenAI-compatible chat completions 接口。"""
+    """请求兼容 OpenAI 格式的 chat completions 接口。"""
     url = build_chat_url(base_url)
     body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
     request = urllib.request.Request(
@@ -95,7 +95,7 @@ def build_chat_url(base_url: str) -> str:
 
 
 def extract_message_content(response: dict[str, Any]) -> str:
-    """从模型响应中取出 assistant 文本。"""
+    """从模型响应中取出回复文本。"""
     choices = response.get("choices") or []
     if not choices:
         raise RuntimeError(f"LLM 响应中没有 choices: {response}")

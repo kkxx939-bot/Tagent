@@ -1,4 +1,4 @@
-"""Parse bug spreadsheets into normalized JSONL items."""
+"""解析 Bug 表格，并转换成统一的 JSONL 记录。"""
 
 from __future__ import annotations
 
@@ -39,7 +39,7 @@ def clean_cell(value: Any) -> str:
 
 
 def display_path(path: Path) -> str:
-    """Prefer project-relative paths in generated data."""
+    """生成数据里优先使用项目相对路径。"""
     try:
         return str(path.resolve().relative_to(PROJECT_ROOT))
     except ValueError:
@@ -112,7 +112,7 @@ def parse_bug_excel(path: Path) -> list[BugItem]:
             if not any(values.values()):
                 continue
 
-            # read_only mode exposes merged cells only on the first row.
+            # read_only 模式下，合并单元格的值只会出现在第一行。
             for key in ("severity", "definition"):
                 if not values.get(key) and last_values.get(key):
                     values[key] = last_values[key]
