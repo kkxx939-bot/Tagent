@@ -6,6 +6,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import asdict, dataclass
 
 try:
@@ -150,8 +151,17 @@ MAIN_INTENT_RULES = [
     {
         "intent": "EXECUTION_ASSISTANT",
         "base": 0.38,
-        "strong_keywords": ("执行用例", "跑用例", "执行 case", "执行case", "跑测试", "执行测试"),
-        "keywords": ("测试执行", "执行一下", "跑一下", "执行结果", "测试结果"),
+        "strong_keywords": (
+            "执行用例",
+            "跑用例",
+            "执行 case",
+            "执行case",
+            "跑测试",
+            "执行测试",
+            "重启服务",
+            "重启测试环境",
+        ),
+        "keywords": ("测试执行", "执行一下", "跑一下", "执行结果", "测试结果", "重启", "测试环境"),
     },
     {
         "intent": "BUG_REPORT_GENERATION",
@@ -239,7 +249,45 @@ def recognize_main_intent(user_input: str) -> dict[str, object]:
         if llm_result.get("reason"):
             evidence.append(f"LLM理由：{llm_result['reason']}")
         alternatives = normalize_llm_alternatives(llm_result.get("alternative_intents"))
+        if is_case_and_automation_query(text):
+            intent = "CASE_GENERATION"
+            confidence = max(confidence, 0.86)
+            evidence.append("识别到先生成 case，再生成自动化脚本的复合任务")
+            if not any(item.get("intent") == "AUTOMATION_WRITING" for item in alternatives):
+                alternatives.insert(
+                    0,
+                    {
+                        "intent": "AUTOMATION_WRITING",
+                        "confidence": 0.72,
+                        "evidence": ["复合任务后半段需要生成自动化脚本"],
+                    },
+                )
         return asdict(build_result(intent, confidence, evidence, alternatives, text))
+
+    if is_case_and_automation_query(text):
+        evidence = build_rule_fallback_evidence(
+            {
+                "intent": "CASE_GENERATION",
+                "confidence": 0.86,
+                "evidence": ["识别到先生成 case，再生成自动化脚本的复合任务"],
+            },
+            llm_result,
+        )
+        return asdict(
+            build_result(
+                "CASE_GENERATION",
+                0.86,
+                evidence,
+                [
+                    {
+                        "intent": "AUTOMATION_WRITING",
+                        "confidence": 0.72,
+                        "evidence": ["复合任务后半段需要生成自动化脚本"],
+                    }
+                ],
+                text,
+            )
+        )
 
     scored = score_intent_rules(text)
     if scored:
@@ -375,7 +423,9 @@ def is_ready_by_intent(
 ) -> bool:
     if intent == "OUT_OF_SCOPE":
         return False
-    if intent in {"FAILURE_TRIAGE", "AUTOMATION_FAILURE_FIX"}:
+    if intent == "FAILURE_TRIAGE":
+        return bool(extracted_context.get("trace_id"))
+    if intent == "AUTOMATION_FAILURE_FIX":
         return False
     if intent in {"CASE_GENERATION", "AUTOMATION_WRITING", "REGRESSION_ANALYSIS"}:
         return bool(extracted_context.get("target"))
@@ -393,7 +443,10 @@ def missing_context_by_intent(
     if intent == "REGRESSION_ANALYSIS" and not extracted_context.get("target"):
         return ["需要说明本次变更、需求或代码影响范围"]
     if intent == "FAILURE_TRIAGE":
-        return ["环境", "错误现象", "接口状态码/response", "traceId/requestId", "是否所有账号都失败"]
+        missing = ["环境", "错误现象", "接口状态码/response", "traceId/requestId", "是否所有账号都失败"]
+        if extracted_context.get("trace_id"):
+            missing.remove("traceId/requestId")
+        return missing
     if intent == "AUTOMATION_FAILURE_FIX":
         return ["失败日志", "自动化框架", "失败用例", "截图/trace/控制台日志"]
     if intent == "OUT_OF_SCOPE":
@@ -407,6 +460,13 @@ def normalize_text(text: str) -> str:
 
 def match_keywords(text: str, keywords: tuple[str, ...]) -> list[str]:
     return [keyword for keyword in keywords if keyword in text]
+
+
+def is_case_and_automation_query(text: str) -> bool:
+    has_case = any(keyword in text for keyword in ("case", "用例", "测试点", "测试用例"))
+    has_case_generation = has_case and any(keyword in text for keyword in ("生成", "写", "设计", "整理"))
+    has_automation = any(keyword in text for keyword in ("自动化", "playwright", "selenium", "pytest", "appium", "cypress"))
+    return has_case_generation and has_automation
 
 
 def extract_main_context(text: str) -> dict[str, object]:
@@ -431,7 +491,20 @@ def extract_main_context(text: str) -> dict[str, object]:
     return {
         "target": [marker for marker in target_markers if marker in text],
         "frameworks": frameworks,
+        "trace_id": extract_trace_or_request_id(text),
     }
+
+
+def extract_trace_or_request_id(text: str) -> str | None:
+    patterns = [
+        r"(?i)(?:traceid|trace_id|trace id)\s*[:= ]\s*([a-z0-9._\-]+)",
+        r"(?i)(?:requestid|request_id|request id)\s*[:= ]\s*([a-z0-9._\-]+)",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, text or "")
+        if match:
+            return match.group(1)
+    return None
 
 
 def print_intent(user_input: str) -> None:

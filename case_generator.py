@@ -41,9 +41,14 @@ REQUIRED_CASE_FIELDS = {
 }
 
 
-def generate_test_cases(query: str = QUERY, output_path: Path = OUTPUT_PATH) -> dict[str, Any]:
+def generate_test_cases(
+    query: str = QUERY,
+    output_path: Path = OUTPUT_PATH,
+    context_override: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """完整生成链路入口。"""
-    context = build_case_context(query)
+    context = context_override or build_case_context(query)
+    context["query"] = query
     messages = build_case_generation_prompt(context)
     response_text = call_llm(messages)
     try:

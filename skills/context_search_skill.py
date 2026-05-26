@@ -13,5 +13,5 @@ CONTEXT_SEARCH_SKILL = SkillSpec(
     instructions_path="skills/context_search/SKILL.md",
     prompt_modules=[],
     rag_sources=["requirement", "case", "bug", "api"],
-    tools=["search_knowledge", "hybrid_search"],
+    tools=[],
 )

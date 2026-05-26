@@ -118,12 +118,17 @@ traceId / requestId
 
 ## 工具
 
-计划接入的工具：
+当前已进入工具注册表的工具：
+
+```text
+query_trace_log(trace_id)
+```
+
+计划接入但尚未进入工具注册表的工具：
 
 ```text
 get_env_status(env)
 get_deploy_version(service, env)
-query_trace_log(trace_id)
 query_test_account(account_id)
 get_api_contract(api_name)
 search_related_bugs(keyword)

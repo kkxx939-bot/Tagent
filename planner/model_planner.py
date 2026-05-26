@@ -36,6 +36,11 @@ try:
 except ModuleNotFoundError:
     get_skill = None
 
+try:
+    from tools.registry import list_tools
+except ModuleNotFoundError:
+    list_tools = None
+
 
 def build_plan(
     user_query: str,
@@ -55,6 +60,20 @@ def build_plan(
     # TODO(Planner优化): 模板兜底还需要补齐 BUG_REPORT、REGRESSION、CONFIG、PROJECT_QA 等专属流程。
     # TODO(Planner优化): 复合任务后续可增加 phase 字段，方便 Executor 和 UI 展示阶段。
     skill = selected_skill or _skill_for_intent(str(intent_result.get("intent") or "OUT_OF_SCOPE"))
+    intent = str(intent_result.get("intent") or "OUT_OF_SCOPE")
+    if _is_case_and_automation_task(user_query, intent_result):
+        skill = _skill_for_intent("CASE_GENERATION") or skill
+        plan = build_template_plan(user_query, intent_result, skill, session_memory)
+        plan.metadata["planner_source"] = "template"
+        plan.metadata["planner_skip_reason"] = "复合任务使用稳定模板计划"
+        return plan
+
+    if intent in {"OUT_OF_SCOPE", "CONTEXT_SEARCH", "CASE_GENERATION", "FAILURE_TRIAGE", "EXECUTION_ASSISTANT"}:
+        plan = build_template_plan(user_query, intent_result, skill, session_memory)
+        plan.metadata["planner_source"] = "template"
+        plan.metadata["planner_skip_reason"] = f"{intent} 使用稳定模板计划"
+        return plan
+
     if strategy in {"hybrid", "model"}:
         model_plan, model_error = build_model_plan(user_query, intent_result, skill, session_memory)
         if model_plan:
@@ -96,6 +115,7 @@ def build_model_plan(
         "intent_result": intent_result,
         "selected_skill": selected_skill or {},
         "allowed_actions": _format_allowed_actions(),
+        "available_tools": list_tools() if list_tools else [],
     }
     try:
         response = call_llm(build_planner_prompt(context), temperature=0.1, max_tokens=1600)
@@ -114,6 +134,16 @@ def build_template_plan(
     """轻量模板兜底计划。"""
     intent = str(intent_result.get("intent") or "OUT_OF_SCOPE")
     missing_context = list(intent_result.get("missing_context") or [])
+    framework = _framework_from_intent_or_query(intent_result, user_query)
+    case_context_type = _case_context_type(intent_result)
+
+    if _needs_clarification_before_execution(intent, intent_result):
+        plan = _ask_user_plan(user_query, intent, missing_context)
+        if selected_skill:
+            plan.metadata["selected_skill"] = selected_skill
+        if session_memory:
+            plan.metadata["session_id"] = session_memory.get("session_id")
+        return plan
 
     if _is_case_and_automation_task(user_query, intent_result):
         plan = Plan(
@@ -123,11 +153,13 @@ def build_template_plan(
             sub_tasks=["CASE_GENERATION", "AUTOMATION_WRITING"],
             missing_context=_merge_missing_context(_automation_missing_context(user_query), missing_context),
             steps=[
-                _step("step_1", "检索需求和历史测试资产", LOAD_CONTEXT),
+                _step("step_1", "读取需求和历史测试资产", LOAD_CONTEXT, inputs={"context_type": case_context_type}),
                 _step("step_2", "生成测试用例", GENERATE_ARTIFACT, ["step_1"], inputs={"artifact_type": "test_case"}),
-                _step("step_3", "生成自动化代码", GENERATE_ARTIFACT, ["step_2"], inputs={"artifact_type": "automation_code"}),
-                _step("step_4", "保存输出结果", SAVE_ARTIFACT, ["step_3"]),
-                _step("step_5", "完成任务并写入记忆", FINISH, ["step_4"]),
+                _step("step_3", "校验测试用例", VALIDATE_ARTIFACT, ["step_2"], inputs={"artifact_type": "test_case"}),
+                _step("step_4", "读取自动化项目上下文", LOAD_CONTEXT, ["step_3"], inputs={"context_type": "automation_project"}),
+                _step("step_5", "生成自动化代码", GENERATE_ARTIFACT, ["step_4"], inputs=_artifact_inputs("automation_code", framework)),
+                _step("step_6", "保存输出结果", SAVE_ARTIFACT, ["step_5"]),
+                _step("step_7", "完成任务并写入记忆", FINISH, ["step_6"]),
             ],
         )
     elif intent == "CASE_GENERATION":
@@ -136,7 +168,7 @@ def build_template_plan(
             user_query=user_query,
             missing_context=missing_context,
             steps=[
-                _step("step_1", "检索相关上下文", LOAD_CONTEXT),
+                _step("step_1", "读取相关上下文", LOAD_CONTEXT, inputs={"context_type": case_context_type}),
                 _step("step_2", "生成测试用例", GENERATE_ARTIFACT, ["step_1"], inputs={"artifact_type": "test_case"}),
                 _step("step_3", "校验测试用例", VALIDATE_ARTIFACT, ["step_2"], inputs={"artifact_type": "test_case"}),
                 _step("step_4", "保存结果", SAVE_ARTIFACT, ["step_3"]),
@@ -152,7 +184,7 @@ def build_template_plan(
             missing_context=_merge_missing_context(_automation_missing_context(user_query), missing_context),
             steps=[
                 _step("step_1", "读取自动化项目上下文", LOAD_CONTEXT, inputs={"context_type": "automation_project"}),
-                _step("step_2", "生成自动化代码", GENERATE_ARTIFACT, ["step_1"], inputs={"artifact_type": "automation_code"}),
+                _step("step_2", "生成自动化代码", GENERATE_ARTIFACT, ["step_1"], inputs=_artifact_inputs("automation_code", framework)),
                 _step("step_3", "汇总验证方式", SUMMARIZE_RESULT, ["step_2"], inputs={"summary_type": "verification"}),
                 _step("step_4", "完成任务并写入记忆", FINISH, ["step_3"]),
             ],
@@ -163,7 +195,7 @@ def build_template_plan(
             user_query=user_query,
             missing_context=missing_context,
             steps=[
-                _step("step_1", "检索相关上下文", LOAD_CONTEXT),
+                _step("step_1", "检索相关上下文", LOAD_CONTEXT, inputs={"context_type": "context_search"}),
                 _step("step_2", "汇总检索结果", SUMMARIZE_RESULT, ["step_1"], inputs={"summary_type": "context"}),
                 _step("step_3", "完成任务并写入记忆", FINISH, ["step_2"]),
             ],
@@ -193,7 +225,26 @@ def build_template_plan(
                         "reason": "当前 Test Agent 只处理测试相关任务，例如用例生成、失败排查、自动化代码生成、测试执行辅助和结果检查。",
                     },
                 ),
-                _step("step_2", "完成任务并写入记忆", FINISH, ["step_1"]),
+                _step("step_2", "结束任务", FINISH, ["step_1"]),
+            ],
+        )
+    elif intent == "EXECUTION_ASSISTANT":
+        plan = Plan(
+            intent=intent,
+            user_query=user_query,
+            missing_context=["缺少可执行的环境操作工具"],
+            warnings=["当前未接入测试环境执行类工具，不能执行服务重启、环境变更等操作"],
+            steps=[
+                _step(
+                    "step_1",
+                    "说明当前能力缺口",
+                    REPORT_CAPABILITY_GAP,
+                    inputs={
+                        "reason": "当前 Test Agent 未接入服务重启工具，不能执行测试环境服务重启操作。",
+                        "missing_tools": ["restart_service"],
+                    },
+                ),
+                _step("step_2", "结束任务", FINISH, ["step_1"]),
             ],
         )
     else:
@@ -203,7 +254,7 @@ def build_template_plan(
             missing_context=missing_context,
             steps=[
                 _step("step_1", "说明当前能力缺口", REPORT_CAPABILITY_GAP),
-                _step("step_2", "完成任务并写入记忆", FINISH, ["step_1"]),
+                _step("step_2", "结束任务", FINISH, ["step_1"]),
             ],
         )
 
@@ -228,11 +279,16 @@ def _model_failed_plan(user_query: str, intent_result: dict[str, Any], error: st
                 REPORT_CAPABILITY_GAP,
                 inputs={"reason": warning},
             ),
-            _step("step_2", "完成任务并写入记忆", FINISH, ["step_1"]),
+            _step("step_2", "结束任务", FINISH, ["step_1"]),
         ]
     else:
         steps = [
-            _step("step_1", "模型 Planner 失败，等待重新规划或人工确认", ASK_USER, inputs={"missing_context": missing_context}),
+            _step(
+                "step_1",
+                "模型 Planner 失败，等待重新规划或人工确认",
+                ASK_USER,
+                inputs={"message": "模型规划失败，请补充任务目标或改写请求。", "missing_context": missing_context},
+            ),
         ]
     return Plan(
         intent=intent,
@@ -244,7 +300,32 @@ def _model_failed_plan(user_query: str, intent_result: dict[str, Any], error: st
     )
 
 
+def _ask_user_plan(user_query: str, intent: str, missing_context: list[str]) -> Plan:
+    if not missing_context:
+        missing_context = ["需要补充任务目标或输入材料"]
+    return Plan(
+        intent=intent,
+        user_query=user_query,
+        missing_context=missing_context,
+        steps=[
+            _step(
+                "step_1",
+                "等待用户补充信息",
+                ASK_USER,
+                inputs={
+                    "message": "当前信息不足，请补充后再继续执行。",
+                    "missing_context": missing_context,
+                },
+            ),
+            _step("step_2", "结束当前等待状态", FINISH, ["step_1"]),
+        ],
+    )
+
+
 def _failure_triage_template(user_query: str, missing_context: list[str]) -> Plan:
+    if not _has_trace_or_request_id(user_query) and missing_context:
+        return _ask_user_plan(user_query, "FAILURE_TRIAGE", missing_context)
+
     steps = [
         _step("step_1", "读取失败排查上下文", LOAD_CONTEXT, inputs={"context_type": "failure_triage"}),
     ]
@@ -268,6 +349,32 @@ def _failure_triage_template(user_query: str, missing_context: list[str]) -> Pla
     return Plan(intent="FAILURE_TRIAGE", user_query=user_query, missing_context=missing_context, steps=steps)
 
 
+def _case_context_type(intent_result: dict[str, Any]) -> str:
+    profile = intent_result.get("source_profile")
+    if intent_result.get("source_document_available") and _force_source_generation(intent_result):
+        return "requirement_document"
+    if intent_result.get("source_document_available") and isinstance(profile, dict) and profile.get("source_type") in {
+        "requirement_document",
+        "api_document",
+        "test_case_file",
+    }:
+        return "requirement_document"
+    if isinstance(profile, dict) and profile.get("source_type") in {
+        "requirement_document",
+        "api_document",
+        "test_case_file",
+    }:
+        return "requirement_document"
+    return "case_generation"
+
+
+def _force_source_generation(intent_result: dict[str, Any]) -> bool:
+    if intent_result.get("force_source_generation"):
+        return True
+    extracted = intent_result.get("extracted_context")
+    return isinstance(extracted, dict) and bool(extracted.get("force_source_generation"))
+
+
 def _plan_from_payload(
     payload: dict[str, Any],
     user_query: str,
@@ -276,7 +383,12 @@ def _plan_from_payload(
 ) -> Plan:
     intent = str(payload.get("intent") or intent_result.get("intent") or "OUT_OF_SCOPE")
     steps_payload = payload.get("steps") or []
-    steps = [_step_from_payload(index, item) for index, item in enumerate(steps_payload, start=1) if isinstance(item, dict)]
+    framework = _framework_from_intent_or_query(intent_result, user_query)
+    steps = [
+        _enrich_step_inputs(_step_from_payload(index, item), intent, framework)
+        for index, item in enumerate(steps_payload, start=1)
+        if isinstance(item, dict)
+    ]
     is_composite = bool(payload.get("is_composite")) or _is_case_and_automation_task(user_query, intent_result)
     sub_tasks = [str(item) for item in payload.get("sub_tasks") or []]
     if is_composite and _is_case_and_automation_task(user_query, intent_result):
@@ -364,6 +476,59 @@ def _skill_for_intent(intent: str) -> dict[str, Any] | None:
         return None
     skill = get_skill(intent)
     return skill.to_dict() if skill else None
+
+
+def _enrich_step_inputs(step: PlanStep, intent: str, framework: str | None) -> PlanStep:
+    inputs = dict(step.inputs)
+    if step.action == LOAD_CONTEXT and not inputs.get("context_type"):
+        inputs["context_type"] = _default_context_type(intent)
+    if step.action == GENERATE_ARTIFACT and inputs.get("artifact_type") == "automation_code" and framework:
+        inputs.setdefault("framework", framework)
+    step.inputs = inputs
+    return step
+
+
+def _default_context_type(intent: str) -> str:
+    if intent == "CASE_GENERATION":
+        return "case_generation"
+    if intent == "AUTOMATION_WRITING":
+        return "automation_project"
+    if intent == "FAILURE_TRIAGE":
+        return "failure_triage"
+    if intent == "RESULT_REVIEW":
+        return "result_file"
+    if intent == "CONTEXT_SEARCH":
+        return "context_search"
+    return "context_search"
+
+
+def _artifact_inputs(artifact_type: str, framework: str | None = None) -> dict[str, object]:
+    inputs: dict[str, object] = {"artifact_type": artifact_type}
+    if framework:
+        inputs["framework"] = framework
+    return inputs
+
+
+def _framework_from_intent_or_query(intent_result: dict[str, Any], user_query: str) -> str | None:
+    extracted_context = intent_result.get("extracted_context") or {}
+    if isinstance(extracted_context, dict):
+        frameworks = extracted_context.get("frameworks")
+        if isinstance(frameworks, list) and frameworks:
+            return str(frameworks[0]).lower()
+
+    text = user_query.lower()
+    for framework in ("playwright", "selenium", "appium", "pytest", "cypress"):
+        if framework in text:
+            return framework
+    return None
+
+
+def _needs_clarification_before_execution(intent: str, intent_result: dict[str, Any]) -> bool:
+    if intent not in {"CASE_GENERATION", "AUTOMATION_WRITING", "REGRESSION_ANALYSIS"}:
+        return False
+    if bool(intent_result.get("is_ready")):
+        return False
+    return bool(intent_result.get("missing_context"))
 
 
 def _is_case_and_automation_task(user_query: str, intent_result: dict[str, Any]) -> bool:

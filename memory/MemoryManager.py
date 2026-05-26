@@ -113,6 +113,7 @@ class MemoryManager:
     def complete_task(
         self,
         summary: str | None = None,
+        final_status: str | None = None,
         persist_summary: bool = True,
         clear_runtime: bool = True,
     ) -> dict[str, Any]:
@@ -120,6 +121,8 @@ class MemoryManager:
         session = self._require_session()
         session.complete(summary=summary)
         session_summary = session.freeze_summary()
+        if final_status:
+            session_summary["status"] = final_status
         self.last_task_summary = session_summary
 
         persisted_records = []

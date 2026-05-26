@@ -11,6 +11,7 @@ RUNNING = "running"
 COMPLETED = "completed"
 FAILED = "failed"
 SKIPPED = "skipped"
+WAITING_FOR_USER = "waiting_for_user"
 
 
 @dataclass

@@ -84,6 +84,8 @@ case_generator.validate_cases(cases)
 data/generated/generated_cases.json
 ```
 
+这些是项目内部组件，不是 Executor 的外部 tool。Planner 需要通过 `load_context` 和 `generate_artifact(test_case)` 进入用例生成流程，不要额外规划 `call_tool`。
+
 ## 工作流程
 
 1. 先明确测试目标。

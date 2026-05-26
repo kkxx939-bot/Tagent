@@ -10,6 +10,7 @@ import re
 from typing import Any, Callable
 
 from executor.artifacts import generate_artifact, save_artifact, validate_artifact
+from executor.context_loader import load_context
 from executor.policies import policy_for_step
 from executor.result import ExecutionResult, StepResult
 from planner.actions import (
@@ -25,7 +26,8 @@ from planner.actions import (
     SUMMARIZE_RESULT,
     VALIDATE_ARTIFACT,
 )
-from planner.plan import COMPLETED, FAILED, RUNNING, Plan, PlanStep
+from planner.plan import COMPLETED, FAILED, RUNNING, SKIPPED, WAITING_FOR_USER, Plan, PlanStep
+from planner.validator import validate_plan
 
 
 StepHandler = Callable[[PlanStep], StepResult]
@@ -34,10 +36,15 @@ StepHandler = Callable[[PlanStep], StepResult]
 class Executor:
     """最小稳定执行内核。"""
 
-    def __init__(self, user_query: str, memory_manager: Any | None = None) -> None:
+    def __init__(
+        self,
+        user_query: str,
+        memory_manager: Any | None = None,
+        execution_context: dict[str, Any] | None = None,
+    ) -> None:
         self.user_query = user_query
         self.memory_manager = memory_manager
-        self.variables: dict[str, Any] = {}
+        self.variables: dict[str, Any] = {"artifacts": [], **(execution_context or {})}
         self.handlers: dict[str, StepHandler] = {
             SELECT_SKILL: self.handle_select_skill,
             LOAD_MEMORY: self.handle_load_memory,
@@ -55,8 +62,21 @@ class Executor:
     def run(self, plan: Plan) -> ExecutionResult:
         step_results: list[StepResult] = []
         completed_steps: set[str] = set()
+        validation = validate_plan(plan)
+        if not validation.is_valid:
+            plan.status = FAILED
+            return self._build_result(
+                plan,
+                step_results,
+                "计划校验失败：" + "；".join(validation.errors),
+                warnings=validation.warnings,
+            )
 
-        for step in plan.steps:
+        plan.status = RUNNING
+        self.variables["plan_missing_context"] = list(plan.missing_context or [])
+        self.variables["plan_intent"] = plan.intent
+
+        for index, step in enumerate(plan.steps):
             step.status = RUNNING
 
             missing_dependencies = [dependency for dependency in step.depends_on if dependency not in completed_steps]
@@ -99,12 +119,19 @@ class Executor:
             step.status = COMPLETED if result.success else FAILED
             completed_steps.add(step.step_id)
             self._record_step_note(step)
+            if step.action == ASK_USER and result.success:
+                for remaining_step in plan.steps[index + 1 :]:
+                    remaining_step.status = SKIPPED
+                plan.status = WAITING_FOR_USER
+                return self._build_result(plan, step_results)
 
-        plan.status = COMPLETED
+        plan.status = self._status_for_output(None)
         return self._build_result(plan, step_results)
 
     def handle_select_skill(self, step: PlanStep) -> StepResult:
         skill = step.inputs.get("skill") or step.inputs.get("skill_name") or step.inputs.get("intent")
+        if skill is None:
+            skill = self.variables.get("selected_skill")
         self.variables["selected_skill"] = skill
         return StepResult(step_id=step.step_id, action=step.action, success=True, data={"selected_skill": skill})
 
@@ -115,39 +142,24 @@ class Executor:
         return StepResult(step_id=step.step_id, action=step.action, success=True, data={"memory_count": len(memories)})
 
     def handle_load_context(self, step: PlanStep) -> StepResult:
-        context_type = str(step.inputs.get("context_type") or "rag")
-        if context_type in {"automation_project", "result_file"}:
-            data = {
-                "context_type": context_type,
-                "message": "当前还没有接入本地项目/结果文件读取工具，先记录为待补充上下文。",
-            }
-            self.variables["loaded_context"] = data
+        context_type = str(step.inputs.get("context_type") or "")
+        if not context_type:
             return StepResult(
                 step_id=step.step_id,
                 action=step.action,
-                success=True,
-                data=data,
-                warnings=[data["message"]],
+                success=False,
+                error="缺少 context_type，不能默认执行 RAG 检索",
             )
-
-        from context import build_case_context
-
-        query = str(step.inputs.get("query") or self.user_query)
-        context = build_case_context(query)
-        self.variables["retrieved_context"] = context
-        self.variables["loaded_context"] = context
-        if self.memory_manager:
-            self.memory_manager.add_retrieved_context(
-                {
-                    "query": query,
-                    "source_summary": context.get("source_summary") or {},
-                }
-            )
+        result = load_context(context_type, self.user_query, dict(step.inputs), self.variables)
+        if self.memory_manager and result.memory_payload:
+            self.memory_manager.add_retrieved_context(result.memory_payload)
         return StepResult(
             step_id=step.step_id,
             action=step.action,
-            success=True,
-            data={"context_type": context_type, "source_summary": context.get("source_summary") or {}},
+            success=result.success,
+            data=result.data,
+            warnings=result.warnings,
+            error=result.error,
         )
 
     def handle_call_tool(self, step: PlanStep) -> StepResult:
@@ -169,6 +181,22 @@ class Executor:
         self.variables.setdefault("tool_results", []).append(data)
         if self.memory_manager:
             self.memory_manager.add_tool_result(tool_name, data)
+
+        if tool_result.error in {"tool_not_configured", "tool_not_implemented"}:
+            self.variables["capability_gap"] = {
+                "reason": f"工具 {tool_name} 当前不可用，无法完成对应外部环境查询。",
+                "missing_tools": [tool_name] if tool_result.error == "tool_not_implemented" else [],
+                "missing_artifacts": [],
+                "missing_config": tool_result.missing_config,
+            }
+            return StepResult(
+                step_id=step.step_id,
+                action=step.action,
+                success=True,
+                data=data,
+                warnings=tool_result.warnings,
+            )
+
         return StepResult(
             step_id=step.step_id,
             action=step.action,
@@ -206,6 +234,8 @@ class Executor:
 
     def handle_save_artifact(self, step: PlanStep) -> StepResult:
         result = save_artifact(dict(step.inputs), self.variables)
+        if result.data.get("artifacts"):
+            self.variables["artifacts"] = result.data["artifacts"]
         return StepResult(
             step_id=step.step_id,
             action=step.action,
@@ -220,6 +250,9 @@ class Executor:
         data = {"summary_type": summary_type}
         if self.variables.get("retrieved_context"):
             data["source_summary"] = self.variables["retrieved_context"].get("source_summary") or {}
+        if self.variables.get("failure_source_context"):
+            data["source_summary"] = self.variables["failure_source_context"].get("source_summary") or {}
+            data["source_profile"] = self.variables["failure_source_context"].get("source_profile") or {}
         if self.variables.get("tool_results"):
             data["tool_result_count"] = len(self.variables["tool_results"])
         if self.variables.get("case_generation_result"):
@@ -228,19 +261,23 @@ class Executor:
         return StepResult(step_id=step.step_id, action=step.action, success=True, data=data)
 
     def handle_ask_user(self, step: PlanStep) -> StepResult:
-        missing_context = step.inputs.get("missing_context") or []
+        message = str(step.inputs.get("message") or "需要用户补充信息后再继续。")
+        missing_context = step.inputs.get("missing_context") or self.variables.get("plan_missing_context") or []
         self.variables["clarification_required"] = missing_context
+        self.variables["clarification_message"] = message
         return StepResult(
             step_id=step.step_id,
             action=step.action,
             success=True,
-            data={"missing_context": missing_context},
+            data={"message": message, "missing_context": missing_context},
             warnings=["需要用户补充信息"],
         )
 
     def handle_report_capability_gap(self, step: PlanStep) -> StepResult:
         gap = {
-            "reason": step.inputs.get("reason") or "当前 Agent 没有可执行的 tool、artifact handler 或上下文配置来完成该任务。",
+            "reason": step.inputs.get("reason")
+            or step.inputs.get("message")
+            or "当前 Agent 没有可执行的 tool、artifact handler 或上下文配置来完成该任务。",
             "missing_tools": step.inputs.get("missing_tools") or [],
             "missing_artifacts": step.inputs.get("missing_artifacts") or [],
         }
@@ -256,15 +293,26 @@ class Executor:
                 warnings=["未配置 memory_manager，跳过记忆写入"],
             )
 
-        result = self.memory_manager.complete_task(summary="Executor 执行完成")
+        persist_summary = self.variables.get("plan_intent") != "OUT_OF_SCOPE" and not self.variables.get("capability_gap")
+        result = self.memory_manager.complete_task(
+            summary="Executor 执行完成",
+            final_status=self._status_for_output(None),
+            persist_summary=persist_summary,
+        )
         self.variables["memory_result"] = result
         return StepResult(step_id=step.step_id, action=step.action, success=True, data=result)
 
     def _record_generated_artifact(self, artifact_type: str, data: dict[str, Any]) -> None:
-        if not self.memory_manager:
-            return
+        # TODO(Executor优化): 后续把 artifact manifest 标准化，补 artifact_id、source_step_id、created_at、status。
+        artifact = {
+            "artifact_type": artifact_type,
+            "output_path": data.get("output_path"),
+            "metadata": {key: value for key, value in data.items() if key not in {"output_path"}},
+        }
+        self.variables.setdefault("artifacts", []).append(artifact)
+
         output_path = str(data.get("output_path") or "")
-        if not output_path:
+        if not self.memory_manager or not output_path:
             return
         self.memory_manager.add_generated_output(
             output_path=output_path,
@@ -282,36 +330,62 @@ class Executor:
         plan: Plan,
         step_results: list[StepResult],
         error: str | None = None,
+        warnings: list[str] | None = None,
     ) -> ExecutionResult:
         if error:
             plan.status = FAILED
+        merged_warnings = [*plan.warnings, *(warnings or [])]
+        for result in step_results:
+            merged_warnings.extend(result.warnings)
+        final_output = self._final_output(plan, error, merged_warnings)
+        if not error and plan.status != WAITING_FOR_USER:
+            plan.status = str(final_output.get("status") or plan.status)
         return ExecutionResult(
             plan_id=plan.plan_id,
             success=error is None,
             step_results=step_results,
-            final_output=self._final_output(),
+            final_output=final_output,
             error=error,
         )
 
-    def _final_output(self) -> dict[str, Any]:
-        output: dict[str, Any] = {}
-        if self.variables.get("output_path"):
-            output["output_path"] = self.variables["output_path"]
+    def _final_output(self, plan: Plan, error: str | None, warnings: list[str]) -> dict[str, Any]:
+        status = self._status_for_output(error)
+        missing_context = self.variables.get("clarification_required") or []
+        if status == "partial_completed":
+            missing_context = _merge_unique(missing_context, self.variables.get("plan_missing_context") or [])
+
+        output: dict[str, Any] = {
+            "status": status,
+            "intent": plan.intent,
+            "artifacts": self.variables.get("artifacts") or [],
+            "tool_results": self.variables.get("tool_results") or [],
+            "summary": self.variables.get("summary_result") or {},
+            "missing_context": missing_context,
+            "message": self.variables.get("clarification_message"),
+            "capability_gap": self.variables.get("capability_gap"),
+            "warnings": warnings,
+        }
         if self.variables.get("case_generation_result"):
             result = self.variables["case_generation_result"]
-            output["case_count"] = len(result.get("cases") or [])
-            output["source_summary"] = result.get("source_summary") or {}
-        if self.variables.get("summary_result"):
-            output["summary_result"] = self.variables["summary_result"]
-        if self.variables.get("clarification_required"):
-            output["missing_context"] = self.variables["clarification_required"]
-        if self.variables.get("capability_gap"):
-            output["capability_gap"] = self.variables["capability_gap"]
-        if self.variables.get("tool_results"):
-            output["tool_results"] = self.variables["tool_results"]
+            output["summary"] = {
+                **output["summary"],
+                "case_count": len(result.get("cases") or []),
+                "source_summary": result.get("source_summary") or {},
+            }
         if self.variables.get("failure_report"):
             output["failure_report"] = self.variables["failure_report"]
         return output
+
+    def _status_for_output(self, error: str | None) -> str:
+        if error:
+            return "failed"
+        if self.variables.get("clarification_required"):
+            return "waiting_for_user"
+        if self.variables.get("capability_gap"):
+            return "capability_gap"
+        if _has_draft_artifact(self.variables.get("artifacts") or []):
+            return "partial_completed"
+        return "completed"
 
 
 def extract_trace_or_request_id(text: str) -> str | None:
@@ -324,3 +398,19 @@ def extract_trace_or_request_id(text: str) -> str | None:
         if match:
             return match.group(1)
     return None
+
+
+def _has_draft_artifact(artifacts: list[dict[str, Any]]) -> bool:
+    for artifact in artifacts:
+        metadata = artifact.get("metadata") if isinstance(artifact, dict) else None
+        if isinstance(metadata, dict) and metadata.get("status") == "draft":
+            return True
+    return False
+
+
+def _merge_unique(existing: list[Any], incoming: list[Any]) -> list[Any]:
+    merged = []
+    for item in [*existing, *incoming]:
+        if item and item not in merged:
+            merged.append(item)
+    return merged

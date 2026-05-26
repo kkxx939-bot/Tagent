@@ -54,6 +54,8 @@ RAGwork.hybrid_search.hybrid_search
 context.build_case_context
 ```
 
+这些是项目内部检索组件，不是 Executor 的外部 tool。Planner 需要通过 `load_context` 调用 `context_search`，不要额外规划 `call_tool`。
+
 ## 输出约定
 
 ```json

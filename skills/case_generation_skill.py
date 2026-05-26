@@ -13,5 +13,5 @@ CASE_GENERATION_SKILL = SkillSpec(
     instructions_path="skills/case_generation/SKILL.md",
     prompt_modules=["prompts.promptcase"],
     rag_sources=["requirement", "case", "bug", "api"],
-    tools=["build_case_context", "generate_test_cases"],
+    tools=[],
 )

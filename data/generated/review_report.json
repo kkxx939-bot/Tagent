@@ -1,0 +1,11 @@
+{
+  "artifact_type": "review_report",
+  "generated_at": "2026-05-24T21:48:12",
+  "review_type": "execution",
+  "case_count": 0,
+  "artifact_count": 1,
+  "tool_result_count": 0,
+  "capability_gap": null,
+  "summary": {},
+  "conclusion": "当前可评审信息有限，需要补充产物或执行结果。"
+}

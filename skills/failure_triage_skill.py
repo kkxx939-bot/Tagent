@@ -13,12 +13,5 @@ FAILURE_TRIAGE_SKILL = SkillSpec(
     instructions_path="skills/failure_triage/SKILL.md",
     prompt_modules=["prompts.prompt_failure"],
     rag_sources=["requirement", "bug", "api", "case"],
-    tools=[
-        "get_env_status",
-        "get_deploy_version",
-        "query_trace_log",
-        "query_test_account",
-        "get_api_contract",
-        "search_related_bugs",
-    ],
+    tools=["query_trace_log"],
 )

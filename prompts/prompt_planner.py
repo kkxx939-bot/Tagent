@@ -28,6 +28,9 @@ PLANNER_SYSTEM_PROMPT = """你是 Test Agent 的 Planner。
 14. 生成测试用例、自动化代码、排查报告等内容时，统一使用 generate_artifact。
 15. 校验产物时，统一使用 validate_artifact。
 16. 结束任务时，统一使用 finish。
+17. 如果需要 ask_user，ask_user 后面只能接 finish，不能继续 load_context、call_tool、generate_artifact。
+18. load_context 必须在 inputs.context_type 中写明上下文类型，例如 context_search、case_generation、automation_project、failure_triage、result_file。
+19. call_tool 只能使用“可用工具”列表里的工具；如果没有合适工具，就不要规划 call_tool。
 """
 
 
@@ -45,6 +48,9 @@ PLANNER_USER_TEMPLATE = """请生成任务计划。
 可用 action：
 {allowed_actions}
 
+可用工具：
+{available_tools}
+
 输出要求：
 1. 只能输出一个 JSON 对象。
 2. 不要用 ```json 包裹。
@@ -56,6 +62,10 @@ PLANNER_USER_TEMPLATE = """请生成任务计划。
 8. steps 至少包含 1 个步骤。
 9. generate_artifact 和 validate_artifact 必须在 inputs 里写 artifact_type。
 10. call_tool 必须写 tool_name。
+11. load_context 必须写 inputs.context_type。
+12. ask_user 必须写 inputs.message 或 inputs.missing_context。
+13. 如果意图识别结果 is_ready=false，优先生成 ask_user -> finish，不要继续生成产物。
+14. 如果要使用 call_tool，tool_name 必须来自可用工具；不要使用 skill 里声明但工具注册表不存在的工具。
 
 输出 JSON 格式：
 {{
@@ -70,7 +80,7 @@ PLANNER_USER_TEMPLATE = """请生成任务计划。
       "name": "检索相关上下文",
       "action": "load_context",
       "depends_on": [],
-      "inputs": {{}},
+      "inputs": {{"context_type": "case_generation"}},
       "requires_permission": false,
       "tool_name": null
     }}
@@ -90,7 +100,7 @@ PLANNER_USER_TEMPLATE = """请生成任务计划。
       "name": "检索需求文档和历史测试资产",
       "action": "load_context",
       "depends_on": [],
-      "inputs": {{}},
+      "inputs": {{"context_type": "case_generation"}},
       "requires_permission": false,
       "tool_name": null
     }},
@@ -128,6 +138,7 @@ def build_planner_prompt(context: dict[str, Any]) -> list[dict[str, str]]:
                 intent_result=json.dumps(context.get("intent_result") or {}, ensure_ascii=False, indent=2),
                 selected_skill=json.dumps(context.get("selected_skill") or {}, ensure_ascii=False, indent=2),
                 allowed_actions=json.dumps(context.get("allowed_actions") or [], ensure_ascii=False, indent=2),
+                available_tools=json.dumps(context.get("available_tools") or [], ensure_ascii=False, indent=2),
             ),
         },
     ]

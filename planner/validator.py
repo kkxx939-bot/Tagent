@@ -7,13 +7,20 @@ from dataclasses import asdict, dataclass, field
 from planner.actions import (
     ASK_USER,
     CALL_TOOL,
+    FINISH,
     GENERATE_ARTIFACT,
+    LOAD_CONTEXT,
     REPORT_CAPABILITY_GAP,
     SAVE_ARTIFACT,
     VALIDATE_ARTIFACT,
     get_action_spec,
 )
 from planner.plan import Plan
+
+try:
+    from tools.registry import get_tool
+except ModuleNotFoundError:
+    get_tool = None
 
 
 @dataclass
@@ -28,7 +35,6 @@ class PlanValidationResult:
 
 def validate_plan(plan: Plan) -> PlanValidationResult:
     # TODO(Planner优化): 接 Executor 后，校验 action 是否存在可执行 handler。
-    # TODO(Planner优化): call_tool 需要接 tools.registry，校验 tool_name 是否真实注册。
     # TODO(Planner优化): 后续补充 step_id 连续性、依赖环、finish 是否最后一步等校验。
     errors = []
     warnings = []
@@ -42,6 +48,7 @@ def validate_plan(plan: Plan) -> PlanValidationResult:
         errors.append(f"存在重复 step_id：{duplicated_ids}")
 
     known_step_ids = set(step_ids)
+    ask_user_index = next((index for index, step in enumerate(plan.steps) if step.action == ASK_USER), None)
     for step in plan.steps:
         action_spec = get_action_spec(step.action)
         if not action_spec:
@@ -55,12 +62,20 @@ def validate_plan(plan: Plan) -> PlanValidationResult:
         tool_name = step.tool_name or step.inputs.get("tool_name")
         if action_spec.requires_tool and not tool_name:
             errors.append(f"{step.step_id} action={step.action} 需要指定 tool_name")
+        if action_spec.requires_tool and tool_name and get_tool and get_tool(str(tool_name)) is None:
+            errors.append(f"{step.step_id} 指定了未注册工具：{tool_name}")
 
         if action_spec.requires_permission and not step.requires_permission:
             warnings.append(f"{step.step_id} action={step.action} 建议标记 requires_permission=True")
 
         if step.action in {GENERATE_ARTIFACT, VALIDATE_ARTIFACT} and not step.inputs.get("artifact_type"):
             errors.append(f"{step.step_id} action={step.action} 需要指定 artifact_type")
+
+        if step.action == LOAD_CONTEXT and not step.inputs.get("context_type"):
+            errors.append(f"{step.step_id} action={step.action} 需要指定 context_type")
+
+        if step.action == ASK_USER and not (step.inputs.get("message") or step.inputs.get("missing_context")):
+            errors.append(f"{step.step_id} action={step.action} 需要指定 message 或 missing_context")
 
         if step.action == CALL_TOOL and step.inputs.get("tool_name") and not step.tool_name:
             step.tool_name = str(step.inputs["tool_name"])
@@ -70,5 +85,11 @@ def validate_plan(plan: Plan) -> PlanValidationResult:
 
     if plan.intent == "OUT_OF_SCOPE" and not any(step.action == REPORT_CAPABILITY_GAP for step in plan.steps):
         errors.append("OUT_OF_SCOPE 意图必须包含 report_capability_gap 步骤")
+
+    if ask_user_index is not None:
+        for later_step in plan.steps[ask_user_index + 1 :]:
+            if later_step.action != FINISH:
+                errors.append("ask_user 后只能接 finish，不能继续执行上下文加载、工具调用或产物生成")
+                break
 
     return PlanValidationResult(is_valid=not errors, errors=errors, warnings=warnings)
