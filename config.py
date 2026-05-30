@@ -59,7 +59,7 @@ LLM_BASE_URL = "https://api.deepseek.com"
 LLM_MODEL = "deepseek-v4-flash"
 LLM_TEMPERATURE = 0.2
 LLM_MAX_TOKENS = 4096
-APIKEY = "sk-c0bb074134bf4d47acfa365dfb8830fb"
+APIKEY = ""
 
 
 def get_llm_config() -> dict[str, str | int | float | None]:
