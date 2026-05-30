@@ -1,0 +1,284 @@
+{
+  "run_id": "20260528_232639_smoke_eval_rule",
+  "suite": "smoke_eval",
+  "generated_at": "2026-05-28T23:26:39",
+  "llm_enabled": false,
+  "git": {
+    "branch": "main",
+    "commit": "1a37111",
+    "dirty": true
+  },
+  "summary": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0,
+    "case_pass_rate": 1.0,
+    "intent_accuracy": 1.0,
+    "ready_accuracy": 1.0,
+    "next_action_accuracy": 1.0,
+    "entity_accuracy": 1.0,
+    "missing_context_accuracy": 1.0,
+    "confusion_matrix": {
+      "OUT_OF_SCOPE": {
+        "OUT_OF_SCOPE": 2
+      },
+      "CASE_GENERATION": {
+        "CASE_GENERATION": 5
+      },
+      "AUTOMATION_WRITING": {
+        "AUTOMATION_WRITING": 2
+      },
+      "FAILURE_TRIAGE": {
+        "FAILURE_TRIAGE": 2
+      },
+      "CONTEXT_SEARCH": {
+        "CONTEXT_SEARCH": 1
+      },
+      "RESULT_REVIEW": {
+        "RESULT_REVIEW": 1
+      },
+      "EXECUTION_ASSISTANT": {
+        "EXECUTION_ASSISTANT": 1
+      },
+      "AUTOMATION_FAILURE_FIX": {
+        "AUTOMATION_FAILURE_FIX": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "case_id": "intent_empty_001",
+      "expected_intent": "OUT_OF_SCOPE",
+      "actual_intent": "OUT_OF_SCOPE",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "out_of_scope",
+        "ready_expected",
+        "next_action_expected",
+        "expected:missing_context_contains"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_out_weather_001",
+      "expected_intent": "OUT_OF_SCOPE",
+      "actual_intent": "OUT_OF_SCOPE",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "out_of_scope",
+        "ready_expected",
+        "next_action_expected"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_case_login_001",
+      "expected_intent": "CASE_GENERATION",
+      "actual_intent": "CASE_GENERATION",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "case_generation",
+        "ready_expected",
+        "next_action_expected",
+        "expected:target_contains"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_case_alias_001",
+      "expected_intent": "CASE_GENERATION",
+      "actual_intent": "CASE_GENERATION",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "normalization",
+        "case_generation",
+        "ready_expected",
+        "next_action_expected",
+        "expected:target_contains",
+        "expected:normalized_query_contains"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_auto_missing_001",
+      "expected_intent": "AUTOMATION_WRITING",
+      "actual_intent": "AUTOMATION_WRITING",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "automation_writing",
+        "not_ready",
+        "ready_expected",
+        "next_action_expected",
+        "expected:frameworks_contains",
+        "expected:missing_context_contains"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_auto_login_001",
+      "expected_intent": "AUTOMATION_WRITING",
+      "actual_intent": "AUTOMATION_WRITING",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "automation_writing",
+        "ready_expected",
+        "next_action_expected",
+        "expected:target_contains",
+        "expected:frameworks_contains"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_failure_request_001",
+      "expected_intent": "FAILURE_TRIAGE",
+      "actual_intent": "FAILURE_TRIAGE",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "failure_triage",
+        "ready_expected",
+        "next_action_expected",
+        "expected:trace_id"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_failure_missing_001",
+      "expected_intent": "FAILURE_TRIAGE",
+      "actual_intent": "FAILURE_TRIAGE",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "failure_triage",
+        "not_ready",
+        "ready_expected",
+        "next_action_expected",
+        "expected:missing_context_contains"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_context_search_001",
+      "expected_intent": "CONTEXT_SEARCH",
+      "actual_intent": "CONTEXT_SEARCH",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "context_search",
+        "ready_expected",
+        "next_action_expected",
+        "expected:target_contains"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_result_review_001",
+      "expected_intent": "RESULT_REVIEW",
+      "actual_intent": "RESULT_REVIEW",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "result_review",
+        "ready_expected",
+        "next_action_expected"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_execution_restart_001",
+      "expected_intent": "EXECUTION_ASSISTANT",
+      "actual_intent": "EXECUTION_ASSISTANT",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "execution_assistant",
+        "ready_expected",
+        "next_action_expected",
+        "expected:target_contains"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_composite_case_auto_001",
+      "expected_intent": "CASE_GENERATION",
+      "actual_intent": "CASE_GENERATION",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "composite",
+        "ready_expected",
+        "next_action_expected",
+        "expected:target_contains",
+        "expected:frameworks_contains",
+        "expected:alternative_intents_contains"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_source_path_001",
+      "expected_intent": "CASE_GENERATION",
+      "actual_intent": "CASE_GENERATION",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "source_ref",
+        "ready_expected",
+        "expected:target_contains",
+        "expected:source_ref_type",
+        "expected:normalized_query_contains"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_force_source_001",
+      "expected_intent": "CASE_GENERATION",
+      "actual_intent": "CASE_GENERATION",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "source_ref",
+        "force",
+        "ready_expected",
+        "expected:source_ref_type",
+        "expected:force_source_generation"
+      ],
+      "error": null,
+      "failures": []
+    },
+    {
+      "case_id": "intent_automation_failure_001",
+      "expected_intent": "AUTOMATION_FAILURE_FIX",
+      "actual_intent": "AUTOMATION_FAILURE_FIX",
+      "passed": true,
+      "tags": [
+        "smoke",
+        "automation_failure_fix",
+        "ready_expected",
+        "next_action_expected",
+        "expected:frameworks_contains",
+        "expected:missing_context_contains"
+      ],
+      "error": null,
+      "failures": []
+    }
+  ]
+}

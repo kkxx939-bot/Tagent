@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="70" y="25" font-family="Arial" font-size="18" fill="#111827">意图评测趋势</text>
+<line x1="70" y1="340.0" x2="930" y2="340.0" stroke="#e5e7eb"/>
+<text x="20" y="344.0" font-family="Arial" font-size="12" fill="#6b7280">0.0</text>
+<line x1="70" y1="280.0" x2="930" y2="280.0" stroke="#e5e7eb"/>
+<text x="20" y="284.0" font-family="Arial" font-size="12" fill="#6b7280">0.2</text>
+<line x1="70" y1="220.0" x2="930" y2="220.0" stroke="#e5e7eb"/>
+<text x="20" y="224.0" font-family="Arial" font-size="12" fill="#6b7280">0.4</text>
+<line x1="70" y1="160.0" x2="930" y2="160.0" stroke="#e5e7eb"/>
+<text x="20" y="164.0" font-family="Arial" font-size="12" fill="#6b7280">0.6</text>
+<line x1="70" y1="100.0" x2="930" y2="100.0" stroke="#e5e7eb"/>
+<text x="20" y="104.0" font-family="Arial" font-size="12" fill="#6b7280">0.8</text>
+<line x1="70" y1="40.0" x2="930" y2="40.0" stroke="#e5e7eb"/>
+<text x="20" y="44.0" font-family="Arial" font-size="12" fill="#6b7280">1.0</text>
+<line x1="70" y1="40" x2="70" y2="340" stroke="#9ca3af"/>
+<line x1="70" y1="340" x2="930" y2="340" stroke="#9ca3af"/>
+<polyline points="70.0,40.0 500.0,40.0 930.0,83.6" fill="none" stroke="#2563eb" stroke-width="2"/>
+<circle cx="70.0" cy="40.0" r="3" fill="#2563eb"/>
+<circle cx="500.0" cy="40.0" r="3" fill="#2563eb"/>
+<circle cx="930.0" cy="83.6" r="3" fill="#2563eb"/>
+<polyline points="70.0,40.0 500.0,40.0 930.0,83.6" fill="none" stroke="#16a34a" stroke-width="2"/>
+<circle cx="70.0" cy="40.0" r="3" fill="#16a34a"/>
+<circle cx="500.0" cy="40.0" r="3" fill="#16a34a"/>
+<circle cx="930.0" cy="83.6" r="3" fill="#16a34a"/>
+<polyline points="70.0,40.0 500.0,40.0 930.0,40.0" fill="none" stroke="#f97316" stroke-width="2"/>
+<circle cx="70.0" cy="40.0" r="3" fill="#f97316"/>
+<circle cx="500.0" cy="40.0" r="3" fill="#f97316"/>
+<circle cx="930.0" cy="40.0" r="3" fill="#f97316"/>
+<polyline points="70.0,40.0 500.0,40.0 930.0,40.0" fill="none" stroke="#9333ea" stroke-width="2"/>
+<circle cx="70.0" cy="40.0" r="3" fill="#9333ea"/>
+<circle cx="500.0" cy="40.0" r="3" fill="#9333ea"/>
+<circle cx="930.0" cy="40.0" r="3" fill="#9333ea"/>
+<polyline points="70.0,40.0 500.0,40.0 930.0,40.0" fill="none" stroke="#dc2626" stroke-width="2"/>
+<circle cx="70.0" cy="40.0" r="3" fill="#dc2626"/>
+<circle cx="500.0" cy="40.0" r="3" fill="#dc2626"/>
+<circle cx="930.0" cy="40.0" r="3" fill="#dc2626"/>
+<rect x="70" y="375" width="12" height="12" fill="#2563eb"/>
+<text x="88" y="386" font-family="Arial" font-size="12" fill="#374151">case_pass_rate</text>
+<rect x="240" y="375" width="12" height="12" fill="#16a34a"/>
+<text x="258" y="386" font-family="Arial" font-size="12" fill="#374151">intent_accuracy</text>
+<rect x="410" y="375" width="12" height="12" fill="#f97316"/>
+<text x="428" y="386" font-family="Arial" font-size="12" fill="#374151">ready_accuracy</text>
+<rect x="580" y="375" width="12" height="12" fill="#9333ea"/>
+<text x="598" y="386" font-family="Arial" font-size="12" fill="#374151">entity_accuracy</text>
+<rect x="750" y="375" width="12" height="12" fill="#dc2626"/>
+<text x="768" y="386" font-family="Arial" font-size="12" fill="#374151">missing_context_accuracy</text>
+<text x="70" y="402" font-family="Arial" font-size="12" fill="#6b7280">2026-05-28T23:23:03</text>
+<text x="730" y="402" font-family="Arial" font-size="12" fill="#6b7280">2026-05-28T23:31:38</text>
+</svg>

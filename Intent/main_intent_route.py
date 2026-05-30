@@ -79,6 +79,10 @@ MAIN_INTENT_RULES = [
             "requestid",
             "request id",
             "打不开",
+            "挂了",
+            "case 挂了",
+            "测试用例挂了",
+            "测试用例 挂了",
         ),
         "keywords": (
             "失败",

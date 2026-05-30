@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 import subprocess
 import tempfile
 import zipfile
@@ -208,23 +209,42 @@ def parse_text_file(path: Path) -> list[RequirementItem]:
 
 
 def parse_doc_with_textutil(path: Path) -> list[RequirementItem]:
-    """用 macOS textutil 兜底解析旧 .doc 文件。"""
+    """解析旧 .doc 文件。"""
     source_file = display_path(path)
+    textutil = shutil.which("textutil")
+    soffice = shutil.which("soffice") or shutil.which("libreoffice")
     with tempfile.TemporaryDirectory() as temp_dir:
         output_path = Path(temp_dir) / f"{path.stem}.txt"
-        result = subprocess.run(
-            ["textutil", "-convert", "txt", str(path), "-output", str(output_path)],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        if result.returncode != 0 or not output_path.exists():
+        if textutil:
+            result = subprocess.run(
+                [textutil, "-convert", "txt", str(path), "-output", str(output_path)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            error = clean_text(result.stderr) or "textutil conversion failed"
+        elif soffice:
+            result = subprocess.run(
+                [soffice, "--headless", "--convert-to", "txt:Text", "--outdir", temp_dir, str(path)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            converted = next(Path(temp_dir).glob("*.txt"), None)
+            if converted and converted != output_path:
+                output_path = converted
+            error = clean_text(result.stderr) or "libreoffice conversion failed"
+        else:
+            result = None
+            error = "旧 .doc 解析需要 macOS textutil 或 LibreOffice。"
+
+        if result is None or result.returncode != 0 or not output_path.exists():
             return [
                 RequirementItem(
                     item_type="unsupported",
                     source_file=source_file,
                     title=path.stem,
-                    error=clean_text(result.stderr) or "textutil conversion failed",
+                    error=error,
                 )
             ]
         text = output_path.read_text(encoding="utf-8", errors="ignore")

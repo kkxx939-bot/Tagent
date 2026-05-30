@@ -1,0 +1,55 @@
+{"id":"full_case_login_001","query":"根据登录需求生成测试用例","expect":{"intent":"CASE_GENERATION","is_ready":true,"target_contains":["登录","需求","用例"]},"tags":["case_generation"]}
+{"id":"full_case_order_001","query":"给订单支付流程写测试用例","expect":{"intent":"CASE_GENERATION","is_ready":true,"target_contains":["订单","支付","用例"]},"tags":["case_generation"]}
+{"id":"full_case_refund_001","query":"退款功能需要覆盖哪些测试场景","expect":{"intent":"CASE_GENERATION","is_ready":true,"target_contains":["退款"]},"tags":["case_generation"]}
+{"id":"full_case_loan_001","query":"帮我设计贷款额度审批的测试点","expect":{"intent":"CASE_GENERATION","is_ready":true,"target_contains":["贷款"]},"tags":["case_generation"]}
+{"id":"full_case_registration_001","query":"注册功能写一批测试用例","expect":{"intent":"CASE_GENERATION","is_ready":true,"target_contains":["注册","用例"]},"tags":["case_generation"]}
+{"id":"full_case_missing_001","query":"生成测试用例","expect":{"intent":"CASE_GENERATION","is_ready":true,"target_contains":["用例"]},"tags":["case_generation","generic"]}
+{"id":"full_case_alias_001","query":"生成登陆的相关case","expect":{"intent":"CASE_GENERATION","is_ready":true,"target_contains":["登录","用例"],"normalized_query_contains":"生成登录的相关测试用例"},"tags":["case_generation","normalization"]}
+{"id":"full_case_regression_001","query":"根据历史 bug 生成回归测试用例","expect":{"intent":"CASE_GENERATION","is_ready":true,"target_contains":["用例"]},"tags":["case_generation","bug"]}
+{"id":"full_auto_playwright_001","query":"把登录功能写成 Playwright 自动化脚本","expect":{"intent":"AUTOMATION_WRITING","is_ready":true,"frameworks_contains":["playwright"],"target_contains":["登录"]},"tags":["automation_writing"]}
+{"id":"full_auto_selenium_001","query":"用 Selenium 写注册流程自动化脚本","expect":{"intent":"AUTOMATION_WRITING","is_ready":true,"frameworks_contains":["selenium"],"target_contains":["注册"]},"tags":["automation_writing"]}
+{"id":"full_auto_pytest_001","query":"订单接口生成 pytest 自动化代码","expect":{"intent":"AUTOMATION_WRITING","is_ready":true,"frameworks_contains":["pytest"],"target_contains":["订单","接口"]},"tags":["automation_writing"]}
+{"id":"full_auto_missing_001","query":"写 Playwright 自动化脚本","expect":{"intent":"AUTOMATION_WRITING","is_ready":false,"frameworks_contains":["playwright"],"missing_context_contains":["需要说明要把哪条用例或哪个功能生成自动化代码"]},"tags":["automation_writing","not_ready"]}
+{"id":"full_auto_cypress_001","query":"支付页面用 cypress 生成自动化","expect":{"intent":"AUTOMATION_WRITING","is_ready":true,"frameworks_contains":["cypress"],"target_contains":["支付"]},"tags":["automation_writing"]}
+{"id":"full_auto_failure_playwright_001","query":"Playwright 报错等待超时，帮我修脚本","expect":{"intent":"AUTOMATION_FAILURE_FIX","is_ready":false,"frameworks_contains":["playwright"],"missing_context_contains":["失败日志"]},"tags":["automation_failure_fix"]}
+{"id":"full_auto_failure_locator_001","query":"这个自动化 case 失败，selector 找不到元素","expect":{"intent":"AUTOMATION_FAILURE_FIX","is_ready":false,"missing_context_contains":["失败日志"]},"tags":["automation_failure_fix"]}
+{"id":"full_auto_failure_assert_001","query":"pytest 自动化断言失败了","expect":{"intent":"AUTOMATION_FAILURE_FIX","is_ready":false,"frameworks_contains":["pytest"]},"tags":["automation_failure_fix"]}
+{"id":"full_failure_trace_001","query":"登录接口返回 500，有 traceId=abc123，帮我看一下","expect":{"intent":"FAILURE_TRIAGE","is_ready":true,"trace_id":"abc123","target_contains":["登录","接口"]},"tags":["failure_triage"]}
+{"id":"full_failure_request_001","query":"看一下 requestId=req-123 为什么执行错误","expect":{"intent":"FAILURE_TRIAGE","is_ready":true,"trace_id":"req-123"},"tags":["failure_triage"]}
+{"id":"full_failure_timeout_001","query":"支付接口 timeout，帮我排查","expect":{"intent":"FAILURE_TRIAGE","is_ready":false,"target_contains":["支付","接口"],"missing_context_contains":["traceId/requestId"]},"tags":["failure_triage","not_ready"]}
+{"id":"full_failure_case_001","query":"这个 case 挂了，帮我看看","expect":{"intent":"FAILURE_TRIAGE","is_ready":false,"missing_context_contains":["traceId/requestId"]},"tags":["failure_triage","not_ready"]}
+{"id":"full_failure_login_001","query":"测试环境登录不上，系统异常","expect":{"intent":"FAILURE_TRIAGE","is_ready":false,"target_contains":["登录"],"missing_context_contains":["traceId/requestId"]},"tags":["failure_triage","not_ready"]}
+{"id":"full_context_login_001","query":"检索登录相关需求资料","expect":{"intent":"CONTEXT_SEARCH","is_ready":true,"target_contains":["登录","需求"]},"tags":["context_search"]}
+{"id":"full_context_bug_001","query":"查一下订单相关历史 bug","expect":{"intent":"CONTEXT_SEARCH","is_ready":true,"target_contains":["订单"]},"tags":["context_search"]}
+{"id":"full_context_api_001","query":"找一下支付接口资料","expect":{"intent":"CONTEXT_SEARCH","is_ready":true,"target_contains":["支付","接口"]},"tags":["context_search"]}
+{"id":"full_context_rag_001","query":"用 bm25 和向量检索贷款需求上下文","expect":{"intent":"CONTEXT_SEARCH","is_ready":true,"target_contains":["贷款","需求"]},"tags":["context_search"]}
+{"id":"full_context_chunk_001","query":"召回注册模块相关 chunk","expect":{"intent":"CONTEXT_SEARCH","is_ready":true,"target_contains":["注册"]},"tags":["context_search"]}
+{"id":"full_review_generated_001","query":"看一下 generated_cases.json 质量怎么样","expect":{"intent":"RESULT_REVIEW","is_ready":true},"tags":["result_review"]}
+{"id":"full_review_output_001","query":"生成结果保存在哪里","expect":{"intent":"RESULT_REVIEW","is_ready":true},"tags":["result_review"]}
+{"id":"full_review_file_001","query":"评审一下结果文件","expect":{"intent":"RESULT_REVIEW","is_ready":true},"tags":["result_review"]}
+{"id":"full_exec_run_001","query":"帮我跑一下 P0 用例","expect":{"intent":"EXECUTION_ASSISTANT","is_ready":true,"target_contains":["用例"]},"tags":["execution_assistant"]}
+{"id":"full_exec_restart_001","query":"帮我重启测试环境的订单服务","expect":{"intent":"EXECUTION_ASSISTANT","is_ready":true,"target_contains":["订单"]},"tags":["execution_assistant"]}
+{"id":"full_exec_result_001","query":"看一下测试执行结果","expect":{"intent":"EXECUTION_ASSISTANT","is_ready":true},"tags":["execution_assistant"]}
+{"id":"full_bug_report_001","query":"根据这个失败生成 bug 报告","expect":{"intent":"BUG_REPORT_GENERATION","is_ready":true},"tags":["bug_report_generation"]}
+{"id":"full_bug_report_002","query":"帮我写一个缺陷报告","expect":{"intent":"BUG_REPORT_GENERATION","is_ready":true},"tags":["bug_report_generation"]}
+{"id":"full_bug_report_003","query":"这个问题提 bug","expect":{"intent":"BUG_REPORT_GENERATION","is_ready":true},"tags":["bug_report_generation"]}
+{"id":"full_regression_001","query":"这次登录改动影响哪些回归用例","expect":{"intent":"REGRESSION_ANALYSIS","is_ready":true,"target_contains":["登录","改动","用例"]},"tags":["regression_analysis"]}
+{"id":"full_regression_002","query":"帮我分析订单变更影响范围","expect":{"intent":"REGRESSION_ANALYSIS","is_ready":true,"target_contains":["订单","变更"]},"tags":["regression_analysis"]}
+{"id":"full_regression_missing_001","query":"做一下回归影响分析","expect":{"intent":"REGRESSION_ANALYSIS","is_ready":false,"missing_context_contains":["需要说明本次变更、需求或代码影响范围"]},"tags":["regression_analysis","not_ready"]}
+{"id":"full_config_001","query":"LLM_API_KEY 应该怎么配置","expect":{"intent":"CONFIG_HELP","is_ready":true},"tags":["config_help"]}
+{"id":"full_config_002","query":"deepseek base_url 配置在哪里","expect":{"intent":"CONFIG_HELP","is_ready":true},"tags":["config_help"]}
+{"id":"full_project_qa_001","query":"解释一下这个 Agent 的规划逻辑","expect":{"intent":"PROJECT_QA","is_ready":true},"tags":["project_qa"]}
+{"id":"full_project_qa_002","query":"下一步应该怎么设计 eval","expect":{"intent":"PROJECT_QA","is_ready":true},"tags":["project_qa"]}
+{"id":"full_composite_001","query":"根据登录需求生成 case，然后生成 Playwright 自动化脚本","expect":{"intent":"CASE_GENERATION","is_ready":true,"frameworks_contains":["playwright"],"alternative_intents_contains":["AUTOMATION_WRITING"]},"tags":["composite"]}
+{"id":"full_composite_002","query":"先整理订单测试用例，再写 pytest 自动化","expect":{"intent":"CASE_GENERATION","is_ready":true,"frameworks_contains":["pytest"],"alternative_intents_contains":["AUTOMATION_WRITING"]},"tags":["composite"]}
+{"id":"full_source_doc_path_001","query":"根据 /Users/gulf/PycharmProjects/Tagent/data/requirements/xx租房项目 客户端需求文档使用说明书.docx 生成case","expect":{"intent":"CASE_GENERATION","is_ready":true,"source_ref_type":"local_file"},"tags":["source_ref"]}
+{"id":"full_source_url_001","query":"根据 https://example.com/login.docx 生成case","expect":{"intent":"CASE_GENERATION","is_ready":true,"source_ref_type":"url"},"tags":["source_ref"]}
+{"id":"full_source_desktop_001","query":"根据我桌面的文档：song_new.pdf，生成case","expect":{"intent":"CASE_GENERATION","is_ready":true,"source_ref_type":"local_file"},"tags":["source_ref"]}
+{"id":"full_source_force_001","query":"根据我桌面的文档：song_new.pdf，force_source_generation=true，生成case","expect":{"intent":"CASE_GENERATION","is_ready":true,"source_ref_type":"local_file","force_source_generation":true},"tags":["source_ref","force"]}
+{"id":"full_source_natural_force_001","query":"确认生成，就按这个文档泛化生成 case","expect":{"intent":"CASE_GENERATION","is_ready":true,"force_source_generation":true},"tags":["source_ref","force"]}
+{"id":"full_out_weather_001","query":"明天天气怎么样","expect":{"intent":"OUT_OF_SCOPE","is_ready":false},"tags":["out_of_scope"]}
+{"id":"full_out_poem_001","query":"帮我写一首诗","expect":{"intent":"OUT_OF_SCOPE","is_ready":false},"tags":["out_of_scope"]}
+{"id":"full_out_translate_001","query":"把这句话翻译成英文","expect":{"intent":"OUT_OF_SCOPE","is_ready":false},"tags":["out_of_scope"]}
+{"id":"full_out_empty_001","query":"","expect":{"intent":"OUT_OF_SCOPE","is_ready":false},"tags":["out_of_scope"]}
+{"id":"full_out_chat_001","query":"你是谁","expect":{"intent":"OUT_OF_SCOPE","is_ready":false},"tags":["out_of_scope"]}
+{"id":"full_out_recipe_001","query":"今晚吃什么比较好","expect":{"intent":"OUT_OF_SCOPE","is_ready":false},"tags":["out_of_scope"]}

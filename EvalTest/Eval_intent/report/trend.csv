@@ -1,0 +1,4 @@
+run_id,suite,generated_at,llm_enabled,git_branch,git_commit,total,passed,failed,case_pass_rate,intent_accuracy,ready_accuracy,entity_accuracy,missing_context_accuracy
+20260528_232303_full_eval_rule,full_eval,2026-05-28T23:23:03,False,main,1a37111,55,55,0,1.0,1.0,1.0,1.0,1.0
+20260528_232639_smoke_eval_rule,smoke_eval,2026-05-28T23:26:39,False,main,1a37111,15,15,0,1.0,1.0,1.0,1.0,1.0
+20260528_233138_full_eval_llm,full_eval,2026-05-28T23:31:38,True,main,1a37111,55,47,8,0.8545,0.8545,1.0,1.0,1.0

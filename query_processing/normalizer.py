@@ -87,6 +87,9 @@ def _normalize_spacing(text: str) -> str:
 
 
 def _replace_alias(text: str, raw: str, normalized: str) -> tuple[str, bool]:
+    if raw.lower() == "case":
+        new_text = re.sub(r"(?<![A-Za-z0-9_])case(?![A-Za-z0-9_])", normalized, text, flags=re.IGNORECASE)
+        return new_text, new_text != text
     new_text = re.sub(re.escape(raw), normalized, text, flags=re.IGNORECASE)
     return new_text, new_text != text
 
