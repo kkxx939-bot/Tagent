@@ -11,6 +11,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from ContextBackend import ContextRequest, load_context_from_backend
+
 
 @dataclass
 class ContextLoadResult:
@@ -49,8 +51,6 @@ def _load_rag_context(
     inputs: dict[str, Any],
     variables: dict[str, Any],
 ) -> ContextLoadResult:
-    from context import build_case_context
-
     if context_type == "failure_triage":
         source_context = variables.get("source_context") or {}
         profile = source_context.get("source_profile") if isinstance(source_context, dict) else {}
@@ -61,14 +61,43 @@ def _load_rag_context(
             return ContextLoadResult(success=True, data=data)
 
     query = str(inputs.get("query") or user_query)
-    context = build_case_context(query)
+    backend_result = load_context_from_backend(
+        ContextRequest(
+            context_type=context_type,
+            query=query,
+            inputs=inputs,
+            variables=variables,
+            filters=_context_filters(variables),
+        ),
+        backend_name=str(inputs.get("backend") or ""),
+    )
+    if not backend_result.success:
+        data = {
+            "context_type": context_type,
+            "backend": backend_result.backend,
+            "backend_metadata": backend_result.metadata,
+        }
+        variables["loaded_context"] = data
+        return ContextLoadResult(
+            success=False,
+            data=data,
+            warnings=backend_result.warnings,
+            error=backend_result.error,
+        )
+
+    context = backend_result.context
     variables["retrieved_context"] = context
     variables["loaded_context"] = context
     source_summary = context.get("source_summary") or {}
     return ContextLoadResult(
         success=True,
-        data={"context_type": context_type, "source_summary": source_summary},
-        memory_payload={"query": query, "source_summary": source_summary},
+        data={
+            "context_type": context_type,
+            "backend": backend_result.backend,
+            "source_summary": source_summary,
+            "backend_metadata": backend_result.metadata,
+        },
+        memory_payload={"query": query, "source_summary": source_summary, "backend": backend_result.backend},
     )
 
 
@@ -88,10 +117,33 @@ def _load_requirement_document_context(
         variables["loaded_context"] = data
         return ContextLoadResult(success=False, data=data, error="缺少可解析的 Source 需求文档")
 
-    from context import build_case_context
-
     retrieval_query = _source_retrieval_query(user_query, profile)
-    rag_context = build_case_context(retrieval_query)
+    backend_result = load_context_from_backend(
+        ContextRequest(
+            context_type="requirement_document",
+            query=retrieval_query,
+            inputs=inputs,
+            variables=variables,
+            filters=_context_filters(variables),
+        ),
+        backend_name=str(inputs.get("backend") or ""),
+    )
+    if not backend_result.success:
+        data = {
+            "context_type": "requirement_document",
+            "source_profile": profile,
+            "backend": backend_result.backend,
+            "backend_metadata": backend_result.metadata,
+        }
+        variables["loaded_context"] = data
+        return ContextLoadResult(
+            success=False,
+            data=data,
+            warnings=backend_result.warnings,
+            error=backend_result.error,
+        )
+
+    rag_context = backend_result.context
     document_chunk = _document_chunk(document_context, profile)
     source_summary = dict(rag_context.get("source_summary") or {})
     source_summary["source_document"] = {
@@ -111,14 +163,39 @@ def _load_requirement_document_context(
     }
     data = {
         "context_type": "requirement_document",
+        "backend": backend_result.backend,
         "source_profile": profile,
         "source_summary": source_summary,
+        "backend_metadata": backend_result.metadata,
     }
     variables["retrieved_context"] = context
     variables["loaded_context"] = context
     variables["case_generation_context"] = context
     variables["requirement_document_context"] = data
-    return ContextLoadResult(success=True, data=data, memory_payload={"query": retrieval_query, "source_summary": source_summary})
+    return ContextLoadResult(
+        success=True,
+        data=data,
+        memory_payload={"query": retrieval_query, "source_summary": source_summary, "backend": backend_result.backend},
+    )
+
+
+def _context_filters(variables: dict[str, Any]) -> dict[str, Any]:
+    filters: dict[str, Any] = {}
+    source_context = variables.get("source_context") or {}
+    profile = source_context.get("source_profile") if isinstance(source_context, dict) else {}
+    if isinstance(profile, dict):
+        if profile.get("domain"):
+            filters["project"] = profile["domain"]
+        if profile.get("module"):
+            filters["module"] = profile["module"]
+
+    intent_result = variables.get("intent_result") or {}
+    extracted = intent_result.get("extracted_context") if isinstance(intent_result, dict) else {}
+    if isinstance(extracted, dict):
+        targets = extracted.get("target")
+        if isinstance(targets, list) and targets:
+            filters["target"] = list(targets)
+    return filters
 
 
 def _source_retrieval_query(user_query: str, profile: dict[str, Any]) -> str:

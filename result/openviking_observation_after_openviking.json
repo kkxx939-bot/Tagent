@@ -1,0 +1,391 @@
+{
+  "report_type": "openviking_comparison_after",
+  "backend": "openviking",
+  "openviking_enabled": true,
+  "generated_at": "2026-05-30T20:01:56",
+  "llm_enabled": false,
+  "summary": {
+    "case_count": 4,
+    "status_distribution": {
+      "completed": 2,
+      "partial_completed": 1,
+      "capability_gap": 1
+    },
+    "intent_distribution": {
+      "CONTEXT_SEARCH": 1,
+      "CASE_GENERATION": 2,
+      "FAILURE_TRIAGE": 1
+    },
+    "estimated_total_tokens": 25667,
+    "estimated_context_tokens": 6332,
+    "context_count": 48,
+    "noise_context_count": 32,
+    "noise_context_rate": 0.8889,
+    "cross_project_context_count": null,
+    "cross_project_context_rate": null,
+    "traceable_context_count": 48,
+    "traceable_context_rate": 1.0,
+    "memory_hit_count": 20,
+    "load_context_total_ms": 279.69,
+    "noise_scorable_context_count": 36,
+    "cross_project_scorable_context_count": 0
+  },
+  "cases": [
+    {
+      "case_id": "context_login_requirements",
+      "query": "检索登录相关需求资料",
+      "status": "completed",
+      "intent": "CONTEXT_SEARCH",
+      "token": {
+        "estimate_method": "local_char_heuristic",
+        "estimated_total_tokens": 5702,
+        "estimated_structural_tokens": 4041,
+        "estimated_context_tokens": 1661,
+        "sections": [
+          {
+            "name": "user_query",
+            "chars": 10,
+            "estimated_tokens": 8,
+            "metadata": {}
+          },
+          {
+            "name": "normalized_query",
+            "chars": 10,
+            "estimated_tokens": 8,
+            "metadata": {}
+          },
+          {
+            "name": "query_context",
+            "chars": 246,
+            "estimated_tokens": 62,
+            "metadata": {}
+          },
+          {
+            "name": "intent_result",
+            "chars": 483,
+            "estimated_tokens": 131,
+            "metadata": {}
+          },
+          {
+            "name": "selected_skill",
+            "chars": 277,
+            "estimated_tokens": 67,
+            "metadata": {}
+          },
+          {
+            "name": "plan",
+            "chars": 1308,
+            "estimated_tokens": 293,
+            "metadata": {}
+          },
+          {
+            "name": "execution_result",
+            "chars": 8987,
+            "estimated_tokens": 2076,
+            "metadata": {}
+          },
+          {
+            "name": "final_output",
+            "chars": 5600,
+            "estimated_tokens": 1396,
+            "metadata": {}
+          }
+        ]
+      },
+      "noise": {
+        "context_count": 12,
+        "noise_context_count": 10,
+        "noise_context_rate": 0.8333,
+        "cross_project_context_count": null,
+        "cross_project_context_rate": null,
+        "noise_scorable_context_count": 12,
+        "cross_project_scorable_context_count": 0
+      },
+      "traceability": {
+        "traceable_context_count": 12,
+        "traceable_context_rate": 1.0
+      },
+      "memory": {
+        "memory_hit_count": 5,
+        "useful_memory_hit_count": null,
+        "memory_precision": null,
+        "quality_evaluation": "not_evaluated",
+        "memory_type_counts": {
+          "task_summary": 5
+        },
+        "traceable_memory_count": 5,
+        "traceable_memory_rate": 1.0
+      },
+      "latency": {
+        "load_context_ms": 125.9
+      }
+    },
+    {
+      "case_id": "case_login_generation",
+      "query": "根据登录需求生成测试用例",
+      "status": "completed",
+      "intent": "CASE_GENERATION",
+      "token": {
+        "estimate_method": "local_char_heuristic",
+        "estimated_total_tokens": 6476,
+        "estimated_structural_tokens": 4890,
+        "estimated_context_tokens": 1586,
+        "sections": [
+          {
+            "name": "user_query",
+            "chars": 12,
+            "estimated_tokens": 10,
+            "metadata": {}
+          },
+          {
+            "name": "normalized_query",
+            "chars": 12,
+            "estimated_tokens": 10,
+            "metadata": {}
+          },
+          {
+            "name": "query_context",
+            "chars": 256,
+            "estimated_tokens": 68,
+            "metadata": {}
+          },
+          {
+            "name": "intent_result",
+            "chars": 491,
+            "estimated_tokens": 134,
+            "metadata": {}
+          },
+          {
+            "name": "selected_skill",
+            "chars": 299,
+            "estimated_tokens": 74,
+            "metadata": {}
+          },
+          {
+            "name": "plan",
+            "chars": 1789,
+            "estimated_tokens": 401,
+            "metadata": {}
+          },
+          {
+            "name": "execution_result",
+            "chars": 12420,
+            "estimated_tokens": 2710,
+            "metadata": {}
+          },
+          {
+            "name": "final_output",
+            "chars": 6557,
+            "estimated_tokens": 1483,
+            "metadata": {}
+          }
+        ]
+      },
+      "noise": {
+        "context_count": 12,
+        "noise_context_count": 12,
+        "noise_context_rate": 1.0,
+        "cross_project_context_count": null,
+        "cross_project_context_rate": null,
+        "noise_scorable_context_count": 12,
+        "cross_project_scorable_context_count": 0
+      },
+      "traceability": {
+        "traceable_context_count": 12,
+        "traceable_context_rate": 1.0
+      },
+      "memory": {
+        "memory_hit_count": 5,
+        "useful_memory_hit_count": null,
+        "memory_precision": null,
+        "quality_evaluation": "not_evaluated",
+        "memory_type_counts": {
+          "task_summary": 5
+        },
+        "traceable_memory_count": 5,
+        "traceable_memory_rate": 1.0
+      },
+      "latency": {
+        "load_context_ms": 53.62
+      }
+    },
+    {
+      "case_id": "composite_login_case_auto",
+      "query": "根据登录需求生成 case，然后生成 Playwright 自动化脚本",
+      "status": "partial_completed",
+      "intent": "CASE_GENERATION",
+      "token": {
+        "estimate_method": "local_char_heuristic",
+        "estimated_total_tokens": 7998,
+        "estimated_structural_tokens": 6339,
+        "estimated_context_tokens": 1659,
+        "sections": [
+          {
+            "name": "user_query",
+            "chars": 35,
+            "estimated_tokens": 17,
+            "metadata": {}
+          },
+          {
+            "name": "normalized_query",
+            "chars": 35,
+            "estimated_tokens": 19,
+            "metadata": {}
+          },
+          {
+            "name": "query_context",
+            "chars": 368,
+            "estimated_tokens": 103,
+            "metadata": {}
+          },
+          {
+            "name": "intent_result",
+            "chars": 687,
+            "estimated_tokens": 208,
+            "metadata": {}
+          },
+          {
+            "name": "selected_skill",
+            "chars": 299,
+            "estimated_tokens": 74,
+            "metadata": {}
+          },
+          {
+            "name": "plan",
+            "chars": 2386,
+            "estimated_tokens": 542,
+            "metadata": {}
+          },
+          {
+            "name": "execution_result",
+            "chars": 14714,
+            "estimated_tokens": 3518,
+            "metadata": {}
+          },
+          {
+            "name": "final_output",
+            "chars": 7774,
+            "estimated_tokens": 1858,
+            "metadata": {}
+          }
+        ]
+      },
+      "noise": {
+        "context_count": 12,
+        "noise_context_count": 10,
+        "noise_context_rate": 0.8333,
+        "cross_project_context_count": null,
+        "cross_project_context_rate": null,
+        "noise_scorable_context_count": 12,
+        "cross_project_scorable_context_count": 0
+      },
+      "traceability": {
+        "traceable_context_count": 12,
+        "traceable_context_rate": 1.0
+      },
+      "memory": {
+        "memory_hit_count": 5,
+        "useful_memory_hit_count": null,
+        "memory_precision": null,
+        "quality_evaluation": "not_evaluated",
+        "memory_type_counts": {
+          "task_summary": 5
+        },
+        "traceable_memory_count": 5,
+        "traceable_memory_rate": 1.0
+      },
+      "latency": {
+        "load_context_ms": 49.67
+      }
+    },
+    {
+      "case_id": "failure_request_trace",
+      "query": "看一下 requestId=req-123 为什么执行错误",
+      "status": "capability_gap",
+      "intent": "FAILURE_TRIAGE",
+      "token": {
+        "estimate_method": "local_char_heuristic",
+        "estimated_total_tokens": 5491,
+        "estimated_structural_tokens": 4065,
+        "estimated_context_tokens": 1426,
+        "sections": [
+          {
+            "name": "user_query",
+            "chars": 29,
+            "estimated_tokens": 13,
+            "metadata": {}
+          },
+          {
+            "name": "normalized_query",
+            "chars": 29,
+            "estimated_tokens": 13,
+            "metadata": {}
+          },
+          {
+            "name": "query_context",
+            "chars": 279,
+            "estimated_tokens": 68,
+            "metadata": {}
+          },
+          {
+            "name": "intent_result",
+            "chars": 689,
+            "estimated_tokens": 205,
+            "metadata": {}
+          },
+          {
+            "name": "selected_skill",
+            "chars": 318,
+            "estimated_tokens": 80,
+            "metadata": {}
+          },
+          {
+            "name": "plan",
+            "chars": 1692,
+            "estimated_tokens": 391,
+            "metadata": {}
+          },
+          {
+            "name": "execution_result",
+            "chars": 9228,
+            "estimated_tokens": 1941,
+            "metadata": {}
+          },
+          {
+            "name": "final_output",
+            "chars": 6363,
+            "estimated_tokens": 1354,
+            "metadata": {}
+          }
+        ]
+      },
+      "noise": {
+        "context_count": 12,
+        "noise_context_count": null,
+        "noise_context_rate": null,
+        "cross_project_context_count": null,
+        "cross_project_context_rate": null,
+        "noise_scorable_context_count": 0,
+        "cross_project_scorable_context_count": 0
+      },
+      "traceability": {
+        "traceable_context_count": 12,
+        "traceable_context_rate": 1.0
+      },
+      "memory": {
+        "memory_hit_count": 5,
+        "useful_memory_hit_count": null,
+        "memory_precision": null,
+        "quality_evaluation": "not_evaluated",
+        "memory_type_counts": {
+          "task_summary": 5
+        },
+        "traceable_memory_count": 5,
+        "traceable_memory_rate": 1.0
+      },
+      "latency": {
+        "load_context_ms": 50.5
+      }
+    }
+  ]
+}

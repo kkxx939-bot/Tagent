@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-05-31T11:08:29",
+  "description": "main.py 维度的运行记录；native_rag 或 openviking 未执行时对应字段为空。",
+  "files": [
+    {
+      "query": "检索登录相关需求资料",
+      "file": "main_compare/检索登录相关需求资料/compare.json",
+      "table_file": "main_compare/检索登录相关需求资料/compare.csv"
+    },
+    {
+      "query": "",
+      "file": "main_compare/empty_query/compare.json",
+      "table_file": "main_compare/empty_query/compare.csv"
+    }
+  ]
+}

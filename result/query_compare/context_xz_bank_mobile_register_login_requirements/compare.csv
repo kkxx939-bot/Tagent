@@ -1,0 +1,8 @@
+metric,label,before_baseline_local,after_openviking,delta,delta_rate
+extra_record_1.status,补充实验状态,,completed,,
+extra_record_1.context_count,补充实验上下文条数,,12,,
+extra_record_1.noise_context_rate,补充实验噪声比例,,0.0,,
+extra_record_1.overview_node_count,补充实验 overview 节点数,,6,,
+extra_record_1.detail_node_count,补充实验明细节点数,,6,,
+extra_record_1.estimated_context_tokens,补充实验上下文 Token,,1616,,
+extra_record_1.load_context_total_ms,补充实验上下文加载耗时 ms,,107.62,,

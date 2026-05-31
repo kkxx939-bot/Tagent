@@ -1,0 +1,6 @@
+query,file,before_status,after_status,before_context_tokens,after_context_tokens,before_noise_rate,after_noise_rate,before_load_context_ms,after_load_context_ms,extra_record_count
+根据登录需求生成 case，然后生成 Playwright 自动化脚本,query_compare/composite_login_case_auto.json,failed,partial_completed,5869,1659,0.5,0.8333,,49.67,0
+根据登录需求生成测试用例,query_compare/case_login_generation.json,failed,completed,4280,1586,0.3333,1.0,,53.62,0
+检索XZ银行手机银行注册登录模块需求资料,query_compare/context_xz_bank_mobile_register_login_requirements.json,,,,,,,,,1
+检索登录相关需求资料,query_compare/context_login_requirements.json,completed,completed,4376,1661,0.8333,0.8333,,125.9,0
+看一下 requestId=req-123 为什么执行错误,query_compare/failure_request_trace.json,capability_gap,capability_gap,4737,1426,,,,50.5,0

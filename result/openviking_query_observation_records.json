@@ -1,0 +1,194 @@
+{
+  "records": [
+    {
+      "record_type": "openviking_query_observation",
+      "created_at": "2026-05-30T23:14:54",
+      "query_info": {
+        "query": "检索XZ银行手机银行注册登录模块需求资料",
+        "query_category": "context_search_specific_module",
+        "specificity": "project_domain_module",
+        "backend": "openviking",
+        "target_uri": "viking://resources/tagent",
+        "account": "default",
+        "user": "tagent"
+      },
+      "run_summary": {
+        "success": true,
+        "status": "completed",
+        "intent": "CONTEXT_SEARCH",
+        "next_action": "search_context",
+        "selected_skill": "context_search",
+        "warnings": [],
+        "error": null
+      },
+      "retrieval_quality": {
+        "context_count": 12,
+        "source_type_counts": {
+          "requirement": {
+            "count": 12,
+            "chunk_ids": [
+              "openviking_000001",
+              "openviking_000002",
+              "openviking_000003",
+              "openviking_000004",
+              "openviking_000005",
+              "openviking_000006",
+              "openviking_000007",
+              "openviking_000008",
+              "openviking_000009",
+              "openviking_000010",
+              "openviking_000011",
+              "openviking_000012"
+            ]
+          }
+        },
+        "noise_context_count": 0,
+        "noise_context_rate": 0.0,
+        "cross_project_context_count": 12,
+        "cross_project_context_rate": 1.0,
+        "overview_node_count": 6,
+        "detail_node_count": 6,
+        "source_file_count": 12
+      },
+      "traceability": {
+        "traceable_context_count": 12,
+        "traceable_context_rate": 1.0,
+        "source_files": {
+          "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.xlsx/.overview.md": 1,
+          "viking://resources/tagent/requirement/XZ银行手机银行需求说明书-功能权限表V0.1-20200610.xlsx/.overview.md": 1,
+          "viking://resources/tagent/requirement/XZ银行手机银行需求格明书-后台管理部分V0.2-20200311.docx/.overview.md": 1,
+          "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.docx/.overview.md": 1,
+          "viking://resources/tagent/requirement/XZ银行手机银行需求说明书-功能权限表V0.1-20200610.xlsx/upload_05ceeed87b7f4f3786bd1043e36c080e/upload_05ceeed87b_2more_736c4dcb_1.md": 1,
+          "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.docx/注册登录/重置登录密码.md": 1,
+          "viking://resources/tagent/requirement/西藏银行手机银行需求说明书.docx/注册登录/重置登录密码.md": 1,
+          "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.xlsx/upload_7c49ea7d56ae486d866d56226a7f96e5/upload_7c49ea7d56_2more_9300dfce_1.md": 1,
+          "viking://resources/tagent/requirement/西藏银行手机银行需求说明书.docx/注册登录/自助注册.md": 1,
+          "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.docx/注册登录/自助注册.md": 1,
+          "viking://resources/tagent/requirement/西藏银行手机银行需求说明书.docx/.overview.md": 1,
+          "viking://resources/tagent/requirement/新版手机银行数字证书补充需求.docx/.overview.md": 1
+        },
+        "trace_items": [
+          {
+            "chunk_id": "openviking_000001",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.xlsx/.overview.md",
+            "title": ".overview.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000002",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/XZ银行手机银行需求说明书-功能权限表V0.1-20200610.xlsx/.overview.md",
+            "title": ".overview.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000003",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/XZ银行手机银行需求格明书-后台管理部分V0.2-20200311.docx/.overview.md",
+            "title": ".overview.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000004",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.docx/.overview.md",
+            "title": ".overview.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000005",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/XZ银行手机银行需求说明书-功能权限表V0.1-20200610.xlsx/upload_05ceeed87b7f4f3786bd1043e36c080e/upload_05ceeed87b_2more_736c4dcb_1.md",
+            "title": "upload_05ceeed87b_2more_736c4dcb_1.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000006",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.docx/注册登录/重置登录密码.md",
+            "title": "重置登录密码.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000007",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/西藏银行手机银行需求说明书.docx/注册登录/重置登录密码.md",
+            "title": "重置登录密码.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000008",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.xlsx/upload_7c49ea7d56ae486d866d56226a7f96e5/upload_7c49ea7d56_2more_9300dfce_1.md",
+            "title": "upload_7c49ea7d56_2more_9300dfce_1.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000009",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/西藏银行手机银行需求说明书.docx/注册登录/自助注册.md",
+            "title": "自助注册.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000010",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.docx/注册登录/自助注册.md",
+            "title": "自助注册.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000011",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/西藏银行手机银行需求说明书.docx/.overview.md",
+            "title": ".overview.md",
+            "project": "tagent",
+            "feature": "requirement"
+          },
+          {
+            "chunk_id": "openviking_000012",
+            "source_type": "requirement",
+            "source_file": "viking://resources/tagent/requirement/新版手机银行数字证书补充需求.docx/.overview.md",
+            "title": ".overview.md",
+            "project": "tagent",
+            "feature": "requirement"
+          }
+        ]
+      },
+      "token_latency": {
+        "estimated_total_tokens": 5743,
+        "estimated_context_tokens": 1616,
+        "load_context_total_ms": 107.62,
+        "llm_total_tokens": 1932
+      },
+      "memory": {
+        "memory_hit_count": 5,
+        "useful_memory_hit_count": null,
+        "memory_precision": null,
+        "quality_evaluation": "not_evaluated",
+        "memory_type_counts": {
+          "task_summary": 5
+        },
+        "traceable_memory_count": 5,
+        "traceable_memory_rate": 1.0
+      },
+      "manual_notes": [
+        "更具体的 query 将噪声率从上一轮宽泛 query 的高噪声状态降到 0.0。",
+        "仍然召回了多个 .overview.md 节点，说明后续需要考虑 level 或排除 overview。",
+        "cross_project_context_rate=1.0 是当前启发式把“银行”当作项目提示导致的误判；OpenViking URI 里的 project 统一是 tagent。",
+        "本次所有 context 都能追踪到 viking:// URI，traceability 保持 1.0。"
+      ]
+    }
+  ]
+}

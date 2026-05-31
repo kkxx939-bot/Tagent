@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-05-30T23:32:48",
+  "description": "每个 query 一个目录，展示 baseline_local 与 after_openviking 的前后对比。",
+  "files": [
+    {
+      "query": "根据登录需求生成 case，然后生成 Playwright 自动化脚本",
+      "file": "query_compare/composite_login_case_auto/compare.json",
+      "table_file": "query_compare/composite_login_case_auto/compare.csv"
+    },
+    {
+      "query": "根据登录需求生成测试用例",
+      "file": "query_compare/case_login_generation/compare.json",
+      "table_file": "query_compare/case_login_generation/compare.csv"
+    },
+    {
+      "query": "检索XZ银行手机银行注册登录模块需求资料",
+      "file": "query_compare/context_xz_bank_mobile_register_login_requirements/compare.json",
+      "table_file": "query_compare/context_xz_bank_mobile_register_login_requirements/compare.csv"
+    },
+    {
+      "query": "检索登录相关需求资料",
+      "file": "query_compare/context_login_requirements/compare.json",
+      "table_file": "query_compare/context_login_requirements/compare.csv"
+    },
+    {
+      "query": "看一下 requestId=req-123 为什么执行错误",
+      "file": "query_compare/failure_request_trace/compare.json",
+      "table_file": "query_compare/failure_request_trace/compare.csv"
+    }
+  ],
+  "layout": "每个 query 一个目录，目录内 compare.json 保存结构化结果，compare.csv 保存表格对比。"
+}

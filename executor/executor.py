@@ -7,12 +7,14 @@ Executor 只负责执行 Planner 给出的通用 action。
 from __future__ import annotations
 
 import re
+import time
 from typing import Any, Callable
 
 from executor.artifacts import generate_artifact, save_artifact, validate_artifact
 from executor.context_loader import load_context
 from executor.policies import policy_for_step
 from executor.result import ExecutionResult, StepResult
+from observability import summarize_context_payload
 from planner.actions import (
     ASK_USER,
     CALL_TOOL,
@@ -150,9 +152,12 @@ class Executor:
                 success=False,
                 error="缺少 context_type，不能默认执行 RAG 检索",
             )
+        started_at = time.perf_counter()
         result = load_context(context_type, self.user_query, dict(step.inputs), self.variables)
+        latency_ms = round((time.perf_counter() - started_at) * 1000, 2)
         if self.memory_manager and result.memory_payload:
             self.memory_manager.add_retrieved_context(result.memory_payload)
+        self._record_context_trace(context_type, latency_ms=latency_ms)
         return StepResult(
             step_id=step.step_id,
             action=step.action,
@@ -374,7 +379,19 @@ class Executor:
             }
         if self.variables.get("failure_report"):
             output["failure_report"] = self.variables["failure_report"]
+        if self.variables.get("context_trace"):
+            output["context_trace"] = self.variables["context_trace"]
         return output
+
+    def _record_context_trace(self, context_type: str, latency_ms: float | None = None) -> None:
+        payload = self.variables.get("loaded_context")
+        if payload is None:
+            return
+        summary = summarize_context_payload(context_type, payload)
+        if latency_ms is not None:
+            summary["latency_ms"] = latency_ms
+            summary.setdefault("metadata", {})["latency_ms"] = latency_ms
+        self.variables.setdefault("context_trace", []).append(summary)
 
     def _status_for_output(self, error: str | None) -> str:
         if error:

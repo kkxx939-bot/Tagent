@@ -1,0 +1,331 @@
+{
+  "report_type": "openviking_comparison_baseline",
+  "backend": "local_rag_memory",
+  "openviking_enabled": false,
+  "generated_at": "2026-05-30T18:56:10",
+  "llm_enabled": false,
+  "planner_strategy": "template",
+  "notes": [
+    "当前文件记录接入 OpenViking 前的本地 RAG/Memory 观测基线。",
+    "后续接入 OpenViking 后，用同一批 cases 和同一字段结构生成对比文件。",
+    "Memory 有效性当前只记录命中和可追踪性，useful_memory_hit_count 仍需要 judge 或人工标注。"
+  ],
+  "summary": {
+    "case_count": 4,
+    "status_distribution": {
+      "completed": 1,
+      "failed": 2,
+      "capability_gap": 1
+    },
+    "intent_distribution": {
+      "CONTEXT_SEARCH": 1,
+      "CASE_GENERATION": 2,
+      "FAILURE_TRIAGE": 1
+    },
+    "estimated_total_tokens": 32948,
+    "estimated_context_tokens": 19262,
+    "context_count": 48,
+    "noise_context_count": 20,
+    "noise_context_rate": 0.5556,
+    "cross_project_context_count": null,
+    "cross_project_context_rate": null,
+    "traceable_context_count": 48,
+    "traceable_context_rate": 1.0,
+    "memory_hit_count": 20,
+    "load_context_total_ms": 10849.13,
+    "noise_scorable_context_count": 36,
+    "cross_project_scorable_context_count": 0
+  },
+  "cases": [
+    {
+      "case_id": "context_login_requirements",
+      "query": "检索登录相关需求资料",
+      "status": "completed",
+      "intent": "CONTEXT_SEARCH",
+      "token": {
+        "estimated_total_tokens": 7981,
+        "estimated_structural_tokens": 3605,
+        "estimated_context_tokens": 4376
+      },
+      "noise": {
+        "noise_context_count": 10,
+        "noise_context_rate": 0.8333,
+        "cross_project_context_count": null,
+        "cross_project_context_rate": null,
+        "expected_topic_hints": [
+          "登录"
+        ],
+        "expected_project_hints": [],
+        "method": "topic_hint_heuristic"
+      },
+      "traceability": {
+        "context_count": 12,
+        "traceable_context_count": 12,
+        "untraceable_context_count": 0,
+        "traceable_context_rate": 1.0,
+        "project_counts": {
+          "KIMS": 2,
+          "信贷业务": 2,
+          "智慧社区": 1,
+          "车机": 3,
+          "xx租房项目": 2
+        },
+        "feature_counts": {
+          "组合管理": 1,
+          "登录注册": 2,
+          "优惠券": 1,
+          "贷款": 1,
+          "车机": 1,
+          "用户资料": 4
+        },
+        "source_file_counts": {
+          "data/requirements/KIMS多组合查询需求规格说明.docx": 1,
+          "data/requirements/平安普惠线上联合放款需求文档v3.9.1.docx": 1,
+          "data/requirements/KIMS基础组合管理需求规格说明书.docx": 1,
+          "data/requirements/智慧社区SaaS服务平台PRD需求规格说明书V0.0.1.docx": 1,
+          "data/test_cases/2 车机测试用例(5000多条).xlsx": 3,
+          "data/test_cases/银行业务-贷款.xmind": 1,
+          "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx": 2,
+          "data/api_docs/API-005_profile_mixed_notes.md": 2
+        }
+      },
+      "memory": {
+        "memory_hit_count": 5,
+        "useful_memory_hit_count": null,
+        "memory_precision": null,
+        "quality_evaluation": "not_evaluated",
+        "memory_type_counts": {
+          "task_summary": 5
+        },
+        "traceable_memory_count": 5,
+        "traceable_memory_rate": 1.0
+      },
+      "latency": {
+        "load_context_total_ms": 2706.69,
+        "load_context_call_count": 1,
+        "load_context_calls": [
+          {
+            "name": "context_search",
+            "latency_ms": 2706.69,
+            "chunk_count": 12
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "case_login_generation",
+      "query": "根据登录需求生成测试用例",
+      "status": "failed",
+      "intent": "CASE_GENERATION",
+      "token": {
+        "estimated_total_tokens": 7305,
+        "estimated_structural_tokens": 3025,
+        "estimated_context_tokens": 4280
+      },
+      "noise": {
+        "noise_context_count": 4,
+        "noise_context_rate": 0.3333,
+        "cross_project_context_count": null,
+        "cross_project_context_rate": null,
+        "expected_topic_hints": [
+          "登录"
+        ],
+        "expected_project_hints": [],
+        "method": "topic_hint_heuristic"
+      },
+      "traceability": {
+        "context_count": 12,
+        "traceable_context_count": 12,
+        "untraceable_context_count": 0,
+        "traceable_context_rate": 1.0,
+        "project_counts": {
+          "信贷业务": 6,
+          "智慧社区": 1,
+          "xx租房项目": 2
+        },
+        "feature_counts": {
+          "登录注册": 8,
+          "贷款": 3
+        },
+        "source_file_counts": {
+          "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx": 3,
+          "data/requirements/智慧社区SaaS服务平台PRD需求规格说明书V0.0.1.docx": 1,
+          "data/test_cases/数据迁移测试案例.xmind": 1,
+          "data/test_cases/测试点-贷后管理功能业务.xmind": 1,
+          "data/test_cases/银行业务-贷款.xmind": 2,
+          "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx": 2,
+          "data/api_docs/API-001_login_openapi_fragment.yaml": 2
+        }
+      },
+      "memory": {
+        "memory_hit_count": 5,
+        "useful_memory_hit_count": null,
+        "memory_precision": null,
+        "quality_evaluation": "not_evaluated",
+        "memory_type_counts": {
+          "task_summary": 5
+        },
+        "traceable_memory_count": 5,
+        "traceable_memory_rate": 1.0
+      },
+      "latency": {
+        "load_context_total_ms": 2674.89,
+        "load_context_call_count": 1,
+        "load_context_calls": [
+          {
+            "name": "case_generation",
+            "latency_ms": 2674.89,
+            "chunk_count": 12
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "composite_login_case_auto",
+      "query": "根据登录需求生成 case，然后生成 Playwright 自动化脚本",
+      "status": "failed",
+      "intent": "CASE_GENERATION",
+      "token": {
+        "estimated_total_tokens": 9263,
+        "estimated_structural_tokens": 3394,
+        "estimated_context_tokens": 5869
+      },
+      "noise": {
+        "noise_context_count": 6,
+        "noise_context_rate": 0.5,
+        "cross_project_context_count": null,
+        "cross_project_context_rate": null,
+        "expected_topic_hints": [
+          "登录"
+        ],
+        "expected_project_hints": [],
+        "method": "topic_hint_heuristic"
+      },
+      "traceability": {
+        "context_count": 12,
+        "traceable_context_count": 12,
+        "untraceable_context_count": 0,
+        "traceable_context_rate": 1.0,
+        "project_counts": {
+          "信贷业务": 7,
+          "智慧社区": 1,
+          "xx租房项目": 2
+        },
+        "feature_counts": {
+          "登录注册": 6,
+          "贷款": 5
+        },
+        "source_file_counts": {
+          "data/requirements/需求说明书-个贷业务V3.0(1).doc": 1,
+          "data/requirements/智慧社区SaaS服务平台PRD需求规格说明书V0.0.1.docx": 1,
+          "data/requirements/需求说明书农贷业务V3.0.docx": 1,
+          "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx": 1,
+          "data/test_cases/测试点-农贷、个贷业务功能.xmind": 4,
+          "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx": 2,
+          "data/api_docs/API-001_login_openapi_fragment.yaml": 2
+        }
+      },
+      "memory": {
+        "memory_hit_count": 5,
+        "useful_memory_hit_count": null,
+        "memory_precision": null,
+        "quality_evaluation": "not_evaluated",
+        "memory_type_counts": {
+          "task_summary": 5
+        },
+        "traceable_memory_count": 5,
+        "traceable_memory_rate": 1.0
+      },
+      "latency": {
+        "load_context_total_ms": 2744.91,
+        "load_context_call_count": 1,
+        "load_context_calls": [
+          {
+            "name": "case_generation",
+            "latency_ms": 2744.91,
+            "chunk_count": 12
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "failure_request_trace",
+      "query": "看一下 requestId=req-123 为什么执行错误",
+      "status": "capability_gap",
+      "intent": "FAILURE_TRIAGE",
+      "token": {
+        "estimated_total_tokens": 8399,
+        "estimated_structural_tokens": 3662,
+        "estimated_context_tokens": 4737
+      },
+      "noise": {
+        "noise_context_count": null,
+        "noise_context_rate": null,
+        "cross_project_context_count": null,
+        "cross_project_context_rate": null,
+        "expected_topic_hints": [],
+        "expected_project_hints": [],
+        "method": "not_enough_topic_hint"
+      },
+      "traceability": {
+        "context_count": 12,
+        "traceable_context_count": 12,
+        "untraceable_context_count": 0,
+        "traceable_context_rate": 1.0,
+        "project_counts": {
+          "信贷业务": 4,
+          "车机": 3,
+          "xx租房项目": 2
+        },
+        "feature_counts": {
+          "贷款": 4,
+          "转账": 1,
+          "车机": 1
+        },
+        "source_file_counts": {
+          "data/requirements/需求说明书农贷业务V3.0.docx": 4,
+          "data/test_cases/银行业务.xmind": 1,
+          "data/test_cases/2 车机测试用例(5000多条).xlsx": 3,
+          "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx": 2,
+          "data/api_docs/API-001_login_openapi_fragment.yaml": 2
+        }
+      },
+      "memory": {
+        "memory_hit_count": 5,
+        "useful_memory_hit_count": null,
+        "memory_precision": null,
+        "quality_evaluation": "not_evaluated",
+        "memory_type_counts": {
+          "task_summary": 5
+        },
+        "traceable_memory_count": 5,
+        "traceable_memory_rate": 1.0
+      },
+      "latency": {
+        "load_context_total_ms": 2722.64,
+        "load_context_call_count": 1,
+        "load_context_calls": [
+          {
+            "name": "failure_triage",
+            "latency_ms": 2722.64,
+            "chunk_count": 12
+          }
+        ]
+      }
+    }
+  ],
+  "compare_after_openviking": {
+    "expected_file": "result/openviking_observation_after_openviking.json",
+    "same_cases_required": true,
+    "primary_metrics": [
+      "estimated_total_tokens",
+      "estimated_context_tokens",
+      "noise_context_rate",
+      "cross_project_context_rate",
+      "traceable_context_rate",
+      "memory_hit_count",
+      "load_context_total_ms"
+    ],
+    "compare_rule": "同一批 cases、同一字段结构；OpenViking 接入后再生成 after 文件做差值。"
+  }
+}

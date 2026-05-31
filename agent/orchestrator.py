@@ -13,9 +13,15 @@ from agent.result import AgentResult
 from executor import Executor
 from filework.queryfile import process_query_sources
 from memory.MemoryManager import MemoryManager
+from observability import build_agent_observation
 from planner.model_planner import build_plan
 from query_processing import normalize_query
 from skills.registry import get_skill
+
+try:
+    from llm_client import consume_llm_usage_log
+except ModuleNotFoundError:
+    consume_llm_usage_log = None
 
 
 def run_agent(
@@ -25,6 +31,7 @@ def run_agent(
     memory_data_dir: str | Path | None = None,
 ) -> AgentResult:
     """运行一次完整 Agent 链路。"""
+    _consume_llm_usage()
     manager = memory_manager or MemoryManager(data_dir=memory_data_dir)
     query_context = normalize_query(user_query)
     normalized_query = query_context.normalized_query
@@ -72,6 +79,18 @@ def run_agent(
                     "session_id": session.session_id,
                     "normalized_query": normalized_query,
                     "source_profile": source_context.source_profile,
+                    "observability": _build_observability(
+                        user_query=user_query,
+                        normalized_query=normalized_query,
+                        query_context=query_context_dict,
+                        source_context=source_context_dict,
+                        intent_result=intent_result,
+                        selected_skill=None,
+                        plan=None,
+                        execution_result=None,
+                        final_output=final_output,
+                        session_memory=session.to_dict(),
+                    ),
                 },
             )
         manager.set_intent_result(intent_result)
@@ -89,6 +108,7 @@ def run_agent(
         )
         warnings.extend(plan.warnings)
 
+        session_memory_before_execution = session.to_dict()
         execution_result = Executor(
             user_query=normalized_query,
             memory_manager=manager,
@@ -122,6 +142,18 @@ def run_agent(
                 "planner_source": plan.metadata.get("planner_source"),
                 "normalized_query": normalized_query,
                 "source_profile": source_context.source_profile,
+                "observability": _build_observability(
+                    user_query=user_query,
+                    normalized_query=normalized_query,
+                    query_context=query_context_dict,
+                    source_context=source_context_dict,
+                    intent_result=intent_result,
+                    selected_skill=selected_skill,
+                    plan=plan_dict,
+                    execution_result=execution_dict,
+                    final_output=final_output,
+                    session_memory=session_memory_before_execution,
+                ),
             },
         )
     except Exception as exc:
@@ -139,7 +171,21 @@ def run_agent(
             query_context=query_context_dict,
             error=error,
             warnings=_dedupe(warnings),
-            metadata={"session_id": session.session_id},
+            metadata={
+                "session_id": session.session_id,
+                "observability": _build_observability(
+                    user_query=user_query,
+                    normalized_query=normalized_query,
+                    query_context=query_context_dict,
+                    source_context=source_context_dict,
+                    intent_result=intent_result,
+                    selected_skill=selected_skill,
+                    plan=plan_dict,
+                    execution_result=execution_dict,
+                    final_output=final_output,
+                    session_memory=session.to_dict(),
+                ),
+            },
         )
 
 
@@ -327,6 +373,41 @@ def _fail_memory_task(manager: MemoryManager, reason: str) -> None:
         manager.fail_task(reason=reason)
     except Exception:
         return
+
+
+def _build_observability(
+    *,
+    user_query: str,
+    normalized_query: str,
+    query_context: dict[str, Any],
+    source_context: dict[str, Any],
+    intent_result: dict[str, Any],
+    selected_skill: dict[str, Any] | None,
+    plan: dict[str, Any] | None,
+    execution_result: dict[str, Any] | None,
+    final_output: dict[str, Any],
+    session_memory: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return build_agent_observation(
+        user_query=user_query,
+        normalized_query=normalized_query,
+        query_context=query_context,
+        source_context=source_context,
+        intent_result=intent_result,
+        selected_skill=selected_skill,
+        plan=plan,
+        execution_result=execution_result,
+        final_output=final_output,
+        context_trace=final_output.get("context_trace") if isinstance(final_output, dict) else [],
+        llm_usage=_consume_llm_usage(),
+        session_memory=session_memory,
+    )
+
+
+def _consume_llm_usage() -> list[dict[str, Any]]:
+    if consume_llm_usage_log is None:
+        return []
+    return consume_llm_usage_log()
 
 
 def _dedupe(items: list[str]) -> list[str]:

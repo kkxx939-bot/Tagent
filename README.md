@@ -97,6 +97,9 @@ memory/
 tools/
   工具注册、工具配置、日志查询等工具适配框架。
 
+openviking/
+  OpenViking 可选接入。用于把本地需求、用例、Bug、接口资料导入上下文服务，并通过 ContextBackend 切换检索来源。
+
 EvalTest/
   评测体系。当前已有 Eval_intent。
 
@@ -264,6 +267,30 @@ docker run --rm -it tagent:playwright npx playwright --version
 ```
 
 更多命令见 `docker.md`。
+
+## OpenViking
+
+Tagent 当前保留本地 RAG，同时也接了一个可选的 OpenViking backend。它的作用是把需求、用例、Bug、接口资料导入独立上下文服务，再通过统一的 `ContextBackend` 返回给 executor。
+
+本地常用命令：
+
+```bash
+python main.py "检索登录相关需求资料"
+python main.py openviking "检索登录相关需求资料"
+python -m openviking.ingest --execute --wait
+python -m observability.openviking_observation_run
+python -m observability.openviking_compare_report
+```
+
+切换到 OpenViking backend 时主要依赖这些环境变量：
+
+```bash
+export CONTEXT_BACKEND=openviking
+export OPENVIKING_URL=http://localhost:1933
+export OPENVIKING_TARGET_URI=viking://resources/tagent
+```
+
+完整实验记录、Docker 本地服务、数据导入、接入前后数据结构和观测结果见 `OpenViKing.md`。
 
 ## 目前边界
 

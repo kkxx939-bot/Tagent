@@ -1,0 +1,1234 @@
+{
+  "success": true,
+  "url": "http://localhost:1933",
+  "target_root": "viking://resources/tagent",
+  "wait": true,
+  "total": 38,
+  "succeeded": 38,
+  "failed": 0,
+  "results": [
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/KIMS基础组合管理需求规格说明书.docx",
+      "success": true,
+      "temp_file_id": "upload_9e40fcedc41540079c4ef29f8edf75ad.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_9e40fcedc41540079c4ef29f8edf75ad.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/KIMS基础组合管理需求规格说明书.docx",
+          "temp_uri": "viking://temp/tagent/05301147_7d56ee/KIMS基础组合管理需求规格说明书",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 45,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/KIMS多组合分类管理需求规格说明书.docx",
+      "success": true,
+      "temp_file_id": "upload_3172679c5f9f4044b90d72b2e4dbee5d.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_3172679c5f9f4044b90d72b2e4dbee5d.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/KIMS多组合分类管理需求规格说明书.docx",
+          "temp_uri": "viking://temp/tagent/05301147_7b991c/KIMS多组合分类管理需求规格说明书",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 7,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/KIMS多组合查询需求规格说明.docx",
+      "success": true,
+      "temp_file_id": "upload_1d2949cdac214e0b96dbbcb26a0194e8.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_1d2949cdac214e0b96dbbcb26a0194e8.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/KIMS多组合查询需求规格说明.docx",
+          "temp_uri": "viking://temp/tagent/05301147_c01571/KIMS多组合查询需求规格说明",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 16,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/KIMS货币组合管理需求规格说明.docx",
+      "success": true,
+      "temp_file_id": "upload_149f7eded46e43cdba5fa078384d4c97.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_149f7eded46e43cdba5fa078384d4c97.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/KIMS货币组合管理需求规格说明.docx",
+          "temp_uri": "viking://temp/tagent/05301147_429428/KIMS货币组合管理需求规格说明",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 7,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/XZ银行手机银行需求格明书-后台管理部分V0.2-20200311.docx",
+      "success": true,
+      "temp_file_id": "upload_377e96cc2d5849f8ad74cbeb06b9bfda.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_377e96cc2d5849f8ad74cbeb06b9bfda.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/XZ银行手机银行需求格明书-后台管理部分V0.2-20200311.docx",
+          "temp_uri": "viking://temp/tagent/05301147_814704/XZ银行手机银行需求格明书-后台管理部分V0.2-20200311",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 72,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/XZ银行手机银行需求说明书-功能权限表V0.1-20200610.xlsx",
+      "success": true,
+      "temp_file_id": "upload_05ceeed87b7f4f3786bd1043e36c080e.xlsx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_05ceeed87b7f4f3786bd1043e36c080e.xlsx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/XZ银行手机银行需求说明书-功能权限表V0.1-20200610.xlsx",
+          "temp_uri": "viking://temp/tagent/05301147_c093e4/XZ银行手机银行需求说明书-功能权限表V0.1-20200610",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 11,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/XZ银行手机银行需求说明书V0.1-20200311.docx",
+      "success": true,
+      "temp_file_id": "upload_fe155c7910244604aad4dcd96f6e5dc1.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_fe155c7910244604aad4dcd96f6e5dc1.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.docx",
+          "temp_uri": "viking://temp/tagent/05301147_425f5f/XZ银行手机银行需求说明书V0.1-20200311",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 84,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/XZ银行手机银行需求说明书V0.1-20200311.xlsx",
+      "success": true,
+      "temp_file_id": "upload_7c49ea7d56ae486d866d56226a7f96e5.xlsx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_7c49ea7d56ae486d866d56226a7f96e5.xlsx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/XZ银行手机银行需求说明书V0.1-20200311.xlsx",
+          "temp_uri": "viking://temp/tagent/05301147_fa6c63/XZ银行手机银行需求说明书V0.1-20200311",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 8,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/xx租房项目 客户端需求文档使用说明书.docx",
+      "success": true,
+      "temp_file_id": "upload_1e94dd34d24f430c908cf099412d162c.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_1e94dd34d24f430c908cf099412d162c.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/xx租房项目_客户端需求文档使用说明书.docx",
+          "temp_uri": "viking://temp/tagent/05301147_b9c370/xx租房项目_客户端需求文档使用说明书",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 3,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/信贷业务基础（上）-授信、合同及放款出账(1).pdf",
+      "success": true,
+      "temp_file_id": "upload_54a6494a62a547b28ef294b42b86c40b.pdf",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_54a6494a62a547b28ef294b42b86c40b.pdf",
+          "meta": {
+            "strategy": "local",
+            "library": "pdfplumber",
+            "pages_processed": 52,
+            "images_extracted": 170,
+            "tables_extracted": 24,
+            "bookmarks_found": 0,
+            "bookmarks_resolved": 0,
+            "bookmarks_unresolved": 0,
+            "headings_found": 40,
+            "heading_source": "font_analysis",
+            "total_pages": 52,
+            "pdf_strategy": "auto",
+            "intermediate_markdown_length": 38457,
+            "intermediate_markdown_preview": "<!-- Page 1 -->\nwww.atstudy.com\n信贷业务基础（上）\n授信、合同及放款出账\n讲解人：金易俭\n学习掌门人 职场引路人\n\n<!-- Page 1 Image 1 -->\n![Page 1 Image 1](.openviking/media/信贷业务基础（上）-授信、合同及放款出账(1)/images/page1_img1.png)\n\n<!-- Page 1 Image 2 -->\n![Page 1 Image 2](.openviking/media/信贷业务基础（上）-授信、合同及放款出账(1)/images/page1_img2.png)\n\n<!-- Page 2 -->\n目录\nCONTENTS\n01 贷款业务分类\n02\n贷款产品介绍\n03 贷款发放流程\n04 还款计划试算\n05\n贷款核算介绍\n学习掌门人 职场引路人\n\n<!-- Page 2 Image 1 -->\n![Page 2 Image 1](.openviking/media/信贷业务基础（上）-授信、合同及放款出账(1)/images/page2_img1.png)\n\n<!-- Page 2"
+          },
+          "root_uri": "viking://resources/tagent/requirement/信贷业务基础（上）-授信、合同及放款出账(1).pdf",
+          "temp_uri": "viking://temp/tagent/05301147_df77a3/信贷业务基础上-授信合同及放款出账1",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 3,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/信贷业务基础（下）-受托支付、还款及变更(1).pdf",
+      "success": true,
+      "temp_file_id": "upload_7f0af03c6e78400a93d03aa5b3d48b1b.pdf",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_7f0af03c6e78400a93d03aa5b3d48b1b.pdf",
+          "meta": {
+            "strategy": "local",
+            "library": "pdfplumber",
+            "pages_processed": 27,
+            "images_extracted": 86,
+            "tables_extracted": 3,
+            "bookmarks_found": 0,
+            "bookmarks_resolved": 0,
+            "bookmarks_unresolved": 0,
+            "headings_found": 30,
+            "heading_source": "font_analysis",
+            "total_pages": 27,
+            "pdf_strategy": "auto",
+            "intermediate_markdown_length": 16598,
+            "intermediate_markdown_preview": "<!-- Page 1 -->\n信贷业务基础（下）\n受托支付、还款及变更\n讲解人：金易俭\n学习掌门人 职场引路人\n\n<!-- Page 1 Image 1 -->\n![Page 1 Image 1](.openviking/media/信贷业务基础（下）-受托支付、还款及变更(1)/images/page1_img1.png)\n\n<!-- Page 1 Image 2 -->\n![Page 1 Image 2](.openviking/media/信贷业务基础（下）-受托支付、还款及变更(1)/images/page1_img2.png)\n\n<!-- Page 1 Image 3 -->\n![Page 1 Image 3](.openviking/media/信贷业务基础（下）-受托支付、还款及变更(1)/images/page1_img3.png)\n\n<!-- Page 1 Image 4 -->\n![Page 1 Image 4](.openviking/media/信贷业务基础（下）-受托支付、还款及变更(1)/images/page1_img4.png)\n\n<!-- Page "
+          },
+          "root_uri": "viking://resources/tagent/requirement/信贷业务基础（下）-受托支付、还款及变更(1).pdf",
+          "temp_uri": "viking://temp/tagent/05301147_615f52/信贷业务基础下-受托支付还款及变更1",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 9,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/寿险渠道走无抵押贷款流程图文版.pdf",
+      "success": true,
+      "temp_file_id": "upload_e30a79e5f6a44aafa91e6aebd64c4805.pdf",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_e30a79e5f6a44aafa91e6aebd64c4805.pdf",
+          "meta": {
+            "strategy": "local",
+            "library": "pdfplumber",
+            "pages_processed": 13,
+            "images_extracted": 24,
+            "tables_extracted": 0,
+            "bookmarks_found": 0,
+            "bookmarks_resolved": 0,
+            "bookmarks_unresolved": 0,
+            "headings_found": 0,
+            "heading_source": "none",
+            "total_pages": 14,
+            "pdf_strategy": "auto",
+            "intermediate_markdown_length": 6607,
+            "intermediate_markdown_preview": "<!-- Page 1 -->\n1.寿险渠道走无抵押单子流程：（整个流程用IE浏览器操作，用chrome有的会\n显示不出来！！）\n2.首先下载平安金管家的测试包，选择TMP1环境测试包\n寿险渠道专员:HEXINGYI064/pa888888\n自己打开平安金管家注册帐号：15355668899/a1234567\n15355661122/a1234567 13812340067/qweqwe123可以走到签约中\n3.如果需要走到放款联系胡组思要如下包含lufax ID的帐号：\nloanRequestCode:171102000012 username:liu5635 身份证：\n450103197905251163 name:刘程 mobile:13616587128\n在平安金管家点击“我的”第二行点击客户经理输入：1110110033/\n（1180100101谢多绑定的是HEXINGYI064）绑定­然后开通旺财最后发送的\n验证码是在短信平台http://pscptest­\n10.paic.com.cn:42154/pscp/login.jsp点击客户管理­网银动态码短信查询\n无抵押单流程"
+          },
+          "root_uri": "viking://resources/tagent/requirement/寿险渠道走无抵押贷款流程图文版.pdf",
+          "temp_uri": "viking://temp/tagent/05301147_b43090/寿险渠道走无抵押贷款流程图文版",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 3,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/平安普惠线上联合放款需求文档v3.9.1.docx",
+      "success": true,
+      "temp_file_id": "upload_5ec5dba101bd405a878b496f5ad30d18.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_5ec5dba101bd405a878b496f5ad30d18.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/平安普惠线上联合放款需求文档v3.9.1.docx",
+          "temp_uri": "viking://temp/tagent/05301147_74fd0c/平安普惠线上联合放款需求文档v3.9.1",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 4,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/新版手机银行数字证书补充需求.docx",
+      "success": true,
+      "temp_file_id": "upload_79e4470c6d2a4727a501772cda12d1f7.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_79e4470c6d2a4727a501772cda12d1f7.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/新版手机银行数字证书补充需求.docx",
+          "temp_uri": "viking://temp/tagent/05301147_47e757/新版手机银行数字证书补充需求",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 3,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/智慧社区SaaS服务平台PRD需求规格说明书V0.0.1.docx",
+      "success": true,
+      "temp_file_id": "upload_3b8c9d5b93ea4ad89d6315c5a77ed18b.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_3b8c9d5b93ea4ad89d6315c5a77ed18b.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/智慧社区SaaS服务平台PRD需求规格说明书V0.0.1.docx",
+          "temp_uri": "viking://temp/tagent/05301147_49bd1e/智慧社区SaaS服务平台PRD需求规格说明书V0.0.1",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 93,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/西藏银行手机银行需求说明书.docx",
+      "success": true,
+      "temp_file_id": "upload_f68a542ec3c94d17babe2d612bc917f9.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_f68a542ec3c94d17babe2d612bc917f9.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/西藏银行手机银行需求说明书.docx",
+          "temp_uri": "viking://temp/tagent/05301147_fe51b9/西藏银行手机银行需求说明书",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 84,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx",
+      "success": true,
+      "temp_file_id": "upload_f4c7007c583045eb8f7946a12edce885.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_f4c7007c583045eb8f7946a12edce885.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/银行移动消费信贷系统需求规格说明书V_1.1-_副本.docx",
+          "temp_uri": "viking://temp/tagent/05301147_525d89/银行移动消费信贷系统需求规格说明书V_1.1-_副本",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 49,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/需求说明书-个贷业务V3.0(1).doc",
+      "success": true,
+      "temp_file_id": "upload_b4b2422d87454915b410d2dfe51f9daa.doc",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_b4b2422d87454915b410d2dfe51f9daa.doc",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/需求说明书-个贷业务V3.0(1).doc",
+          "temp_uri": "viking://temp/tagent/05301147_fe66d8/需求说明书-个贷业务V3.01",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 18,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "requirement",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/requirements/需求说明书农贷业务V3.0.docx",
+      "success": true,
+      "temp_file_id": "upload_515ad2360b4e4aeb89e83a26df1c1572.docx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_515ad2360b4e4aeb89e83a26df1c1572.docx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/requirement/需求说明书农贷业务V3.0.docx",
+          "temp_uri": "viking://temp/tagent/05301147_f0396d/需求说明书农贷业务V3.0",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 223,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/2 车机测试用例(5000多条).xlsx",
+      "success": true,
+      "temp_file_id": "upload_3c7c6067f9cb44b1ba9e75f11b504fe4.xlsx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_3c7c6067f9cb44b1ba9e75f11b504fe4.xlsx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/2_车机测试用例(5000多条).xlsx",
+          "temp_uri": "viking://temp/tagent/05301148_92b7ce/2_车机测试用例5000多条",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 783,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/4 长安汽车车机测试模块XMind.xmind",
+      "success": true,
+      "temp_file_id": "upload_16f548c8584f4fee9edf210dafd0a323.xmind",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_16f548c8584f4fee9edf210dafd0a323.xmind",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/4_长安汽车车机测试模块XMind.xmind",
+          "temp_uri": "viking://temp/tagent/05301149_807eb6/4_长安汽车车机测试模块XMind.xmind",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 19,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/xx租房项目 测试用例 60条.xlsx",
+      "success": true,
+      "temp_file_id": "upload_81f888942bc14cab8d1116bae5a5936e.xlsx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_81f888942bc14cab8d1116bae5a5936e.xlsx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/xx租房项目_测试用例_60条.xlsx",
+          "temp_uri": "viking://temp/tagent/05301149_70b025/xx租房项目_测试用例_60条",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 7,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/手机号转账.xmind",
+      "success": true,
+      "temp_file_id": "upload_0b76291e656f40aeaf78d3a64df60e13.xmind",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_0b76291e656f40aeaf78d3a64df60e13.xmind",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/手机号转账.xmind",
+          "temp_uri": "viking://temp/tagent/05301149_9d0fd1/手机号转账.xmind",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 69,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/手机号转账模块详细测试点.xmind",
+      "success": true,
+      "temp_file_id": "upload_6b7947d5ec764f45a16fa1d9349081df.xmind",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_6b7947d5ec764f45a16fa1d9349081df.xmind",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/手机号转账模块详细测试点.xmind",
+          "temp_uri": "viking://temp/tagent/05301149_916b1b/手机号转账模块详细测试点.xmind",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 69,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/手机银行前端1.3.xmind",
+      "success": true,
+      "temp_file_id": "upload_e45c438ddf8d40ee9534861707400742.xmind",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_e45c438ddf8d40ee9534861707400742.xmind",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/手机银行前端1.3.xmind",
+          "temp_uri": "viking://temp/tagent/05301149_243a9e/手机银行前端1.3.xmind",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 933,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/手机银行后管.xmind",
+      "success": true,
+      "temp_file_id": "upload_d1dee18b1cc746028b5ce4a5051fa615.xmind",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_d1dee18b1cc746028b5ce4a5051fa615.xmind",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/手机银行后管.xmind",
+          "temp_uri": "viking://temp/tagent/05301150_e735ce/手机银行后管.xmind",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 20,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/数据迁移测试案例.xmind",
+      "success": true,
+      "temp_file_id": "upload_8d517bffc8aa4dceb509a8af4ad3b464.xmind",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_8d517bffc8aa4dceb509a8af4ad3b464.xmind",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/数据迁移测试案例.xmind",
+          "temp_uri": "viking://temp/tagent/05301150_b05720/数据迁移测试案例.xmind",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 37,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/测试点-农贷、个贷业务功能.xmind",
+      "success": true,
+      "temp_file_id": "upload_f30f6b78870449138feeb24eed7ba355.xmind",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_f30f6b78870449138feeb24eed7ba355.xmind",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/测试点-农贷、个贷业务功能.xmind",
+          "temp_uri": "viking://temp/tagent/05301150_c8dfc4/测试点-农贷个贷业务功能.xmind",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 26,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/测试点-贷后管理功能业务.xmind",
+      "success": true,
+      "temp_file_id": "upload_10b1af2e901a4de2933c88fbd4bd22e1.xmind",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_10b1af2e901a4de2933c88fbd4bd22e1.xmind",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/测试点-贷后管理功能业务.xmind",
+          "temp_uri": "viking://temp/tagent/05301150_e6e4aa/测试点-贷后管理功能业务.xmind",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 29,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/银行业务-贷款.xmind",
+      "success": true,
+      "temp_file_id": "upload_885ac11be5204ff79e3d3014057bd5f3.xmind",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_885ac11be5204ff79e3d3014057bd5f3.xmind",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/银行业务-贷款.xmind",
+          "temp_uri": "viking://temp/tagent/05301150_910f0a/银行业务-贷款.xmind",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 25,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "case",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/test_cases/银行业务.xmind",
+      "success": true,
+      "temp_file_id": "upload_80178b5e7e4546679229ade20da9c535.xmind",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_80178b5e7e4546679229ade20da9c535.xmind",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/case/银行业务.xmind",
+          "temp_uri": "viking://temp/tagent/05301150_78d278/银行业务.xmind",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 105,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "bug",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/bugs/5 Bug描述清单.xlsx",
+      "success": true,
+      "temp_file_id": "upload_7a07c4ef9eb848df84f53aa75a526da8.xlsx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_7a07c4ef9eb848df84f53aa75a526da8.xlsx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/bug/5_Bug描述清单.xlsx",
+          "temp_uri": "viking://temp/tagent/05301150_d9f6b4/5_Bug描述清单",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 3,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "bug",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx",
+      "success": true,
+      "temp_file_id": "upload_1e08d70d83a1459983bb8ebd54d85c7d.xlsx",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_1e08d70d83a1459983bb8ebd54d85c7d.xlsx",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/bug/xx租房项目__bug列表_100多个bug_描述较简略.xlsx",
+          "temp_uri": "viking://temp/tagent/05301150_53b6cd/xx租房项目_bug列表_100多个bug_描述较简略",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 18,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "api",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/api_docs/API-001_login_openapi_fragment.yaml",
+      "success": true,
+      "temp_file_id": "upload_00cb2cd74d5546cea296eef799d1dbc4.yaml",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_00cb2cd74d5546cea296eef799d1dbc4.yaml",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/api/API-001_login_openapi_fragment.yaml",
+          "temp_uri": "viking://temp/tagent/05301150_611f2d/API-001_login_openapi_fragment",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 3,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "api",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/api_docs/API-002_order_markdown_loose.md",
+      "success": true,
+      "temp_file_id": "upload_e43bf7a8b0a143fc8b997c89f7eb4c5e.md",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_e43bf7a8b0a143fc8b997c89f7eb4c5e.md",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/api/API-002_order_markdown_loose.md",
+          "temp_uri": "viking://temp/tagent/05301150_0bcda4/API-002_order_markdown_loose",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 3,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "api",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/api_docs/API-003_coupon_csv_style.csv",
+      "success": true,
+      "temp_file_id": "upload_aae83291c40a4df086380ffda4dbd80c.csv",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_aae83291c40a4df086380ffda4dbd80c.csv",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/api/API-003_coupon_csv_style.csv",
+          "temp_uri": "viking://temp/tagent/05301150_f4f6f7/API-003_coupon_csv_style",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 3,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "api",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/api_docs/API-004_refund_plain_text.txt",
+      "success": true,
+      "temp_file_id": "upload_d7ee402448a94ae5b999c764ccd6669c.txt",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_d7ee402448a94ae5b999c764ccd6669c.txt",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/api/API-004_refund_plain_text.txt",
+          "temp_uri": "viking://temp/tagent/05301150_b3ed57/API-004_refund_plain_text",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 3,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "source_type": "api",
+      "path": "/Users/gulf/PycharmProjects/Tagent/data/api_docs/API-005_profile_mixed_notes.md",
+      "success": true,
+      "temp_file_id": "upload_bd1f279bcd124eabad2397eb38d1db10.md",
+      "response": {
+        "status": "ok",
+        "result": {
+          "status": "success",
+          "errors": [],
+          "source_path": "/app/data/temp/upload/upload_bd1f279bcd124eabad2397eb38d1db10.md",
+          "meta": {},
+          "root_uri": "viking://resources/tagent/api/API-005_profile_mixed_notes.md",
+          "temp_uri": "viking://temp/tagent/05301150_f99152/API-005_profile_mixed_notes",
+          "queue_status": {
+            "Semantic": {
+              "processed": 1,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            },
+            "Embedding": {
+              "processed": 3,
+              "requeue_count": 0,
+              "error_count": 0,
+              "errors": []
+            }
+          }
+        }
+      }
+    }
+  ]
+}

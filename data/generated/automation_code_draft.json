@@ -1,7 +1,7 @@
 {
   "artifact_type": "automation_code",
   "status": "draft",
-  "generated_at": "2026-05-24T23:20:26",
+  "generated_at": "2026-05-30T20:01:50",
   "framework": "playwright",
   "target": "登录",
   "project_context": {
@@ -12,9 +12,9 @@
       "自动化项目路径"
     ]
   },
-  "source_case_count": 13,
+  "source_case_count": 11,
   "source_case_output_path": "/Users/gulf/PycharmProjects/Tagent/data/generated/generated_cases.json",
-  "user_query": "根据登录需求生成 case，然后生成 Playwright 自动化脚本",
+  "user_query": "根据登录需求生成 测试用例，然后生成 Playwright 自动化脚本",
   "next_steps": [
     "补充自动化项目路径后，再生成可直接落库的代码文件。",
     "确认 P0 用例筛选规则和执行命令。"
@@ -23,11 +23,11 @@
     {
       "path_hint": "tests/generated/p0.spec.ts",
       "case_titles": [
-        "正常登录-有效用户名和密码",
-        "登录失败-用户名为空",
-        "登录失败-密码错误",
-        "登录失败-用户名不存在",
-        "登录成功校验返回的token"
+        "使用正确用户名和密码登录成功",
+        "第一次使用手机短信验证码登录成功",
+        "后台运行20分钟自动退出登录",
+        "结束进程后需重新登录",
+        "密码或账号错误时登录失败并提示"
       ]
     }
   ]

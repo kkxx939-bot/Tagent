@@ -1,281 +1,251 @@
 {
-  "query": "根据我桌面的文档：song_new.pdf，生成测试用例",
-  "generated_at": "2026-05-26T23:00:54",
+  "query": "根据登录需求生成 测试用例，然后生成 Playwright 自动化脚本",
+  "generated_at": "2026-05-30T20:01:50",
   "source_summary": {
     "requirement": {
       "count": 4,
       "chunk_ids": [
-        "requirement_003508",
-        "requirement_003425",
-        "requirement_006541",
-        "requirement_006594"
+        "requirement_006138",
+        "requirement_003633",
+        "requirement_006557",
+        "requirement_005345"
       ]
     },
     "case": {
       "count": 4,
       "chunk_ids": [
-        "case_010124",
-        "case_010437",
-        "case_003402",
-        "case_010167"
+        "case_009456",
+        "case_009208",
+        "case_009457",
+        "case_009421"
       ]
     },
     "bug": {
       "count": 2,
       "chunk_ids": [
-        "bug_000046",
-        "bug_000081"
+        "bug_000184",
+        "bug_000173"
       ]
     },
     "api": {
       "count": 2,
       "chunk_ids": [
-        "api_000011",
-        "api_000051"
+        "api_000001",
+        "api_000007"
       ]
-    },
-    "source_document": {
-      "count": 1,
-      "source_files": [
-        "song_new.pdf"
-      ],
-      "source_type": "unknown"
     }
   },
   "cases": [
     {
       "case_id": "TC-001",
-      "module": "算价系统",
-      "title": "验证正常订单优惠金额与分摊金额计算正确",
+      "module": "登录注册",
+      "title": "使用正确用户名和密码登录成功",
       "priority": "P0",
       "case_type": "正常流",
-      "precondition": "准备一个包含多种优惠（例如满减、折扣）的订单，上游系统（小程序/APP）正常传递订单数据至算价系统",
+      "precondition": "用户已注册且账号正常",
       "steps": [
-        "1. 通过上游系统发起一笔包含多项商品的订单，其中商品1参与满减（满100减10），商品2参与折扣（8折），且存在平台优惠券（满200减20）",
-        "2. 调用算价系统计算接口，获取计算后的优惠金额、分摊金额、付款金额、逆向分摊明细",
-        "3. 手工计算各优惠项应分摊的金额和用户实际应付金额"
+        "进入登录页面",
+        "输入正确的用户名和密码",
+        "点击登录按钮"
       ],
-      "expected_result": "算价系统返回的优惠金额、分摊金额、付款金额与手工计算结果一致，逆向分摊逻辑正确",
-      "case_basis": "简历中'饿了么-算价系统'项目描述：测试关注点永远是金额，包括优惠出资方式、比例、兜底方案等",
-      "source_chunk_ids": []
+      "expected_result": "页面跳转至首页，接口返回200，响应包含token",
+      "case_basis": "需求4自动退出登录场景中隐含登录成功前提；接口API返回200",
+      "source_chunk_ids": [
+        "api_000001",
+        "api_000007",
+        "requirement_005345"
+      ]
     },
     {
       "case_id": "TC-002",
-      "module": "上海银行核心系统",
-      "title": "验证贷款开户放款功能正常流程",
-      "priority": "P0",
+      "module": "登录注册",
+      "title": "第一次使用手机短信验证码登录成功",
+      "priority": "P1",
       "case_type": "正常流",
-      "precondition": "信贷系统已就绪，客户信息完善且满足贷款条件，使用Jmeter发送json格式接口报文",
+      "precondition": "用户手机号未绑定平台账号（首次登录）",
       "steps": [
-        "1. 发送贷款开户请求报文，包含客户证件号、贷款金额、利率、期限等必填字段",
-        "2. 发送放款请求报文，关联开户成功的合同号",
-        "3. 查询核心系统账户余额及贷款台账"
+        "进入登录页面，选择短信登录",
+        "输入有效手机号",
+        "点击获取验证码",
+        "输入收到的验证码",
+        "点击登录"
       ],
-      "expected_result": "开户成功返回合同号，放款成功资金到达客户账户，台账信息正确",
-      "case_basis": "简历中'上海银行核心系统'项目描述：使用Jmeter发送json格式接口报文验证产品功能，涵盖贷款开户放款业务功能",
-      "source_chunk_ids": []
+      "expected_result": "登录成功，自动注册并绑定手机号，跳转至首页",
+      "case_basis": "需求4中提及“短信登录（首次）”",
+      "source_chunk_ids": [
+        "requirement_005345"
+      ]
     },
     {
       "case_id": "TC-003",
-      "module": "接口自动化测试框架",
-      "title": "验证Grpc接口自动化测试框架能成功发送请求并验证响应",
+      "module": "登录注册",
+      "title": "后台运行20分钟自动退出登录",
       "priority": "P1",
       "case_type": "正常流",
-      "precondition": "自动化测试框架环境已部署（Spring+Grpc+TestNG），被测Grpc接口服务正常运行，存在proto文件定义",
+      "precondition": "用户已登录且App未结束进程，切至后台",
       "steps": [
-        "1. 根据proto文件生成Java stub",
-        "2. 编写测试用例，调用一个简单的Grpc接口（如健康检查）",
-        "3. 执行测试用例，断言响应中的预期字段"
+        "用户登录成功",
+        "将App切换至后台运行",
+        "等待20分钟",
+        "重新将App切换至前台",
+        "尝试访问需要登录的页面"
       ],
-      "expected_result": "测试用例执行通过，Grpc请求成功发送，响应结果与预期一致",
-      "case_basis": "简历中'核聚集团 自动化测试工程师'项目描述：使用java+spring+Grpc+testng搭建自动化测试框架，覆盖接口测试",
-      "source_chunk_ids": []
+      "expected_result": "自动退出登录，页面跳转回登录页，需重新登录",
+      "case_basis": "需求4-自动退出登录（未结束进程）",
+      "source_chunk_ids": [
+        "requirement_005345"
+      ]
     },
     {
       "case_id": "TC-004",
-      "module": "算价系统",
-      "title": "输入非法优惠比例触发异常处理",
+      "module": "登录注册",
+      "title": "结束进程后需重新登录",
       "priority": "P1",
-      "case_type": "异常流",
-      "precondition": "算价系统接口暴露优惠配置参数，上游系统可传入自定义优惠比例",
+      "case_type": "正常流",
+      "precondition": "用户已登录",
       "steps": [
-        "1. 构造请求，将优惠比例字段设置为负数（如-0.1）",
-        "2. 调用算价系统接口",
-        "3. 观察返回结果"
+        "用户登录成功",
+        "强制结束App进程",
+        "重新打开App"
       ],
-      "expected_result": "接口返回错误码及错误信息提示'优惠比例不合法'或'比例必须大于0'，计算不执行",
-      "case_basis": "简历中'饿了么-算价系统'项目涉及金额计算，需校验参数合法性；历史Bug中'接口错误信息返回问题'提示需关注异常信息",
+      "expected_result": "启动后显示登录页面，需要重新登录",
+      "case_basis": "需求4-自动退出登录（结束进程）",
       "source_chunk_ids": [
-        "bug_000046"
+        "requirement_005345"
       ]
     },
     {
       "case_id": "TC-005",
-      "module": "上海银行核心系统",
-      "title": "贷款还款金额大于应还总额时的处理",
-      "priority": "P1",
-      "case_type": "边界值",
-      "precondition": "存在一笔未结清贷款，应还总额为10000元",
+      "module": "登录注册",
+      "title": "密码或账号错误时登录失败并提示",
+      "priority": "P0",
+      "case_type": "异常流",
+      "precondition": "用户已注册",
       "steps": [
-        "1. 发送还款请求报文，还款金额为15000元",
-        "2. 确认系统返回结果"
+        "进入登录页面",
+        "输入错误的密码或错误的用户名",
+        "点击登录按钮"
       ],
-      "expected_result": "系统拒绝超额还款，返回错误码提示'还款金额超过应还总额'，或允许部分超额但需有明确规则（如退回）",
-      "case_basis": "简历中'上海银行核心系统'项目包含贷款还款业务功能；边界值场景覆盖",
-      "source_chunk_ids": []
+      "expected_result": "登录失败，页面提示“用户名或密码错误”，接口返回401或400",
+      "case_basis": "接口正常流反例；上下文不足，仅给出通用异常方向",
+      "source_chunk_ids": [
+        "api_000007",
+        "context_insufficient"
+      ]
     },
     {
       "case_id": "TC-006",
-      "module": "订单接口",
-      "title": "POST /order/create 必填参数缺失校验",
+      "module": "登录注册",
+      "title": "用户名为空或密码为空时登录失败",
       "priority": "P1",
       "case_type": "异常流",
-      "precondition": "订单创建接口 /order/create 已启动，未提供鉴权token",
+      "precondition": "无",
       "steps": [
-        "1. 构造POST请求，省略必填参数如productId或amount",
-        "2. 发送请求",
-        "3. 检查响应"
+        "进入登录页面",
+        "不输入用户名，输入密码",
+        "点击登录按钮",
+        "或不输入密码，输入用户名",
+        "点击登录按钮",
+        "或两者都为空，点击登录"
       ],
-      "expected_result": "接口返回400 Bad Request，响应中包含缺失参数的错误提示",
-      "case_basis": "接口文档：POST /order/create 草稿；需覆盖参数校验异常场景",
+      "expected_result": "登录按钮不可用，或点击后提示“用户名不能为空/密码不能为空”",
+      "case_basis": "接口参数校验；上下文不足，仅给出通用边界方向",
       "source_chunk_ids": [
-        "api_000011"
+        "api_000001",
+        "context_insufficient"
       ]
     },
     {
       "case_id": "TC-007",
-      "module": "算价系统",
-      "title": "优惠金额为0或最大允许值时的边界验证",
+      "module": "登录注册",
+      "title": "密码长度边界测试（最短6位、最长20位）",
       "priority": "P2",
       "case_type": "边界值",
-      "precondition": "算价系统支持配置不同优惠金额上限",
+      "precondition": "用户已注册，密码规则为6-20位字符",
       "steps": [
-        "1. 构造请求，优惠金额设为0",
-        "2. 构造请求，优惠金额设为系统允许的最大值（如999999.99）",
-        "3. 分别调用算价系统接口"
+        "进入登录页面",
+        "输入用户名",
+        "输入5位密码，点击登录",
+        "输入6位密码，点击登录",
+        "输入20位密码，点击登录",
+        "输入21位密码，点击登录"
       ],
-      "expected_result": "优惠金额为0时，其他计算正常，不享受优惠；优惠金额为最大值时，系统能正确处理，不溢出或错误",
-      "case_basis": "简历中'饿了么-算价系统'关注金额计算，边界值测试需要覆盖",
-      "source_chunk_ids": []
+      "expected_result": "5位或21位密码登录失败，提示密码长度不合法；6位和20位登录成功",
+      "case_basis": "上下文不足，仅给出通用边界值测试方向，假设密码长度规则",
+      "source_chunk_ids": [
+        "context_insufficient"
+      ]
     },
     {
       "case_id": "TC-008",
-      "module": "信贷系统接口",
-      "title": "未授权用户调用信贷系统接口返回鉴权失败",
-      "priority": "P2",
-      "case_type": "权限/鉴权",
-      "precondition": "信贷系统提供接口（如贷款查询），该接口需要内部系统鉴权token",
+      "module": "登录注册",
+      "title": "新注册账号首次登录不闪退",
+      "priority": "P0",
+      "case_type": "历史Bug回归",
+      "precondition": "用户刚刚完成注册",
       "steps": [
-        "1. 不携带token或携带无效token",
-        "2. 发送HTTP请求调用接口",
-        "3. 观察响应"
+        "新注册账号后立即跳转至登录页或自动登录",
+        "使用该账号执行登录操作（如自动跳转则观察界面）",
+        "登录成功后尝试点击首页各元素"
       ],
-      "expected_result": "接口返回401 Unauthorized或403 Forbidden，错误信息提示鉴权失败",
-      "case_basis": "历史用例中'信贷系统提供接口'，需补充鉴权场景；无具体鉴权文档，基于通用安全要求",
+      "expected_result": "登录后不闪退，正常展示首页，无崩溃或白屏",
+      "case_basis": "历史Bug：新注册的号登录闪退（Bug ID 22-1）",
       "source_chunk_ids": [
-        "case_010124"
+        "bug_000184"
       ]
     },
     {
       "case_id": "TC-009",
-      "module": "用户资料接口",
-      "title": "PUT /user/profile avatar字段上传方式校验",
-      "priority": "P2",
-      "case_type": "权限/鉴权",
-      "precondition": "用户已登录，头像上传接口存在两种说法（单独上传或base64直接传）",
+      "module": "登录注册",
+      "title": "广告页后正常跳转登录页面",
+      "priority": "P1",
+      "case_type": "历史Bug回归",
+      "precondition": "App启动后展示广告页",
       "steps": [
-        "1. 使用base64方式直接传头像字段（假设后端支持）",
-        "2. 使用单独的上传接口先上传图片，再设置avatar为URL",
-        "3. 同时尝试两种方式并验证"
+        "冷启动App，等待广告页加载",
+        "广告页显示期间不点击跳过",
+        "广告页倒计时结束或点击“跳过”",
+        "观察跳转页面"
       ],
-      "expected_result": "无论哪种方式，头像更新成功，用户资料返回正确头像URL或base64数据",
-      "case_basis": "接口文档：/user/profile field avatar 描述中前后端说法不一致，需覆盖两种实现",
+      "expected_result": "广告页结束后正确跳转至登录页面，而非其他页面",
+      "case_basis": "历史Bug：广告页之后应该跳转登录页面（Bug ID 33-1）",
       "source_chunk_ids": [
-        "api_000051"
+        "bug_000173"
       ]
     },
     {
       "case_id": "TC-010",
-      "module": "接口自动化测试框架",
-      "title": "数据准备接口通过JDBC对测试数据进行增删改查",
+      "module": "登录注册",
+      "title": "未登录状态下访问需鉴权页面被拦截",
       "priority": "P1",
-      "case_type": "正常流",
-      "precondition": "自动化框架配置了jdbc连接，测试环境数据库有对应表",
+      "case_type": "权限/鉴权",
+      "precondition": "用户未登录或token过期",
       "steps": [
-        "1. 调用框架中的数据准备接口，向测试表插入一条记录",
-        "2. 通过接口查询该记录",
-        "3. 更新记录中的某个字段",
-        "4. 删除该记录"
+        "未登录直接访问个人中心URL或点击个人中心入口",
+        "或访问其他需要登录的页面"
       ],
-      "expected_result": "增删改查操作均成功，数据库状态与预期一致",
-      "case_basis": "简历中'核聚集团'项目描述：使用jdbc链接数据库，对测试数据进行增删改查操作",
-      "source_chunk_ids": []
-    },
-    {
-      "case_id": "TC-011",
-      "module": "接口自动化测试框架",
-      "title": "测试结果邮件报告发送功能",
-      "priority": "P2",
-      "case_type": "正常流",
-      "precondition": "自动化测试框架已配置mail服务，完成一轮接口测试执行",
-      "steps": [
-        "1. 执行一批测试用例（包含通过和失败案例）",
-        "2. 触发测试报告发送功能",
-        "3. 检查指定邮箱是否收到报告邮件"
-      ],
-      "expected_result": "邮件成功发送，邮件正文或附件包含测试结果汇总（通过数、失败数、失败详情）",
-      "case_basis": "简历中'核聚集团'项目描述：使用web service的mail服务发送测试结果邮件报告",
-      "source_chunk_ids": []
-    },
-    {
-      "case_id": "TC-012",
-      "module": "订单接口",
-      "title": "历史Bug回归：订单创建接口异常场景返回错误信息格式",
-      "priority": "P0",
-      "case_type": "历史Bug回归",
-      "precondition": "订单创建接口存在已知缺陷：错误信息返回格式不规范（已修复）",
-      "steps": [
-        "1. 构造一个必填参数为空的请求",
-        "2. 发送请求",
-        "3. 检查响应中的错误信息字段"
-      ],
-      "expected_result": "错误信息为结构化JSON，包含errorCode和errorMessage，格式统一且可读",
-      "case_basis": "历史Bug ID 181-1 接口错误信息返回问题；需回归验证修复结果",
+      "expected_result": "自动跳转至登录页面，或返回401错误并提示重新登录",
+      "case_basis": "权限校验通用场景；上下文不足，仅给出通用鉴权方向",
       "source_chunk_ids": [
-        "bug_000046"
+        "context_insufficient"
       ]
     },
     {
-      "case_id": "TC-013",
-      "module": "上海银行核心系统",
-      "title": "XML报文多系统连通性验证",
-      "priority": "P1",
-      "case_type": "正常流",
-      "precondition": "核心系统、前置系统、账务系统均连通，使用Jmeter发送XML报文",
-      "steps": [
-        "1. 构造一笔贷款放款XML报文",
-        "2. 通过Jmeter发送至核心系统接口",
-        "3. 查看各系统日志确认报文流转"
-      ],
-      "expected_result": "核心系统接收处理成功，前置系统转发正常，账务系统更新账户，各系统日志无报错",
-      "case_basis": "简历中'上海银行核心系统'项目描述：发送XML报文，验证多系统连通性",
-      "source_chunk_ids": []
-    },
-    {
-      "case_id": "TC-014",
-      "module": "性能测试",
-      "title": "算价系统接口QPS达标验证",
+      "case_id": "TC-011",
+      "module": "登录注册",
+      "title": "连续多次登录失败后账号被锁定",
       "priority": "P2",
-      "case_type": "正常流",
-      "precondition": "使用Jmeter工具，准备并发测试脚本，目标QPS为1000/s",
+      "case_type": "权限/鉴权",
+      "precondition": "账号安全策略：连续5次登录失败锁定30分钟",
       "steps": [
-        "1. 配置Jmeter线程组，设置线程数100，循环次数10，总请求1000",
-        "2. 添加聚合报告监听器",
-        "3. 运行测试，观察QPS和响应时间"
+        "使用同一账号连续输入错误密码5次",
+        "第6次输入正确密码尝试登录"
       ],
-      "expected_result": "接口QPS达到1000/s以上，95%响应时间在200ms以内，无超时或错误",
-      "case_basis": "简历中'性能测试'描述：使用jmeter，验证接口qps，分析原因；补充基于数据测试的Flink对比场景",
-      "source_chunk_ids": []
+      "expected_result": "前5次提示密码错误，第6次提示“账号已被锁定，请30分钟后再试”",
+      "case_basis": "上下文不足，仅给出通用锁定策略测试方向",
+      "source_chunk_ids": [
+        "context_insufficient"
+      ]
     }
   ]
 }

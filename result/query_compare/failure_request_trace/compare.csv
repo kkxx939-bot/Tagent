@@ -1,0 +1,14 @@
+metric,label,before_baseline_local,after_openviking,delta,delta_rate
+status,执行状态,capability_gap,capability_gap,,
+intent,意图,FAILURE_TRIAGE,FAILURE_TRIAGE,,
+estimated_total_tokens,总 Token 估算,8399,5491,-2908,-0.3462
+estimated_context_tokens,上下文 Token 估算,4737,1426,-3311,-0.699
+context_count,上下文条数,,12,,
+noise_context_count,噪声上下文条数,,,,
+noise_context_rate,噪声比例,,,,
+cross_project_context_count,跨项目上下文条数,,,,
+cross_project_context_rate,跨项目比例,,,,
+traceable_context_count,可追踪上下文条数,12,12,0,0.0
+traceable_context_rate,可追踪比例,1.0,1.0,0.0,0.0
+memory_hit_count,Memory 命中数,5,5,0,0.0
+load_context_ms,上下文加载耗时 ms,,50.5,,

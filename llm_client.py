@@ -15,6 +15,7 @@ from config import get_llm_config, require_llm_api_key
 
 
 QUERY = "你好，请用一句话介绍你自己。"
+_LLM_USAGE_LOG: list[dict[str, Any]] = []
 
 
 def call_llm(
@@ -38,6 +39,7 @@ def call_llm(
         api_key=api_key,
         payload=payload,
     )
+    record_llm_usage(response, payload)
     return extract_message_content(response)
 
 
@@ -58,6 +60,7 @@ def call_deepseek_v4_flash(messages: list[dict[str, str]]) -> str:
         api_key=api_key,
         payload=payload,
     )
+    record_llm_usage(response, payload)
     return extract_message_content(response)
 
 
@@ -105,6 +108,22 @@ def extract_message_content(response: dict[str, Any]) -> str:
     if content is None:
         raise RuntimeError(f"LLM 响应中没有 content: {response}")
     return str(content)
+
+
+def record_llm_usage(response: dict[str, Any], payload: dict[str, Any]) -> None:
+    usage = response.get("usage")
+    _LLM_USAGE_LOG.append(
+        {
+            "model": payload.get("model"),
+            "usage": usage if isinstance(usage, dict) else {},
+        }
+    )
+
+
+def consume_llm_usage_log() -> list[dict[str, Any]]:
+    usage = list(_LLM_USAGE_LOG)
+    _LLM_USAGE_LOG.clear()
+    return usage
 
 
 def build_demo_messages(query: str = QUERY) -> list[dict[str, str]]:

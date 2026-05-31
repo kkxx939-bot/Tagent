@@ -1,0 +1,113 @@
+{
+  "query": "看一下 requestId=req-123 为什么执行错误",
+  "file": "failure_request_trace.json",
+  "baseline_local": {
+    "status": "capability_gap",
+    "intent": "FAILURE_TRIAGE",
+    "estimated_total_tokens": 8399,
+    "estimated_context_tokens": 4737,
+    "context_count": null,
+    "noise_context_count": null,
+    "noise_context_rate": null,
+    "cross_project_context_count": null,
+    "cross_project_context_rate": null,
+    "traceable_context_count": 12,
+    "traceable_context_rate": 1.0,
+    "memory_hit_count": 5,
+    "load_context_ms": null
+  },
+  "after_openviking": {
+    "status": "capability_gap",
+    "intent": "FAILURE_TRIAGE",
+    "estimated_total_tokens": 5491,
+    "estimated_context_tokens": 1426,
+    "context_count": 12,
+    "noise_context_count": null,
+    "noise_context_rate": null,
+    "cross_project_context_count": null,
+    "cross_project_context_rate": null,
+    "traceable_context_count": 12,
+    "traceable_context_rate": 1.0,
+    "memory_hit_count": 5,
+    "load_context_ms": 50.5
+  },
+  "diff": {
+    "context_count": {
+      "before": null,
+      "after": 12
+    },
+    "cross_project_context_count": {
+      "before": null,
+      "after": null
+    },
+    "cross_project_context_rate": {
+      "before": null,
+      "after": null
+    },
+    "estimated_context_tokens": {
+      "before": 4737,
+      "after": 1426,
+      "delta": -3311,
+      "delta_rate": -0.699
+    },
+    "estimated_total_tokens": {
+      "before": 8399,
+      "after": 5491,
+      "delta": -2908,
+      "delta_rate": -0.3462
+    },
+    "intent": {
+      "before": "FAILURE_TRIAGE",
+      "after": "FAILURE_TRIAGE"
+    },
+    "load_context_ms": {
+      "before": null,
+      "after": 50.5
+    },
+    "memory_hit_count": {
+      "before": 5,
+      "after": 5,
+      "delta": 0,
+      "delta_rate": 0.0
+    },
+    "noise_context_count": {
+      "before": null,
+      "after": null
+    },
+    "noise_context_rate": {
+      "before": null,
+      "after": null
+    },
+    "status": {
+      "before": "capability_gap",
+      "after": "capability_gap"
+    },
+    "traceable_context_count": {
+      "before": 12,
+      "after": 12,
+      "delta": 0,
+      "delta_rate": 0.0
+    },
+    "traceable_context_rate": {
+      "before": 1.0,
+      "after": 1.0,
+      "delta": 0.0,
+      "delta_rate": 0.0
+    }
+  },
+  "source_files": {
+    "baseline_local": {
+      "data/requirements/需求说明书农贷业务V3.0.docx": 4,
+      "data/test_cases/银行业务.xmind": 1,
+      "data/test_cases/2 车机测试用例(5000多条).xlsx": 3,
+      "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx": 2,
+      "data/api_docs/API-001_login_openapi_fragment.yaml": 2
+    },
+    "after_openviking": {}
+  },
+  "extra_query_records": [],
+  "notes": [
+    "context token: 4737 -> 1426",
+    "load context ms: None -> 50.5"
+  ]
+}

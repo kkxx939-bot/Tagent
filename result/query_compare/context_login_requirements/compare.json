@@ -1,0 +1,121 @@
+{
+  "query": "检索登录相关需求资料",
+  "file": "context_login_requirements.json",
+  "baseline_local": {
+    "status": "completed",
+    "intent": "CONTEXT_SEARCH",
+    "estimated_total_tokens": 7981,
+    "estimated_context_tokens": 4376,
+    "context_count": null,
+    "noise_context_count": 10,
+    "noise_context_rate": 0.8333,
+    "cross_project_context_count": null,
+    "cross_project_context_rate": null,
+    "traceable_context_count": 12,
+    "traceable_context_rate": 1.0,
+    "memory_hit_count": 5,
+    "load_context_ms": null
+  },
+  "after_openviking": {
+    "status": "completed",
+    "intent": "CONTEXT_SEARCH",
+    "estimated_total_tokens": 5702,
+    "estimated_context_tokens": 1661,
+    "context_count": 12,
+    "noise_context_count": 10,
+    "noise_context_rate": 0.8333,
+    "cross_project_context_count": null,
+    "cross_project_context_rate": null,
+    "traceable_context_count": 12,
+    "traceable_context_rate": 1.0,
+    "memory_hit_count": 5,
+    "load_context_ms": 125.9
+  },
+  "diff": {
+    "context_count": {
+      "before": null,
+      "after": 12
+    },
+    "cross_project_context_count": {
+      "before": null,
+      "after": null
+    },
+    "cross_project_context_rate": {
+      "before": null,
+      "after": null
+    },
+    "estimated_context_tokens": {
+      "before": 4376,
+      "after": 1661,
+      "delta": -2715,
+      "delta_rate": -0.6204
+    },
+    "estimated_total_tokens": {
+      "before": 7981,
+      "after": 5702,
+      "delta": -2279,
+      "delta_rate": -0.2856
+    },
+    "intent": {
+      "before": "CONTEXT_SEARCH",
+      "after": "CONTEXT_SEARCH"
+    },
+    "load_context_ms": {
+      "before": null,
+      "after": 125.9
+    },
+    "memory_hit_count": {
+      "before": 5,
+      "after": 5,
+      "delta": 0,
+      "delta_rate": 0.0
+    },
+    "noise_context_count": {
+      "before": 10,
+      "after": 10,
+      "delta": 0,
+      "delta_rate": 0.0
+    },
+    "noise_context_rate": {
+      "before": 0.8333,
+      "after": 0.8333,
+      "delta": 0.0,
+      "delta_rate": 0.0
+    },
+    "status": {
+      "before": "completed",
+      "after": "completed"
+    },
+    "traceable_context_count": {
+      "before": 12,
+      "after": 12,
+      "delta": 0,
+      "delta_rate": 0.0
+    },
+    "traceable_context_rate": {
+      "before": 1.0,
+      "after": 1.0,
+      "delta": 0.0,
+      "delta_rate": 0.0
+    }
+  },
+  "source_files": {
+    "baseline_local": {
+      "data/requirements/KIMS多组合查询需求规格说明.docx": 1,
+      "data/requirements/平安普惠线上联合放款需求文档v3.9.1.docx": 1,
+      "data/requirements/KIMS基础组合管理需求规格说明书.docx": 1,
+      "data/requirements/智慧社区SaaS服务平台PRD需求规格说明书V0.0.1.docx": 1,
+      "data/test_cases/2 车机测试用例(5000多条).xlsx": 3,
+      "data/test_cases/银行业务-贷款.xmind": 1,
+      "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx": 2,
+      "data/api_docs/API-005_profile_mixed_notes.md": 2
+    },
+    "after_openviking": {}
+  },
+  "extra_query_records": [],
+  "notes": [
+    "context token: 4376 -> 1661",
+    "noise rate: 0.8333 -> 0.8333",
+    "load context ms: None -> 125.9"
+  ]
+}

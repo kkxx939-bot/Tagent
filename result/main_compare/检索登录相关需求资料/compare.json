@@ -1,0 +1,97 @@
+{
+  "dimension": "main",
+  "query": "检索登录相关需求资料",
+  "created_at": "2026-05-31T11:04:36",
+  "updated_at": "2026-05-31T11:08:29",
+  "native_rag": {
+    "mode": "native_rag",
+    "recorded_at": "2026-05-31T11:08:29",
+    "success": true,
+    "status": "completed",
+    "intent": "CONTEXT_SEARCH",
+    "backend": "local",
+    "normalized_query": "检索登录相关需求资料",
+    "source_summary": {
+      "requirement": {
+        "count": 4,
+        "chunk_ids": [
+          "requirement_000615",
+          "requirement_003489",
+          "requirement_000308",
+          "requirement_003691"
+        ]
+      },
+      "case": {
+        "count": 4,
+        "chunk_ids": [
+          "case_002011",
+          "case_010082",
+          "case_000634",
+          "case_004487"
+        ]
+      },
+      "bug": {
+        "count": 2,
+        "chunk_ids": [
+          "bug_000028",
+          "bug_000056"
+        ]
+      },
+      "api": {
+        "count": 2,
+        "chunk_ids": [
+          "api_000046",
+          "api_000048"
+        ]
+      }
+    },
+    "estimated_total_tokens": 8004,
+    "estimated_context_tokens": 4376,
+    "context_count": 12,
+    "noise_context_rate": 0.8333,
+    "traceable_context_rate": 1.0,
+    "load_context_total_ms": 2605.23,
+    "memory_hit_count": 5,
+    "llm_total_tokens": 1563,
+    "error": null,
+    "warnings": []
+  },
+  "openviking": {
+    "mode": "openviking",
+    "recorded_at": "2026-05-31T11:04:36",
+    "success": true,
+    "status": "completed",
+    "intent": "CONTEXT_SEARCH",
+    "backend": "openviking",
+    "normalized_query": "检索登录相关需求资料",
+    "source_summary": {
+      "requirement": {
+        "count": 12,
+        "chunk_ids": [
+          "openviking_000001",
+          "openviking_000002",
+          "openviking_000003",
+          "openviking_000004",
+          "openviking_000005",
+          "openviking_000006",
+          "openviking_000007",
+          "openviking_000008",
+          "openviking_000009",
+          "openviking_000010",
+          "openviking_000011",
+          "openviking_000012"
+        ]
+      }
+    },
+    "estimated_total_tokens": 5710,
+    "estimated_context_tokens": 1661,
+    "context_count": 12,
+    "noise_context_rate": 0.8333,
+    "traceable_context_rate": 1.0,
+    "load_context_total_ms": 151.84,
+    "memory_hit_count": 5,
+    "llm_total_tokens": 1596,
+    "error": null,
+    "warnings": []
+  }
+}

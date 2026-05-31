@@ -1,6 +1,7 @@
 openpyxl==3.1.5
 PyYAML==6.0.3
 pypdf==6.11.0
+requests==2.32.5
 
 # RAG 向量检索和重排
 numpy==2.4.6

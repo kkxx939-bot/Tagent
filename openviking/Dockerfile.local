@@ -1,0 +1,10 @@
+FROM ghcr.io/volcengine/openviking:latest
+
+USER root
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc g++ make \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN /app/.venv/bin/python -m ensurepip \
+    && /app/.venv/bin/python -m pip install "openviking[local-embed]"

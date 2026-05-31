@@ -1,0 +1,120 @@
+{
+  "query": "根据登录需求生成 case，然后生成 Playwright 自动化脚本",
+  "file": "composite_login_case_auto.json",
+  "baseline_local": {
+    "status": "failed",
+    "intent": "CASE_GENERATION",
+    "estimated_total_tokens": 9263,
+    "estimated_context_tokens": 5869,
+    "context_count": null,
+    "noise_context_count": 6,
+    "noise_context_rate": 0.5,
+    "cross_project_context_count": null,
+    "cross_project_context_rate": null,
+    "traceable_context_count": 12,
+    "traceable_context_rate": 1.0,
+    "memory_hit_count": 5,
+    "load_context_ms": null
+  },
+  "after_openviking": {
+    "status": "partial_completed",
+    "intent": "CASE_GENERATION",
+    "estimated_total_tokens": 7998,
+    "estimated_context_tokens": 1659,
+    "context_count": 12,
+    "noise_context_count": 10,
+    "noise_context_rate": 0.8333,
+    "cross_project_context_count": null,
+    "cross_project_context_rate": null,
+    "traceable_context_count": 12,
+    "traceable_context_rate": 1.0,
+    "memory_hit_count": 5,
+    "load_context_ms": 49.67
+  },
+  "diff": {
+    "context_count": {
+      "before": null,
+      "after": 12
+    },
+    "cross_project_context_count": {
+      "before": null,
+      "after": null
+    },
+    "cross_project_context_rate": {
+      "before": null,
+      "after": null
+    },
+    "estimated_context_tokens": {
+      "before": 5869,
+      "after": 1659,
+      "delta": -4210,
+      "delta_rate": -0.7173
+    },
+    "estimated_total_tokens": {
+      "before": 9263,
+      "after": 7998,
+      "delta": -1265,
+      "delta_rate": -0.1366
+    },
+    "intent": {
+      "before": "CASE_GENERATION",
+      "after": "CASE_GENERATION"
+    },
+    "load_context_ms": {
+      "before": null,
+      "after": 49.67
+    },
+    "memory_hit_count": {
+      "before": 5,
+      "after": 5,
+      "delta": 0,
+      "delta_rate": 0.0
+    },
+    "noise_context_count": {
+      "before": 6,
+      "after": 10,
+      "delta": 4,
+      "delta_rate": 0.6667
+    },
+    "noise_context_rate": {
+      "before": 0.5,
+      "after": 0.8333,
+      "delta": 0.3333,
+      "delta_rate": 0.6666
+    },
+    "status": {
+      "before": "failed",
+      "after": "partial_completed"
+    },
+    "traceable_context_count": {
+      "before": 12,
+      "after": 12,
+      "delta": 0,
+      "delta_rate": 0.0
+    },
+    "traceable_context_rate": {
+      "before": 1.0,
+      "after": 1.0,
+      "delta": 0.0,
+      "delta_rate": 0.0
+    }
+  },
+  "source_files": {
+    "baseline_local": {
+      "data/requirements/需求说明书-个贷业务V3.0(1).doc": 1,
+      "data/requirements/智慧社区SaaS服务平台PRD需求规格说明书V0.0.1.docx": 1,
+      "data/requirements/需求说明书农贷业务V3.0.docx": 1,
+      "data/requirements/银行移动消费信贷系统需求规格说明书V_1.1- 副本.docx": 1,
+      "data/test_cases/测试点-农贷、个贷业务功能.xmind": 4,
+      "data/bugs/xx租房项目  bug列表 100多个bug 描述较简略.xlsx": 2,
+      "data/api_docs/API-001_login_openapi_fragment.yaml": 2
+    },
+    "after_openviking": {}
+  },
+  "extra_query_records": [],
+  "notes": [
+    "context token: 5869 -> 1659",
+    "noise rate: 0.5 -> 0.8333",
+    "load context ms: None -> 49.67"
+  ]
+}
