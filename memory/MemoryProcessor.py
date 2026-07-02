@@ -73,7 +73,7 @@ class MemoryProcessor:
         self.use_llm = config["use_llm"] if use_llm is None else use_llm
         self.min_confidence = config["min_confidence"] if min_confidence is None else min_confidence
         self.allowed_persist_actions = set(allowed_persist_actions or config["allowed_persist_actions"])
-        self.persist_task_statuses = persist_task_statuses or {"completed", "failed"}
+        self.persist_task_statuses = persist_task_statuses or {"completed"}
         self.skip_task_intents = skip_task_intents or {"UNKNOWN"}
 
     def build_candidates(self, session_summary: dict[str, Any]) -> list[dict[str, Any]]:
@@ -211,6 +211,7 @@ class MemoryProcessor:
                 build_memory_process_prompt(session_summary),
                 temperature=0.1,
                 max_tokens=1200,
+                llm_task="memory_summary",
             )
             payload = self._parse_json_response(response)
         except Exception:
@@ -264,6 +265,9 @@ class MemoryProcessor:
             return False
         if intent in self.skip_task_intents:
             return False
+        result_quality = session_summary.get("result_quality")
+        if isinstance(result_quality, dict) and result_quality.get("should_reuse") is False:
+            return False
         return True
 
     def _safe_summary(self, session_summary: dict[str, Any]) -> dict[str, Any]:
@@ -276,6 +280,8 @@ class MemoryProcessor:
             "selected_skill",
             "generated_outputs",
             "missing_context",
+            "final_output_summary",
+            "result_quality",
             "notes",
             "started_at",
             "completed_at",

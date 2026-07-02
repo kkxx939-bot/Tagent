@@ -1,0 +1,27 @@
+# 本地调试用 OpenTelemetry Collector 配置。
+#
+# 当前阶段只做最小闭环：
+# Tagent OpenTelemetry SDK -> OTLP HTTP -> Collector -> debug exporter 打印。
+# 后续接 Tempo/Grafana 时，再把 exporters.debug 换成或追加 otlp/tempo。
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+
+exporters:
+  debug:
+    verbosity: detailed
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]

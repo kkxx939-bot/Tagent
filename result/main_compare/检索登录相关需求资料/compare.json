@@ -2,10 +2,10 @@
   "dimension": "main",
   "query": "检索登录相关需求资料",
   "created_at": "2026-05-31T11:04:36",
-  "updated_at": "2026-05-31T11:08:29",
+  "updated_at": "2026-06-30T17:57:05",
   "native_rag": {
     "mode": "native_rag",
-    "recorded_at": "2026-05-31T11:08:29",
+    "recorded_at": "2026-06-30T17:57:05",
     "success": true,
     "status": "completed",
     "intent": "CONTEXT_SEARCH",
@@ -45,14 +45,14 @@
         ]
       }
     },
-    "estimated_total_tokens": 8004,
+    "estimated_total_tokens": 7728,
     "estimated_context_tokens": 4376,
     "context_count": 12,
     "noise_context_rate": 0.8333,
     "traceable_context_rate": 1.0,
-    "load_context_total_ms": 2605.23,
+    "load_context_total_ms": 2619.68,
     "memory_hit_count": 5,
-    "llm_total_tokens": 1563,
+    "llm_total_tokens": 922,
     "error": null,
     "warnings": []
   },

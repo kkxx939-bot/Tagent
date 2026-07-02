@@ -3,12 +3,12 @@ status,执行状态,completed,completed
 success,是否成功,True,True
 intent,识别意图,CONTEXT_SEARCH,CONTEXT_SEARCH
 backend,上下文后端,local,openviking
-estimated_total_tokens,总 Token 估算,8004,5710
+estimated_total_tokens,总 Token 估算,7728,5710
 estimated_context_tokens,上下文 Token 估算,4376,1661
 context_count,上下文条数,12,12
 noise_context_rate,噪声比例,0.8333,0.8333
 traceable_context_rate,上下文可追踪率,1.0,1.0
-load_context_total_ms,上下文加载耗时 ms,2605.23,151.84
+load_context_total_ms,上下文加载耗时 ms,2619.68,151.84
 memory_hit_count,Memory 命中数,5,5
-llm_total_tokens,LLM Token,1563,1596
+llm_total_tokens,LLM Token,922,1596
 error,错误,,

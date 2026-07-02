@@ -10,6 +10,8 @@ import re
 import time
 from typing import Any, Callable
 
+from OTel.OTelClient import mark_span_error, mark_span_ok, set_span_attributes, start_span
+from OTel.TraceScheme import SPAN_EXECUTOR_STEP, build_executor_step_attributes
 from executor.artifacts import generate_artifact, save_artifact, validate_artifact
 from executor.context_loader import load_context
 from executor.policies import policy_for_step
@@ -79,53 +81,71 @@ class Executor:
         self.variables["plan_intent"] = plan.intent
 
         for index, step in enumerate(plan.steps):
-            step.status = RUNNING
+            with start_span(
+                SPAN_EXECUTOR_STEP,
+                build_executor_step_attributes(plan=plan.to_dict(), step=step.to_dict(), index=index),
+            ) as span:
+                step.status = RUNNING
 
-            missing_dependencies = [dependency for dependency in step.depends_on if dependency not in completed_steps]
-            if missing_dependencies:
-                result = StepResult(
-                    step_id=step.step_id,
-                    action=step.action,
-                    success=False,
-                    error=f"依赖步骤未完成：{missing_dependencies}",
-                )
-                step.status = FAILED
-                step_results.append(result)
-                return self._build_result(plan, step_results, result.error)
-
-            handler = self.handlers.get(step.action)
-            if not handler:
-                result = StepResult(
-                    step_id=step.step_id,
-                    action=step.action,
-                    success=False,
-                    error=f"action 未实现：{step.action}",
-                )
-            else:
-                try:
-                    result = handler(step)
-                except Exception as exc:
+                missing_dependencies = [
+                    dependency for dependency in step.depends_on if dependency not in completed_steps
+                ]
+                if missing_dependencies:
                     result = StepResult(
                         step_id=step.step_id,
                         action=step.action,
                         success=False,
-                        error=f"{type(exc).__name__}: {exc}",
+                        error=f"依赖步骤未完成：{missing_dependencies}",
                     )
+                    step.status = FAILED
+                    step_results.append(result)
+                    self._record_step_span_result(span, plan, step, index, result)
+                    mark_span_error(span, result.error)
+                    return self._build_result(plan, step_results, result.error)
 
-            step_results.append(result)
-            policy = policy_for_step(step)
-            if not result.success and not policy.continue_on_failure:
-                step.status = FAILED
-                return self._build_result(plan, step_results, result.error)
+                handler = self.handlers.get(step.action)
+                if not handler:
+                    result = StepResult(
+                        step_id=step.step_id,
+                        action=step.action,
+                        success=False,
+                        error=f"action 未实现：{step.action}",
+                    )
+                else:
+                    try:
+                        result = handler(step)
+                    except Exception as exc:
+                        result = StepResult(
+                            step_id=step.step_id,
+                            action=step.action,
+                            success=False,
+                            error=f"{type(exc).__name__}: {exc}",
+                        )
 
-            step.status = COMPLETED if result.success else FAILED
-            completed_steps.add(step.step_id)
-            self._record_step_note(step)
-            if step.action == ASK_USER and result.success:
-                for remaining_step in plan.steps[index + 1 :]:
-                    remaining_step.status = SKIPPED
-                plan.status = WAITING_FOR_USER
-                return self._build_result(plan, step_results)
+                step_results.append(result)
+                policy = policy_for_step(step)
+                if not result.success and not policy.continue_on_failure:
+                    step.status = FAILED
+                    self._record_step_span_result(span, plan, step, index, result)
+                    mark_span_error(span, result.error)
+                    return self._build_result(plan, step_results, result.error)
+
+                step.status = COMPLETED if result.success else FAILED
+                completed_steps.add(step.step_id)
+                self._record_step_note(step)
+                if step.action == ASK_USER and result.success:
+                    for remaining_step in plan.steps[index + 1 :]:
+                        remaining_step.status = SKIPPED
+                    plan.status = WAITING_FOR_USER
+                    self._record_step_span_result(span, plan, step, index, result)
+                    mark_span_ok(span)
+                    return self._build_result(plan, step_results)
+
+                self._record_step_span_result(span, plan, step, index, result)
+                if result.success:
+                    mark_span_ok(span)
+                else:
+                    mark_span_error(span, result.error)
 
         plan.status = self._status_for_output(None)
         return self._build_result(plan, step_results)
@@ -299,10 +319,13 @@ class Executor:
             )
 
         persist_summary = self.variables.get("plan_intent") != "OUT_OF_SCOPE" and not self.variables.get("capability_gap")
+        final_status = self._status_for_output(None)
         result = self.memory_manager.complete_task(
             summary="Executor 执行完成",
-            final_status=self._status_for_output(None),
+            final_status=final_status,
+            final_output=self._memory_final_output(final_status),
             persist_summary=persist_summary,
+            persist_async=True,
         )
         self.variables["memory_result"] = result
         return StepResult(step_id=step.step_id, action=step.action, success=True, data=result)
@@ -329,6 +352,17 @@ class Executor:
     def _record_step_note(self, step: PlanStep) -> None:
         if self.memory_manager and self.memory_manager.get_current_session():
             self.memory_manager.add_note(f"执行完成：{step.step_id} {step.action}")
+
+    def _record_step_span_result(self, span: Any, plan: Plan, step: PlanStep, index: int, result: StepResult) -> None:
+        set_span_attributes(
+            span,
+            build_executor_step_attributes(
+                plan=plan.to_dict(),
+                step=step.to_dict(),
+                index=index,
+                result=result.to_dict(),
+            ),
+        )
 
     def _build_result(
         self,
@@ -381,6 +415,23 @@ class Executor:
             output["failure_report"] = self.variables["failure_report"]
         if self.variables.get("context_trace"):
             output["context_trace"] = self.variables["context_trace"]
+        return output
+
+    def _memory_final_output(self, status: str) -> dict[str, Any]:
+        output = {
+            "status": status,
+            "artifacts": self.variables.get("artifacts") or [],
+            "tool_results": self.variables.get("tool_results") or [],
+            "missing_context": self.variables.get("clarification_required") or [],
+            "capability_gap": self.variables.get("capability_gap"),
+            "warnings": [],
+        }
+        if self.variables.get("case_generation_result"):
+            output["summary"] = {
+                "case_count": len(self.variables["case_generation_result"].get("cases") or []),
+                "source_summary": self.variables["case_generation_result"].get("source_summary") or {},
+                "grounding_report": self.variables["case_generation_result"].get("grounding_report") or {},
+            }
         return output
 
     def _record_context_trace(self, context_type: str, latency_ms: float | None = None) -> None:

@@ -1,3 +1,17 @@
+"""意图识别评测入口。
+
+这个脚本只评测 Tagent 的前半段链路：
+
+1. 从 jsonl 评测集读取 query 和 expect 标准答案
+2. 对 query 做 normalize_query 标准化
+3. 调用 recognize_main_intent 做意图识别
+4. 用 metrics.evaluate_case 把实际结果和 expect 逐项比较
+5. 汇总通过率、意图准确率、实体抽取准确率等指标
+
+注意：默认不启用 LLM。这样可以先得到稳定、低成本、可复现的规则兜底基线。
+如果需要评测 LLM + 规则混合效果，运行时加 --allow-llm。
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -11,6 +25,8 @@ from typing import Any
 
 CURRENT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = CURRENT_DIR.parents[1]
+# 评测脚本位于 EvalTest/Eval_intent 下，直接运行时 Python 默认找不到项目根目录模块。
+# 这里把项目根目录和当前评测目录加入 sys.path，方便导入 Intent、query_processing 和 metrics。
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 if str(CURRENT_DIR) not in sys.path:
@@ -35,15 +51,21 @@ TREND_METRICS = (
 
 def main() -> int:
     args = parse_args()
+    # 默认禁用 LLM，强制 classify_main_intent_with_llm 返回无效结果。
+    # 这样 recognize_main_intent 会进入规则兜底路径，适合作为 CI/回归评测基线。
     if not args.allow_llm:
         disable_llm()
 
     generated_at = datetime.now().isoformat(timespec="seconds")
     cases = load_cases(args.suite)
+    # --case-id 可以只跑某几条 case，调试单个失败样本时很有用。
     if args.case_id:
         wanted = set(args.case_id)
         cases = [case for case in cases if case["id"] in wanted]
 
+    # 每条 case 会得到一个 IntentEvalResult：
+    # - passed 表示这条 case 的所有 expect 检查项都通过
+    # - failures 记录具体哪一项不符合预期
     results = [run_case(case) for case in cases]
     report = {
         "run_id": build_run_id(args.suite, generated_at, args.allow_llm),
@@ -54,19 +76,26 @@ def main() -> int:
         "summary": compute_summary(results),
         "results": [result_to_dict(result) for result in results],
     }
+    # --output 适合把本次完整报告写到指定文件。
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    # 默认会写 report/latest.json、report/history.jsonl、trend.csv、trend.svg。
+    # --no-report 则只打印结果，不落盘，适合临时验证。
     if not args.no_report:
         write_report_artifacts(report, args.report_dir)
     print(json.dumps(report, ensure_ascii=False, indent=2))
+    # 退出码是给 CI/CD 用的：有失败返回 1，全部通过返回 0。
     return 0 if report["summary"]["failed"] == 0 else 1
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="运行意图评测。")
+    # suite 决定读取哪个 jsonl 评测集。
     parser.add_argument("--suite", choices=sorted(SUITES), default="full_eval")
+    # 可以多次传入，例如：--case-id a --case-id b。
     parser.add_argument("--case-id", action="append", default=[])
+    # 默认关闭 LLM；加这个参数后才会走真实 LLM 意图识别。
     parser.add_argument("--allow-llm", action="store_true")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--report-dir", type=Path, default=DEFAULT_REPORT_DIR)
@@ -78,6 +107,8 @@ def disable_llm() -> None:
     import Intent.main_intent_route as main_intent_route
 
     def invalid_intent(*_: Any, **__: Any) -> dict[str, Any]:
+        # 这里不是返回一个真实意图，而是模拟“LLM 不可用/结果无效”。
+        # recognize_main_intent 看到 is_valid=False 后，会继续走规则匹配。
         return {
             "intent": "OUT_OF_SCOPE",
             "confidence": 0.3,
@@ -89,6 +120,7 @@ def disable_llm() -> None:
             "error": "intent_eval_disabled_llm",
         }
 
+    # 直接替换模块里的函数引用，是这个评测脚本控制 LLM 开关的关键。
     main_intent_route.classify_main_intent_with_llm = invalid_intent
 
 
@@ -98,9 +130,11 @@ def load_cases(suite: str) -> list[dict[str, Any]]:
     with path.open("r", encoding="utf-8") as file:
         for line_no, line in enumerate(file, start=1):
             text = line.strip()
+            # 允许 jsonl 里出现空行或 # 注释行，方便维护评测集。
             if not text or text.startswith("#"):
                 continue
             case = json.loads(text)
+            # 保存原始行号，后续如果要定位坏 case，可以用这个字段扩展错误提示。
             case["_line"] = line_no
             cases.append(case)
     return cases
@@ -109,17 +143,24 @@ def load_cases(suite: str) -> list[dict[str, Any]]:
 def run_case(case: dict[str, Any]) -> IntentEvalResult:
     expect = case.get("expect") or {}
     try:
+        # actual 是 Tagent 实际跑出来的结果，包含 query_context 和 intent_result。
         actual = run_intent(case["query"])
+        # evaluate_case 是真正的打分入口：
+        # 它会把 expect.intent / expect.is_ready / expect.target_contains 等字段
+        # 和 actual.intent_result / actual.query_context 逐项比较。
         failures = evaluate_case(actual, expect)
         return IntentEvalResult(
             case_id=str(case["id"]),
             expected_intent=str(expect.get("intent") or ""),
             actual_intent=str((actual.get("intent_result") or {}).get("intent") or ""),
+            # 一条 case 的判定很严格：没有任何 failure 才算通过。
             passed=not failures,
             failures=failures,
             tags=mark_expected_tags(expect, list(case.get("tags") or [])),
         )
     except Exception as exc:
+        # 如果评测过程本身抛异常，这条 case 也算失败。
+        # 例如 json 格式问题、代码运行错误、依赖导入失败等。
         return IntentEvalResult(
             case_id=str(case.get("id") or ""),
             expected_intent=str(expect.get("intent") or ""),
@@ -134,9 +175,14 @@ def run_intent(query: str) -> dict[str, Any]:
     from Intent.main_intent_route import recognize_main_intent
     from query_processing import normalize_query
 
+    # 评测集里可以写 {project_root} 占位符，运行时替换成本机项目路径。
     expanded_query = expand_query(query)
+    # 第一步：query_processing。这里会做别名替换、traceId/source_refs/target/framework 抽取。
     query_context = normalize_query(expanded_query)
+    # 第二步：Intent。注意传入的是 normalized_query，不是原始 query。
     intent_result = recognize_main_intent(query_context.normalized_query)
+    # 第三步：把 query_processing 抽取出的上下文合并进 intent_result。
+    # 这样 metrics.py 可以统一从 actual 里检查 target、framework、trace_id 等字段。
     merge_query_context(intent_result, query_context.to_dict())
     return {
         "query": expanded_query,
@@ -148,14 +194,18 @@ def run_intent(query: str) -> dict[str, Any]:
 def merge_query_context(intent_result: dict[str, Any], query_context: dict[str, Any]) -> None:
     extracted = intent_result.setdefault("extracted_context", {})
     normalized_extracted = query_context.get("extracted_context") or {}
+    # Intent 自己可能抽到一部分实体，query_processing 也可能抽到一部分实体。
+    # 这里做合并和去重，避免评测时漏掉标准化阶段抽出来的 target/framework/source_refs。
     for key in ("target", "frameworks", "source_refs"):
         existing = extracted.get(key) if isinstance(extracted.get(key), list) else []
         incoming = normalized_extracted.get(key) if isinstance(normalized_extracted.get(key), list) else []
         extracted[key] = dedupe([*existing, *incoming])
+    # trace_id 和 force_source_generation 是单值/布尔值，按“标准化阶段有则补充”的方式合并。
     if normalized_extracted.get("trace_id") and not extracted.get("trace_id"):
         extracted["trace_id"] = normalized_extracted["trace_id"]
     if normalized_extracted.get("force_source_generation"):
         extracted["force_source_generation"] = True
+    # 把原始 query 和标准化 query 放到 intent_result，方便 metrics 检查 normalized_query_contains。
     intent_result["normalized_query"] = query_context.get("normalized_query")
     intent_result["raw_query"] = query_context.get("raw_query")
 
@@ -179,6 +229,7 @@ def build_run_id(suite: str, generated_at: str, llm_enabled: bool) -> str:
 
 
 def get_git_info() -> dict[str, Any]:
+    # 报告里记录 git 信息，便于以后追踪“哪个版本跑出了这个评测结果”。
     return {
         "branch": run_git(["rev-parse", "--abbrev-ref", "HEAD"]),
         "commit": run_git(["rev-parse", "--short", "HEAD"]),
@@ -209,14 +260,17 @@ def write_report_artifacts(report: dict[str, Any], report_dir: Path) -> None:
 
     run_id = str(report["run_id"])
     full_report_path = runs_dir / f"{run_id}.json"
+    # runs/ 保存每次完整报告；latest.json 总是指向最近一次报告。
     full_report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     (report_dir / "latest.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    # history.jsonl 是趋势数据源：每次评测追加一行摘要。
     history_item = build_history_item(report, full_report_path)
     history_path = report_dir / "history.jsonl"
     with history_path.open("a", encoding="utf-8") as file:
         file.write(json.dumps(history_item, ensure_ascii=False) + "\n")
 
+    # 根据历史记录生成趋势表和趋势图。
     history = load_history(history_path)
     write_trend_csv(history, report_dir / "trend.csv")
     write_trend_svg(history, report_dir / "trend.svg")
@@ -224,6 +278,7 @@ def write_report_artifacts(report: dict[str, Any], report_dir: Path) -> None:
 
 def build_history_item(report: dict[str, Any], full_report_path: Path) -> dict[str, Any]:
     summary = report.get("summary") or {}
+    # 历史记录只保留摘要和失败 case id，不重复保存完整 results，避免 history.jsonl 越来越大。
     failed_case_ids = [
         result.get("case_id")
         for result in report.get("results") or []
@@ -274,6 +329,7 @@ def load_history(history_path: Path) -> list[dict[str, Any]]:
 
 
 def write_trend_csv(history: list[dict[str, Any]], output_path: Path) -> None:
+    # trend.csv 方便用表格工具或 Grafana/BI 看各版本指标变化。
     fields = [
         "run_id",
         "suite",
@@ -294,6 +350,7 @@ def write_trend_csv(history: list[dict[str, Any]], output_path: Path) -> None:
 
 
 def write_trend_svg(history: list[dict[str, Any]], output_path: Path) -> None:
+    # 这里手写一个轻量 SVG 趋势图，避免额外引入 matplotlib 等依赖。
     width = 960
     height = 420
     margin_left = 70

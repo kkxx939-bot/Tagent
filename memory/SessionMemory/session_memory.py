@@ -51,6 +51,8 @@ class SessionMemory:
     tool_results: list[dict[str, Any]] = field(default_factory=list)
     generated_outputs: list[dict[str, Any]] = field(default_factory=list)
     missing_context: list[str] = field(default_factory=list)
+    final_output_summary: dict[str, Any] = field(default_factory=dict)
+    result_quality: dict[str, Any] = field(default_factory=dict)
     notes: list[str] = field(default_factory=list)
     events: list[MemoryEvent] = field(default_factory=list)
     metadata: dict[str, Any] = field(default_factory=dict)
@@ -118,6 +120,21 @@ class SessionMemory:
         self.missing_context = list(missing_context)
         self._record_event("missing_context_updated", {"missing_context": self.missing_context})
 
+    def set_result_quality(
+        self,
+        final_output_summary: dict[str, Any] | None = None,
+        result_quality: dict[str, Any] | None = None,
+    ) -> None:
+        self.final_output_summary = dict(final_output_summary or {})
+        self.result_quality = dict(result_quality or {})
+        self._record_event(
+            "result_quality_recorded",
+            {
+                "final_output_summary": self.final_output_summary,
+                "result_quality": self.result_quality,
+            },
+        )
+
     def add_note(self, note: str) -> None:
         self.notes.append(note)
         self._record_event("note_added", {"note": note})
@@ -150,6 +167,8 @@ class SessionMemory:
             "selected_skill": self._skill_name(),
             "generated_outputs": list(self.generated_outputs),
             "missing_context": list(self.missing_context),
+            "final_output_summary": dict(self.final_output_summary),
+            "result_quality": dict(self.result_quality),
             "notes": list(self.notes),
             "started_at": self.created_at,
             "completed_at": self.completed_at,
@@ -174,6 +193,8 @@ class SessionMemory:
         self.tool_results.clear()
         self.generated_outputs.clear()
         self.missing_context.clear()
+        self.final_output_summary.clear()
+        self.result_quality.clear()
         self.notes.clear()
         self.events.clear()
         self.metadata.clear()

@@ -118,7 +118,7 @@ def build_model_plan(
         "available_tools": list_tools() if list_tools else [],
     }
     try:
-        response = call_llm(build_planner_prompt(context), temperature=0.1, max_tokens=1600)
+        response = call_llm(build_planner_prompt(context), temperature=0.1, max_tokens=1600, llm_task="planner")
         payload = _parse_json_response(response)
         return _plan_from_payload(payload, user_query, intent_result, session_memory), None
     except Exception as exc:

@@ -50,7 +50,7 @@ def classify_main_intent_with_llm(
     messages = build_main_intent_prompt(context)
 
     try:
-        response_text = call_llm(messages, temperature=TEMPERATURE, max_tokens=MAX_TOKENS)
+        response_text = call_llm(messages, temperature=TEMPERATURE, max_tokens=MAX_TOKENS, llm_task="intent")
     except RuntimeError as exc:
         return asdict(build_invalid_result(raw_response="", error=f"LLM 调用失败: {exc}"))
 

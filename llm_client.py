@@ -7,11 +7,14 @@
 from __future__ import annotations
 
 import json
+import time
 import urllib.error
 import urllib.request
 from typing import Any
 
 from config import get_llm_config, require_llm_api_key
+from OTel.OTelClient import mark_span_error, mark_span_ok, set_span_attributes, start_span
+from OTel.TraceScheme import SPAN_LLM_CALL, build_llm_call_attributes
 
 
 QUERY = "你好，请用一句话介绍你自己。"
@@ -22,10 +25,10 @@ def call_llm(
     messages: list[dict[str, str]],
     temperature: float | None = None,
     max_tokens: int | None = None,
+    llm_task: str = "unknown",
 ) -> str:
     """调用默认模型，并返回模型回复文本。"""
     config = get_llm_config()
-    api_key = require_llm_api_key()
 
     payload = {
         "model": config["model"],
@@ -34,19 +37,49 @@ def call_llm(
         "max_tokens": max_tokens if max_tokens is not None else config["max_tokens"],
     }
 
-    response = post_chat_completion(
-        base_url=str(config["base_url"]),
-        api_key=api_key,
-        payload=payload,
-    )
-    record_llm_usage(response, payload)
-    return extract_message_content(response)
+    with start_span(SPAN_LLM_CALL, build_llm_call_attributes(task=llm_task, payload=payload)) as span:
+        started_at = time.perf_counter()
+        try:
+            api_key = require_llm_api_key()
+            response = post_chat_completion(
+                base_url=str(config["base_url"]),
+                api_key=api_key,
+                payload=payload,
+            )
+            latency_ms = round((time.perf_counter() - started_at) * 1000, 2)
+            content = extract_message_content(response)
+            record_llm_usage(response, payload)
+            set_span_attributes(
+                span,
+                build_llm_call_attributes(
+                    task=llm_task,
+                    payload=payload,
+                    response=response,
+                    success=True,
+                    latency_ms=latency_ms,
+                ),
+            )
+            mark_span_ok(span)
+            return content
+        except Exception as exc:
+            latency_ms = round((time.perf_counter() - started_at) * 1000, 2)
+            set_span_attributes(
+                span,
+                build_llm_call_attributes(
+                    task=llm_task,
+                    payload=payload,
+                    success=False,
+                    error=exc,
+                    latency_ms=latency_ms,
+                ),
+            )
+            mark_span_error(span, exc)
+            raise
 
 
-def call_deepseek_v4_flash(messages: list[dict[str, str]]) -> str:
+def call_deepseek_v4_flash(messages: list[dict[str, str]], llm_task: str = "debug") -> str:
     """明确使用 deepseek-v4-flash，方便调试和演示。"""
     config = get_llm_config()
-    api_key = require_llm_api_key()
 
     payload = {
         "model": "deepseek-v4-flash",
@@ -55,13 +88,44 @@ def call_deepseek_v4_flash(messages: list[dict[str, str]]) -> str:
         "max_tokens": config["max_tokens"],
     }
 
-    response = post_chat_completion(
-        base_url=str(config["base_url"]),
-        api_key=api_key,
-        payload=payload,
-    )
-    record_llm_usage(response, payload)
-    return extract_message_content(response)
+    with start_span(SPAN_LLM_CALL, build_llm_call_attributes(task=llm_task, payload=payload)) as span:
+        started_at = time.perf_counter()
+        try:
+            api_key = require_llm_api_key()
+            response = post_chat_completion(
+                base_url=str(config["base_url"]),
+                api_key=api_key,
+                payload=payload,
+            )
+            latency_ms = round((time.perf_counter() - started_at) * 1000, 2)
+            content = extract_message_content(response)
+            record_llm_usage(response, payload)
+            set_span_attributes(
+                span,
+                build_llm_call_attributes(
+                    task=llm_task,
+                    payload=payload,
+                    response=response,
+                    success=True,
+                    latency_ms=latency_ms,
+                ),
+            )
+            mark_span_ok(span)
+            return content
+        except Exception as exc:
+            latency_ms = round((time.perf_counter() - started_at) * 1000, 2)
+            set_span_attributes(
+                span,
+                build_llm_call_attributes(
+                    task=llm_task,
+                    payload=payload,
+                    success=False,
+                    error=exc,
+                    latency_ms=latency_ms,
+                ),
+            )
+            mark_span_error(span, exc)
+            raise
 
 
 def post_chat_completion(base_url: str, api_key: str, payload: dict[str, Any]) -> dict[str, Any]:

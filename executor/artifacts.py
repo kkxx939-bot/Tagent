@@ -54,12 +54,23 @@ def validate_artifact(
 ) -> ArtifactOperationResult:
     artifact_type = _normalize_artifact_type(artifact_type)
     if artifact_type == "test_case":
-        from case_generator import validate_cases
+        from case_generator import grounding_errors, validate_cases
 
         result = variables.get("case_generation_result") or {}
         cases = result.get("cases") or []
         validate_cases(cases)
-        return ArtifactOperationResult(success=True, data={"artifact_type": artifact_type, "case_count": len(cases)})
+        grounding_report = result.get("grounding_report") or {}
+        errors = grounding_errors(grounding_report)
+        return ArtifactOperationResult(
+            success=not errors,
+            data={
+                "artifact_type": artifact_type,
+                "case_count": len(cases),
+                "grounding_report": grounding_report,
+            },
+            warnings=list(grounding_report.get("warnings") or []) if isinstance(grounding_report, dict) else [],
+            error="；".join(errors) if errors else None,
+        )
 
     return ArtifactOperationResult(
         success=True,
@@ -92,7 +103,9 @@ def _generate_test_case_artifact(user_query: str, variables: dict[str, Any]) -> 
             "case_count": case_count,
             "output_path": str(OUTPUT_PATH),
             "source_summary": result.get("source_summary") or {},
+            "grounding_report": result.get("grounding_report") or {},
         },
+        warnings=list((result.get("grounding_report") or {}).get("warnings") or []),
     )
 
 

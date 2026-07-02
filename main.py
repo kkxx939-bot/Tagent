@@ -7,7 +7,9 @@ import os
 import sys
 
 from agent.orchestrator import run_agent
+from config import get_otel_config
 from observability.main_observation import record_main_run
+from OTel.OTelClient import configure_otel
 
 DEFAULT_QUERY = "检索登录相关需求资料"
 OPENVIKING_LOCAL_DEFAULTS = {
@@ -42,9 +44,11 @@ def run_openviking(user_query: str = DEFAULT_QUERY) -> None:
 
 
 def main() -> None:
+    configure_otel(force=True, **get_otel_config())
     argv = sys.argv[1:]
+    user_query = " ".join(argv).strip() or DEFAULT_QUERY
     # run_openviking(" ".join(argv).strip() or DEFAULT_QUERY)
-    run_native_rag(" ".join(argv).strip() or DEFAULT_QUERY)
+    run_native_rag(user_query)
 
 if __name__ == '__main__':
     main()

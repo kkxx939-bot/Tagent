@@ -61,6 +61,13 @@ LLM_TEMPERATURE = 0.2
 LLM_MAX_TOKENS = 4096
 APIKEY = ""
 
+# OpenTelemetry 配置。
+# 默认关闭，避免本地普通运行和评测时自动上报 trace。
+OTEL_ENABLED = True
+OTEL_EXPORTER = "otlp"
+OTEL_ENDPOINT = "http://localhost:4318/v1/traces"
+OTEL_SERVICE_NAME = "tagent"
+
 
 def get_llm_config() -> dict[str, str | int | float | None]:
     """返回 LLM 调用需要的配置。"""
@@ -79,6 +86,16 @@ def require_llm_api_key() -> str:
     if not api_key:
         raise RuntimeError("缺少 LLM_API_KEY，请先配置环境变量，或临时在 config.py 的 APIKEY 中填写。")
     return str(api_key)
+
+
+def get_otel_config() -> dict[str, str | bool]:
+    """返回 OTel 初始化配置。"""
+    return {
+        "enabled": OTEL_ENABLED,
+        "exporter": OTEL_EXPORTER,
+        "endpoint": OTEL_ENDPOINT,
+        "service_name": OTEL_SERVICE_NAME,
+    }
 
 
 def ensure_output_dirs() -> None:

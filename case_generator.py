@@ -58,11 +58,13 @@ def generate_test_cases(
         raise RuntimeError(f"模型返回不是合法 JSON，原始内容已保存到: {RAW_OUTPUT_PATH}") from exc
     cases = normalize_cases(cases)
     validate_cases(cases)
+    grounding_report = build_grounding_report(cases, context)
 
     result = {
         "query": query,
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "source_summary": context.get("source_summary") or {},
+        "grounding_report": grounding_report,
         "cases": cases,
     }
     save_generation_result(result, output_path)
@@ -176,6 +178,159 @@ def validate_cases(cases: list[dict[str, Any]]) -> None:
 
         if not isinstance(case.get("source_chunk_ids"), list):
             raise ValueError(f"第 {index} 条用例的 source_chunk_ids 必须是数组。")
+
+
+def build_grounding_report(cases: list[dict[str, Any]], context: dict[str, Any]) -> dict[str, Any]:
+    """校验用例引用的 chunk 是否来自本次召回上下文。"""
+    chunks_by_id = _chunks_by_id(context.get("chunks") or [])
+    available_chunk_ids = sorted(chunks_by_id)
+    case_reports = []
+    invalid_source_ref_count = 0
+    status_counts = {"grounded": 0, "weakly_supported": 0, "unsupported": 0}
+
+    for index, case in enumerate(cases, start=1):
+        source_chunk_ids = _case_source_chunk_ids(case)
+        valid_chunk_ids = [chunk_id for chunk_id in source_chunk_ids if chunk_id in chunks_by_id]
+        invalid_chunk_ids = [chunk_id for chunk_id in source_chunk_ids if chunk_id not in chunks_by_id]
+        invalid_source_ref_count += len(invalid_chunk_ids)
+        basis = str(case.get("case_basis") or "")
+        status = _grounding_status(source_chunk_ids, valid_chunk_ids, invalid_chunk_ids, basis)
+        status_counts[status] += 1
+        case_reports.append(
+            {
+                "case_id": case.get("case_id") or f"case_{index}",
+                "title": case.get("title") or "",
+                "status": status,
+                "source_chunk_ids": source_chunk_ids,
+                "valid_source_chunk_ids": valid_chunk_ids,
+                "invalid_source_chunk_ids": invalid_chunk_ids,
+                "evidence": [_chunk_evidence(chunks_by_id[chunk_id]) for chunk_id in valid_chunk_ids],
+                "warnings": _case_grounding_warnings(status, source_chunk_ids, invalid_chunk_ids, basis),
+            }
+        )
+
+    case_count = len(cases)
+    warnings = _grounding_report_warnings(status_counts, invalid_source_ref_count, available_chunk_ids)
+    return {
+        "status": "warning" if warnings else "ok",
+        "case_count": case_count,
+        "available_chunk_count": len(available_chunk_ids),
+        "available_chunk_ids": available_chunk_ids,
+        "grounded_case_count": status_counts["grounded"],
+        "weakly_supported_case_count": status_counts["weakly_supported"],
+        "unsupported_case_count": status_counts["unsupported"],
+        "invalid_source_ref_count": invalid_source_ref_count,
+        "grounded_rate": _rate(status_counts["grounded"], case_count),
+        "warnings": warnings,
+        "cases": case_reports,
+    }
+
+
+def grounding_errors(report: dict[str, Any]) -> list[str]:
+    """把 grounding report 转成会阻断产物校验的错误。"""
+    if not isinstance(report, dict) or not report:
+        return ["缺少 grounding_report，无法确认生成结果是否有上下文依据"]
+
+    errors = []
+    invalid_count = int(report.get("invalid_source_ref_count") or 0)
+    unsupported_count = int(report.get("unsupported_case_count") or 0)
+    if invalid_count:
+        errors.append(f"存在 {invalid_count} 个不存在于召回上下文的 source_chunk_ids")
+    if unsupported_count:
+        errors.append(f"存在 {unsupported_count} 条未标明有效依据的测试用例")
+    return errors
+
+
+def _chunks_by_id(chunks: list[Any]) -> dict[str, dict[str, Any]]:
+    result = {}
+    for chunk in chunks:
+        if not isinstance(chunk, dict):
+            continue
+        chunk_id = str(chunk.get("chunk_id") or "").strip()
+        if chunk_id:
+            result[chunk_id] = chunk
+    return result
+
+
+def _case_source_chunk_ids(case: dict[str, Any]) -> list[str]:
+    values = case.get("source_chunk_ids") or []
+    if isinstance(values, str):
+        values = [values]
+    if not isinstance(values, list):
+        return []
+
+    result = []
+    for value in values:
+        chunk_id = str(value or "").strip()
+        if chunk_id and chunk_id not in result:
+            result.append(chunk_id)
+    return result
+
+
+def _grounding_status(
+    source_chunk_ids: list[str],
+    valid_chunk_ids: list[str],
+    invalid_chunk_ids: list[str],
+    basis: str,
+) -> str:
+    if valid_chunk_ids and not invalid_chunk_ids and not _basis_marks_context_gap(basis):
+        return "grounded"
+    if valid_chunk_ids or _basis_marks_context_gap(basis):
+        return "weakly_supported"
+    if source_chunk_ids and not valid_chunk_ids:
+        return "unsupported"
+    return "unsupported"
+
+
+def _basis_marks_context_gap(basis: str) -> bool:
+    text = basis.strip()
+    return any(keyword in text for keyword in ("上下文不足", "通用测试方向", "依据有限", "无明确依据"))
+
+
+def _chunk_evidence(chunk: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "chunk_id": chunk.get("chunk_id"),
+        "source_type": chunk.get("source_type"),
+        "source_file": chunk.get("source_file"),
+        "title": chunk.get("title"),
+    }
+
+
+def _case_grounding_warnings(
+    status: str,
+    source_chunk_ids: list[str],
+    invalid_chunk_ids: list[str],
+    basis: str,
+) -> list[str]:
+    warnings = []
+    if invalid_chunk_ids:
+        warnings.append(f"引用了不存在的 source_chunk_ids: {', '.join(invalid_chunk_ids)}")
+    if status == "unsupported":
+        warnings.append("未引用有效上下文，也未在 case_basis 中说明上下文不足")
+    if status == "weakly_supported" and not source_chunk_ids and _basis_marks_context_gap(basis):
+        warnings.append("仅标记为通用测试方向，缺少可追踪 chunk 依据")
+    return warnings
+
+
+def _grounding_report_warnings(
+    status_counts: dict[str, int],
+    invalid_source_ref_count: int,
+    available_chunk_ids: list[str],
+) -> list[str]:
+    warnings = []
+    if not available_chunk_ids:
+        warnings.append("本次生成没有可追踪召回 chunk，所有用例都只能视为弱依据或无依据")
+    if invalid_source_ref_count:
+        warnings.append("部分 source_chunk_ids 不存在于本次召回上下文")
+    if status_counts["unsupported"]:
+        warnings.append("部分用例未标明有效依据，建议补充上下文或重新生成")
+    return warnings
+
+
+def _rate(numerator: int, denominator: int) -> float:
+    if denominator <= 0:
+        return 0.0
+    return round(numerator / denominator, 4)
 
 
 def save_generation_result(result: dict[str, Any], output_path: Path = OUTPUT_PATH) -> None:

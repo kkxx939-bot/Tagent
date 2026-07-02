@@ -7,12 +7,33 @@
 
 from __future__ import annotations
 
+import atexit
+from concurrent.futures import Future, ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
 from memory.LongTermMemory import LongTermMemory, MemoryRecord
 from memory.MemoryProcessor import MemoryProcessor
 from memory.SessionMemory import SessionMemory
+
+
+_MEMORY_PERSIST_EXECUTOR = ThreadPoolExecutor(max_workers=1, thread_name_prefix="tagent-memory-persist")
+
+
+def _shutdown_memory_persist_executor() -> None:
+    _MEMORY_PERSIST_EXECUTOR.shutdown(wait=True)
+
+
+atexit.register(_shutdown_memory_persist_executor)
+
+
+def _persist_candidates_background(
+    memory_processor: MemoryProcessor,
+    long_term_memory: LongTermMemory,
+    session_summary: dict[str, Any],
+) -> list[dict[str, Any]]:
+    candidates = memory_processor.build_candidates(session_summary)
+    return memory_processor.persist_candidates(long_term_memory, candidates)
 
 
 class MemoryManager:
@@ -114,21 +135,40 @@ class MemoryManager:
         self,
         summary: str | None = None,
         final_status: str | None = None,
+        final_output: dict[str, Any] | None = None,
+        error: str | None = None,
         persist_summary: bool = True,
+        persist_async: bool = False,
         clear_runtime: bool = True,
     ) -> dict[str, Any]:
         """完成任务，并按需把任务摘要写入长期记忆。"""
         session = self._require_session()
+        status = final_status or "completed"
+        session.set_result_quality(
+            final_output_summary=_summarize_final_output(final_output or {}, status=status, error=error),
+            result_quality=_build_result_quality(final_output or {}, status=status, error=error),
+        )
         session.complete(summary=summary)
         session_summary = session.freeze_summary()
-        if final_status:
-            session_summary["status"] = final_status
+        session_summary["status"] = status
         self.last_task_summary = session_summary
 
         persisted_records = []
+        persist_future: Future[list[dict[str, Any]]] | None = None
+        persistence_status = "skipped"
         if persist_summary:
-            candidates = self.memory_processor.build_candidates(session_summary)
-            persisted_records = self.memory_processor.persist_candidates(self.long_term_memory, candidates)
+            if persist_async:
+                persist_future = _MEMORY_PERSIST_EXECUTOR.submit(
+                    _persist_candidates_background,
+                    self.memory_processor,
+                    self.long_term_memory,
+                    dict(session_summary),
+                )
+                persistence_status = "scheduled"
+            else:
+                candidates = self.memory_processor.build_candidates(session_summary)
+                persisted_records = self.memory_processor.persist_candidates(self.long_term_memory, candidates)
+                persistence_status = "completed"
 
         if clear_runtime:
             session.clear_runtime()
@@ -138,16 +178,26 @@ class MemoryManager:
             "session_summary": session_summary,
             "persisted_record": self._first_record(persisted_records),
             "persisted_records": persisted_records,
+            "persistence": {
+                "mode": "async" if persist_async else "sync",
+                "status": persistence_status,
+                "future_id": id(persist_future) if persist_future else None,
+            },
         }
 
     def fail_task(
         self,
         reason: str,
+        final_output: dict[str, Any] | None = None,
         persist_summary: bool = True,
         clear_runtime: bool = True,
     ) -> dict[str, Any]:
         """标记任务失败，并按需保存失败摘要。"""
         session = self._require_session()
+        session.set_result_quality(
+            final_output_summary=_summarize_final_output(final_output or {}, status="failed", error=reason),
+            result_quality=_build_result_quality(final_output or {}, status="failed", error=reason),
+        )
         session.fail(reason=reason)
         session_summary = session.freeze_summary()
         session_summary["failure_reason"] = reason
@@ -227,3 +277,125 @@ class MemoryManager:
 
     def _first_record(self, records: list[dict[str, Any]]) -> dict[str, Any] | None:
         return records[0] if records else None
+
+
+def _summarize_final_output(
+    final_output: dict[str, Any],
+    *,
+    status: str,
+    error: str | None = None,
+) -> dict[str, Any]:
+    artifacts = final_output.get("artifacts") if isinstance(final_output, dict) else []
+    tool_results = final_output.get("tool_results") if isinstance(final_output, dict) else []
+    warnings = final_output.get("warnings") if isinstance(final_output, dict) else []
+    grounding_reports = _grounding_reports_from_final_output(final_output)
+    summary = {
+        "status": status,
+        "error": error,
+        "artifact_count": len(artifacts) if isinstance(artifacts, list) else 0,
+        "tool_result_count": len(tool_results) if isinstance(tool_results, list) else 0,
+        "warning_count": len(warnings) if isinstance(warnings, list) else 0,
+        "has_capability_gap": bool(final_output.get("capability_gap")) if isinstance(final_output, dict) else False,
+        "missing_context": list(final_output.get("missing_context") or []) if isinstance(final_output, dict) else [],
+    }
+    if grounding_reports:
+        summary["grounding"] = _compact_grounding_reports(grounding_reports)
+    return summary
+
+
+def _build_result_quality(
+    final_output: dict[str, Any],
+    *,
+    status: str,
+    error: str | None = None,
+) -> dict[str, Any]:
+    reasons = []
+    grounding_reports = _grounding_reports_from_final_output(final_output)
+    grounding = _compact_grounding_reports(grounding_reports) if grounding_reports else {}
+
+    reusable = status == "completed" and not error
+    quality = "usable" if reusable else "not_reusable"
+    confidence = 0.85 if reusable else 0.2
+
+    if error:
+        reasons.append("execution_error")
+    if status in {"failed", "waiting_for_user", "capability_gap"}:
+        reasons.append(status)
+        reusable = False
+        quality = "not_reusable"
+        confidence = 0.2
+    if isinstance(final_output, dict) and final_output.get("capability_gap"):
+        reasons.append("capability_gap")
+        reusable = False
+        quality = "not_reusable"
+        confidence = 0.2
+    if grounding:
+        if grounding.get("invalid_source_ref_count") or grounding.get("unsupported_case_count"):
+            reasons.append("grounding_failed")
+            reusable = False
+            quality = "not_reusable"
+            confidence = 0.2
+        elif grounding.get("warning_count"):
+            reasons.append("grounding_warning")
+            quality = "weakly_supported"
+            confidence = min(confidence, 0.65)
+
+    return {
+        "quality": quality,
+        "should_reuse": reusable,
+        "confidence": confidence,
+        "reasons": _dedupe_text(reasons),
+        "grounding": grounding,
+    }
+
+
+def _grounding_reports_from_final_output(final_output: dict[str, Any]) -> list[dict[str, Any]]:
+    reports = []
+    if not isinstance(final_output, dict):
+        return reports
+
+    summary = final_output.get("summary")
+    if isinstance(summary, dict) and isinstance(summary.get("grounding_report"), dict):
+        reports.append(summary["grounding_report"])
+
+    for artifact in final_output.get("artifacts") or []:
+        if not isinstance(artifact, dict):
+            continue
+        metadata = artifact.get("metadata")
+        if isinstance(metadata, dict) and isinstance(metadata.get("grounding_report"), dict):
+            reports.append(metadata["grounding_report"])
+    return reports
+
+
+def _compact_grounding_reports(reports: list[dict[str, Any]]) -> dict[str, Any]:
+    compact = {
+        "report_count": 0,
+        "status": "not_applicable",
+        "case_count": 0,
+        "grounded_case_count": 0,
+        "weakly_supported_case_count": 0,
+        "unsupported_case_count": 0,
+        "invalid_source_ref_count": 0,
+        "warning_count": 0,
+    }
+    for report in reports:
+        if not isinstance(report, dict):
+            continue
+        compact["report_count"] += 1
+        compact["case_count"] += int(report.get("case_count") or 0)
+        compact["grounded_case_count"] += int(report.get("grounded_case_count") or 0)
+        compact["weakly_supported_case_count"] += int(report.get("weakly_supported_case_count") or 0)
+        compact["unsupported_case_count"] += int(report.get("unsupported_case_count") or 0)
+        compact["invalid_source_ref_count"] += int(report.get("invalid_source_ref_count") or 0)
+        compact["warning_count"] += len(report.get("warnings") or [])
+    if compact["report_count"]:
+        compact["status"] = "warning" if compact["warning_count"] else "ok"
+    return compact
+
+
+def _dedupe_text(items: list[str]) -> list[str]:
+    result = []
+    for item in items:
+        if item and item not in result:
+            result.append(item)
+    return result

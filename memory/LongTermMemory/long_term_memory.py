@@ -183,6 +183,8 @@ class LongTermMemory:
             memory_type = str(record.get("memory_type") or "")
             if allowed_types and memory_type not in allowed_types:
                 continue
+            if not self._is_reusable_record(record):
+                continue
 
             searchable = json.dumps(record, ensure_ascii=False).lower()
             score = self._match_score(normalized_query, searchable)
@@ -216,6 +218,18 @@ class LongTermMemory:
         records.extend(self._read_jsonl(self.task_history_path))
         records.extend(self._read_jsonl(self.feedback_path))
         return records
+
+    def _is_reusable_record(self, record: dict[str, Any]) -> bool:
+        if str(record.get("memory_type") or "") != "task_summary":
+            return True
+        content = record.get("content")
+        if not isinstance(content, dict):
+            return True
+        result_quality = content.get("result_quality")
+        if isinstance(result_quality, dict) and result_quality.get("should_reuse") is False:
+            return False
+        status = str(content.get("status") or "").lower()
+        return status not in {"failed", "waiting_for_user", "capability_gap"}
 
     def _build_task_tags(self, task_summary: dict[str, Any]) -> list[str]:
         tags = []
